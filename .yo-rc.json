@@ -1,0 +1,22 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "5.8.1",
+    "applicationType": "monolith",
+    "baseName": "npsp_client",
+    "clientFramework": "react",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "skipServer": true
+  }
+}

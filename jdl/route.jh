@@ -1,0 +1,25 @@
+entity Route {
+	routeName String
+}
+
+entity Location {
+	locationName String
+}
+
+entity Coordinate {
+	longitude Double
+    latitude Double
+}
+
+relationship OneToOne{
+    Location{coordinate} to Coordinate
+}
+
+relationship ManyToOne{
+	Route{startLocation} to Location
+    Route{endLocation} to Location
+}
+
+relationship OneToMany{
+	Route{coordinates} to Coordinate
+}
