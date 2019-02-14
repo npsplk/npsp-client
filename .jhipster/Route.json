@@ -1,0 +1,40 @@
+{
+    "name": "Route",
+    "fields": [
+        {
+            "fieldName": "routeName",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "coordinates",
+            "otherEntityName": "coordinate",
+            "otherEntityRelationshipName": "route"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "startLocation",
+            "otherEntityName": "location",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "route"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "endLocation",
+            "otherEntityName": "location",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "route"
+        }
+    ],
+    "changelogDate": "20190214080731",
+    "entityTableName": "route",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
