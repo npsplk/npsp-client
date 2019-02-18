@@ -4,22 +4,83 @@ entity Route {
 
 entity Location {
 	locationName String
-}
-
-entity Coordinate {
 	longitude Double
     latitude Double
 }
 
-relationship OneToOne{
-    Location{coordinate} to Coordinate
+entity ParkingArea{
+	areaName String required
+}
+
+entity ParkingSlot{
+	slotNumber String
+}
+
+entity LocationType {
+	typeName String required
+    metaCode String required
+}
+
+entity TransportType {
+	typeName String required
+    metaCode String required
+    description String
+}
+
+entity VehicleFacility{
+	facilityName String required
+    facilityMeta String required
+    description String
+}
+
+entity Vehicle{
+	numberPlate String required
+    numberOfSeats Integer required
+}
+
+entity VehicleOwner{
+	ownerName String required
+    contactNumber String required
+    address String
+}
+
+entity Schedule{
+	startTime Instant required
+    endTime Instant required
+}
+
+entity Trip{
+	startDate LocalDate
+	startTime Instant
+    endTime Instant
+}
+
+entity Weekday{
+	weekdayName String required
+    weekdayMeta String required
 }
 
 relationship ManyToOne{
 	Route{startLocation} to Location
     Route{endLocation} to Location
+    Location{locationType} to LocationType
+    Schedule{route} to Route
+    Schedule{startLocation} to Location
+    Schedule{endLocation} to Location
+    Vehicle{owner} to VehicleOwner{vehicle}
+    Vehicle{transportType} to TransportType
+    Trip{vehicle} to Vehicle{trip}
+    Trip{schedule} to Schedule{trip}
+    ParkingArea{location} to Location{parkingArea}
+    ParkingSlot{parkingArea} to ParkingArea{parkingSlot}
+    Trip{parkingSlot} to ParkingSlot
 }
 
-relationship OneToMany{
-	Route{coordinates} to Coordinate
+relationship ManyToMany{
+	Route{location} to Location{route}
+    Schedule{weekday} to Weekday{schedule}
+    Vehicle{vehicleFacility} to VehicleFacility{vehicle}
+    Schedule{vehicleFacility} to VehicleFacility{schedule}
 }
+
+paginate all with pagination

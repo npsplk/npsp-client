@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAllAction } from 'react-jhipster';
+import { ICrudGetAllAction, getSortState, IPaginationBaseState, getPaginationItemsNumber, JhiPagination } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -11,16 +11,45 @@ import { getEntities } from './location.reducer';
 import { ILocation } from 'app/shared/model/location.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ILocationProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export class Location extends React.Component<ILocationProps> {
+export type ILocationState = IPaginationBaseState;
+
+export class Location extends React.Component<ILocationProps, ILocationState> {
+  state: ILocationState = {
+    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+  };
+
   componentDidMount() {
-    this.props.getEntities();
+    this.getEntities();
   }
 
+  sort = prop => () => {
+    this.setState(
+      {
+        order: this.state.order === 'asc' ? 'desc' : 'asc',
+        sort: prop
+      },
+      () => this.sortEntities()
+    );
+  };
+
+  sortEntities() {
+    this.getEntities();
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
+  }
+
+  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
+
+  getEntities = () => {
+    const { activePage, itemsPerPage, sort, order } = this.state;
+    this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
+  };
+
   render() {
-    const { locationList, match } = this.props;
+    const { locationList, match, totalItems } = this.props;
     return (
       <div>
         <h2 id="location-heading">
@@ -33,9 +62,21 @@ export class Location extends React.Component<ILocationProps> {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Location Name</th>
-                <th>Coordinate</th>
+                <th className="hand" onClick={this.sort('id')}>
+                  ID <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('locationName')}>
+                  Location Name <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('longitude')}>
+                  Longitude <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('latitude')}>
+                  Latitude <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Location Type <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -48,7 +89,11 @@ export class Location extends React.Component<ILocationProps> {
                     </Button>
                   </td>
                   <td>{location.locationName}</td>
-                  <td>{location.coordinate ? <Link to={`coordinate/${location.coordinate.id}`}>{location.coordinate.id}</Link> : ''}</td>
+                  <td>{location.longitude}</td>
+                  <td>{location.latitude}</td>
+                  <td>
+                    {location.locationType ? <Link to={`location-type/${location.locationType.id}`}>{location.locationType.id}</Link> : ''}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${location.id}`} color="info" size="sm">
@@ -67,13 +112,22 @@ export class Location extends React.Component<ILocationProps> {
             </tbody>
           </Table>
         </div>
+        <Row className="justify-content-center">
+          <JhiPagination
+            items={getPaginationItemsNumber(totalItems, this.state.itemsPerPage)}
+            activePage={this.state.activePage}
+            onSelect={this.handlePagination}
+            maxButtons={5}
+          />
+        </Row>
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ location }: IRootState) => ({
-  locationList: location.entities
+  locationList: location.entities,
+  totalItems: location.totalItems
 });
 
 const mapDispatchToProps = {

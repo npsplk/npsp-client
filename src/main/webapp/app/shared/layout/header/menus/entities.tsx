@@ -14,8 +14,35 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/location">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Location
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/coordinate">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Coordinate
+    <DropdownItem tag={Link} to="/entity/parking-area">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Parking Area
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/parking-slot">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Parking Slot
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/location-type">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Location Type
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/transport-type">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Transport Type
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/vehicle-facility">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Vehicle Facility
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/vehicle">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Vehicle
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/vehicle-owner">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Vehicle Owner
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/schedule">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Schedule
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/trip">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Trip
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/weekday">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Weekday
     </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>

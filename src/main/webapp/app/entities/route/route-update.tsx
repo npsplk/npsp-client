@@ -20,6 +20,7 @@ export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteCompo
 
 export interface IRouteUpdateState {
   isNew: boolean;
+  idslocation: any[];
   startLocationId: string;
   endLocationId: string;
 }
@@ -28,6 +29,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   constructor(props) {
     super(props);
     this.state = {
+      idslocation: [],
       startLocationId: '0',
       endLocationId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -55,7 +57,8 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
       const { routeEntity } = this.props;
       const entity = {
         ...routeEntity,
-        ...values
+        ...values,
+        locations: mapIdList(values.locations)
       };
 
       if (this.state.isNew) {
@@ -115,6 +118,26 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                 <AvGroup>
                   <Label for="endLocation.id">End Location</Label>
                   <AvInput id="route-endLocation" type="select" className="form-control" name="endLocation.id">
+                    <option value="" key="0" />
+                    {locations
+                      ? locations.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="locations">Location</Label>
+                  <AvInput
+                    id="route-location"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="locations"
+                    value={routeEntity.locations && routeEntity.locations.map(e => e.id)}
+                  >
                     <option value="" key="0" />
                     {locations
                       ? locations.map(otherEntity => (

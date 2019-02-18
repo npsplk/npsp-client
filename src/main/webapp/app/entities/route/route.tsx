@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAllAction } from 'react-jhipster';
+import { ICrudGetAllAction, getSortState, IPaginationBaseState, getPaginationItemsNumber, JhiPagination } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -11,16 +11,45 @@ import { getEntities } from './route.reducer';
 import { IRoute } from 'app/shared/model/route.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IRouteProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export class Route extends React.Component<IRouteProps> {
+export type IRouteState = IPaginationBaseState;
+
+export class Route extends React.Component<IRouteProps, IRouteState> {
+  state: IRouteState = {
+    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+  };
+
   componentDidMount() {
-    this.props.getEntities();
+    this.getEntities();
   }
 
+  sort = prop => () => {
+    this.setState(
+      {
+        order: this.state.order === 'asc' ? 'desc' : 'asc',
+        sort: prop
+      },
+      () => this.sortEntities()
+    );
+  };
+
+  sortEntities() {
+    this.getEntities();
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
+  }
+
+  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
+
+  getEntities = () => {
+    const { activePage, itemsPerPage, sort, order } = this.state;
+    this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
+  };
+
   render() {
-    const { routeList, match } = this.props;
+    const { routeList, match, totalItems } = this.props;
     return (
       <div>
         <h2 id="route-heading">
@@ -33,10 +62,18 @@ export class Route extends React.Component<IRouteProps> {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Route Name</th>
-                <th>Start Location</th>
-                <th>End Location</th>
+                <th className="hand" onClick={this.sort('id')}>
+                  ID <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('routeName')}>
+                  Route Name <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Start Location <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  End Location <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -69,13 +106,22 @@ export class Route extends React.Component<IRouteProps> {
             </tbody>
           </Table>
         </div>
+        <Row className="justify-content-center">
+          <JhiPagination
+            items={getPaginationItemsNumber(totalItems, this.state.itemsPerPage)}
+            activePage={this.state.activePage}
+            onSelect={this.handlePagination}
+            maxButtons={5}
+          />
+        </Row>
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ route }: IRootState) => ({
-  routeList: route.entities
+  routeList: route.entities,
+  totalItems: route.totalItems
 });
 
 const mapDispatchToProps = {

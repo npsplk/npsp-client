@@ -21,6 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<ILocation>,
   entity: defaultValue,
   updating: false,
+  totalItems: 0,
   updateSuccess: false
 };
 
@@ -63,6 +64,7 @@ export default (state: LocationState = initialState, action): LocationState => {
       return {
         ...state,
         loading: false,
+        totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_LOCATION):
@@ -99,10 +101,13 @@ const apiUrl = 'api/locations';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<ILocation> = (page, size, sort) => ({
-  type: ACTION_TYPES.FETCH_LOCATION_LIST,
-  payload: axios.get<ILocation>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
-});
+export const getEntities: ICrudGetAllAction<ILocation> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_LOCATION_LIST,
+    payload: axios.get<ILocation>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
 
 export const getEntity: ICrudGetAction<ILocation> = id => {
   const requestUrl = `${apiUrl}/${id}`;

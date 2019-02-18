@@ -21,6 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IRoute>,
   entity: defaultValue,
   updating: false,
+  totalItems: 0,
   updateSuccess: false
 };
 
@@ -63,6 +64,7 @@ export default (state: RouteState = initialState, action): RouteState => {
       return {
         ...state,
         loading: false,
+        totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_ROUTE):
@@ -99,10 +101,13 @@ const apiUrl = 'api/routes';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IRoute> = (page, size, sort) => ({
-  type: ACTION_TYPES.FETCH_ROUTE_LIST,
-  payload: axios.get<IRoute>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
-});
+export const getEntities: ICrudGetAllAction<IRoute> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ROUTE_LIST,
+    payload: axios.get<IRoute>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
 
 export const getEntity: ICrudGetAction<IRoute> = id => {
   const requestUrl = `${apiUrl}/${id}`;

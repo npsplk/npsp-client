@@ -32,8 +32,16 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
               <span id="locationName">Location Name</span>
             </dt>
             <dd>{locationEntity.locationName}</dd>
-            <dt>Coordinate</dt>
-            <dd>{locationEntity.coordinate ? locationEntity.coordinate.id : ''}</dd>
+            <dt>
+              <span id="longitude">Longitude</span>
+            </dt>
+            <dd>{locationEntity.longitude}</dd>
+            <dt>
+              <span id="latitude">Latitude</span>
+            </dt>
+            <dd>{locationEntity.latitude}</dd>
+            <dt>Location Type</dt>
+            <dd>{locationEntity.locationType ? locationEntity.locationType.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/location" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

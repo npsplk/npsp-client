@@ -8,8 +8,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ICoordinate } from 'app/shared/model/coordinate.model';
-import { getEntities as getCoordinates } from 'app/entities/coordinate/coordinate.reducer';
+import { ILocationType } from 'app/shared/model/location-type.model';
+import { getEntities as getLocationTypes } from 'app/entities/location-type/location-type.reducer';
+import { IRoute } from 'app/shared/model/route.model';
+import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './location.reducer';
 import { ILocation } from 'app/shared/model/location.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +22,16 @@ export interface ILocationUpdateProps extends StateProps, DispatchProps, RouteCo
 
 export interface ILocationUpdateState {
   isNew: boolean;
-  coordinateId: string;
+  locationTypeId: string;
+  routeId: string;
 }
 
 export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocationUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      coordinateId: '0',
+      locationTypeId: '0',
+      routeId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -45,7 +49,8 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getCoordinates();
+    this.props.getLocationTypes();
+    this.props.getRoutes();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +74,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
   };
 
   render() {
-    const { locationEntity, coordinates, loading, updating } = this.props;
+    const { locationEntity, locationTypes, routes, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -98,11 +103,23 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                   <AvField id="location-locationName" type="text" name="locationName" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="coordinate.id">Coordinate</Label>
-                  <AvInput id="location-coordinate" type="select" className="form-control" name="coordinate.id">
+                  <Label id="longitudeLabel" for="longitude">
+                    Longitude
+                  </Label>
+                  <AvField id="location-longitude" type="string" className="form-control" name="longitude" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="latitudeLabel" for="latitude">
+                    Latitude
+                  </Label>
+                  <AvField id="location-latitude" type="string" className="form-control" name="latitude" />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="locationType.id">Location Type</Label>
+                  <AvInput id="location-locationType" type="select" className="form-control" name="locationType.id">
                     <option value="" key="0" />
-                    {coordinates
-                      ? coordinates.map(otherEntity => (
+                    {locationTypes
+                      ? locationTypes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -128,7 +145,8 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  coordinates: storeState.coordinate.entities,
+  locationTypes: storeState.locationType.entities,
+  routes: storeState.route.entities,
   locationEntity: storeState.location.entity,
   loading: storeState.location.loading,
   updating: storeState.location.updating,
@@ -136,7 +154,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getCoordinates,
+  getLocationTypes,
+  getRoutes,
   getEntity,
   updateEntity,
   createEntity,

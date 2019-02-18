@@ -36,6 +36,17 @@ export class RouteDetail extends React.Component<IRouteDetailProps> {
             <dd>{routeEntity.startLocation ? routeEntity.startLocation.id : ''}</dd>
             <dt>End Location</dt>
             <dd>{routeEntity.endLocation ? routeEntity.endLocation.id : ''}</dd>
+            <dt>Location</dt>
+            <dd>
+              {routeEntity.locations
+                ? routeEntity.locations.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === routeEntity.locations.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/route" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
