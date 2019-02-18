@@ -8,6 +8,7 @@ export interface ITrip {
   startDate?: Moment;
   startTime?: Moment;
   endTime?: Moment;
+  specialNotes?: string;
   vehicle?: IVehicle;
   schedule?: ISchedule;
   parkingSlot?: IParkingSlot;

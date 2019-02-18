@@ -74,6 +74,9 @@ export class Trip extends React.Component<ITripProps, ITripState> {
                 <th className="hand" onClick={this.sort('endTime')}>
                   End Time <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('specialNotes')}>
+                  Special Notes <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   Vehicle <FontAwesomeIcon icon="sort" />
                 </th>
@@ -103,6 +106,7 @@ export class Trip extends React.Component<ITripProps, ITripState> {
                   <td>
                     <TextFormat type="date" value={trip.endTime} format={APP_DATE_FORMAT} />
                   </td>
+                  <td>{trip.specialNotes}</td>
                   <td>{trip.vehicle ? <Link to={`vehicle/${trip.vehicle.id}`}>{trip.vehicle.id}</Link> : ''}</td>
                   <td>{trip.schedule ? <Link to={`schedule/${trip.schedule.id}`}>{trip.schedule.id}</Link> : ''}</td>
                   <td>{trip.parkingSlot ? <Link to={`parking-slot/${trip.parkingSlot.id}`}>{trip.parkingSlot.id}</Link> : ''}</td>

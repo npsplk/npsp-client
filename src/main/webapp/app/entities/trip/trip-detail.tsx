@@ -46,6 +46,10 @@ export class TripDetail extends React.Component<ITripDetailProps> {
             <dd>
               <TextFormat value={tripEntity.endTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
+            <dt>
+              <span id="specialNotes">Special Notes</span>
+            </dt>
+            <dd>{tripEntity.specialNotes}</dd>
             <dt>Vehicle</dt>
             <dd>{tripEntity.vehicle ? tripEntity.vehicle.id : ''}</dd>
             <dt>Schedule</dt>

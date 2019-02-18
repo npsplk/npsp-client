@@ -137,6 +137,12 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="specialNotesLabel" for="specialNotes">
+                    Special Notes
+                  </Label>
+                  <AvField id="trip-specialNotes" type="text" name="specialNotes" />
+                </AvGroup>
+                <AvGroup>
                   <Label for="vehicle.id">Vehicle</Label>
                   <AvInput id="trip-vehicle" type="select" className="form-control" name="vehicle.id">
                     <option value="" key="0" />
