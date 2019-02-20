@@ -1,0 +1,34 @@
+{
+    "name": "RouteLocation",
+    "fields": [
+        {
+            "fieldName": "sequenceNumber",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "routeLocation"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "route",
+            "otherEntityName": "route",
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "routeLocation"
+        }
+    ],
+    "changelogDate": "20190220083035",
+    "entityTableName": "route_location",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

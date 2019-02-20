@@ -44,6 +44,9 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/weekday">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Weekday
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/route-location">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Route Location
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

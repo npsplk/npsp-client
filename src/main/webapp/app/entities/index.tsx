@@ -16,6 +16,7 @@ import VehicleOwner from './vehicle-owner';
 import Schedule from './schedule';
 import Trip from './trip';
 import Weekday from './weekday';
+import RouteLocation from './route-location';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -34,6 +35,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/schedule`} component={Schedule} />
       <ErrorBoundaryRoute path={`${match.url}/trip`} component={Trip} />
       <ErrorBoundaryRoute path={`${match.url}/weekday`} component={Weekday} />
+      <ErrorBoundaryRoute path={`${match.url}/route-location`} component={RouteLocation} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

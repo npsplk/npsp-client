@@ -8,26 +8,10 @@
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "startLocation",
-            "otherEntityName": "location",
-            "otherEntityField": "id",
+            "relationshipType": "one-to-many",
+            "relationshipName": "routeLocation",
+            "otherEntityName": "routeLocation",
             "otherEntityRelationshipName": "route"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "endLocation",
-            "otherEntityName": "location",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "route"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "route",
-            "relationshipName": "location",
-            "otherEntityName": "location",
-            "otherEntityField": "id",
-            "ownerSide": true
         }
     ],
     "changelogDate": "20190214080731",

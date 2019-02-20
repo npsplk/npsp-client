@@ -60,6 +60,10 @@ import trip, {
 import weekday, {
   WeekdayState
 } from 'app/entities/weekday/weekday.reducer';
+// prettier-ignore
+import routeLocation, {
+  RouteLocationState
+} from 'app/entities/route-location/route-location.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -84,6 +88,7 @@ export interface IRootState {
   readonly schedule: ScheduleState;
   readonly trip: TripState;
   readonly weekday: WeekdayState;
+  readonly routeLocation: RouteLocationState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -110,6 +115,7 @@ const rootReducer = combineReducers<IRootState>({
   schedule,
   trip,
   weekday,
+  routeLocation,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

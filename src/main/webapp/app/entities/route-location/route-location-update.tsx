@@ -8,26 +8,30 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ILocationType } from 'app/shared/model/location-type.model';
-import { getEntities as getLocationTypes } from 'app/entities/location-type/location-type.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './location.reducer';
 import { ILocation } from 'app/shared/model/location.model';
+import { getEntities as getLocations } from 'app/entities/location/location.reducer';
+import { IRoute } from 'app/shared/model/route.model';
+import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './route-location.reducer';
+import { IRouteLocation } from 'app/shared/model/route-location.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ILocationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IRouteLocationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export interface ILocationUpdateState {
+export interface IRouteLocationUpdateState {
   isNew: boolean;
-  locationTypeId: string;
+  locationId: string;
+  routeId: string;
 }
 
-export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocationUpdateState> {
+export class RouteLocationUpdate extends React.Component<IRouteLocationUpdateProps, IRouteLocationUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      locationTypeId: '0',
+      locationId: '0',
+      routeId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -45,14 +49,15 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getLocationTypes();
+    this.props.getLocations();
+    this.props.getRoutes();
   }
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { locationEntity } = this.props;
+      const { routeLocationEntity } = this.props;
       const entity = {
-        ...locationEntity,
+        ...routeLocationEntity,
         ...values
       };
 
@@ -65,18 +70,18 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/location');
+    this.props.history.push('/entity/route-location');
   };
 
   render() {
-    const { locationEntity, locationTypes, loading, updating } = this.props;
+    const { routeLocationEntity, locations, routes, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.location.home.createOrEditLabel">Create or edit a Location</h2>
+            <h2 id="npspClientApp.routeLocation.home.createOrEditLabel">Create or edit a RouteLocation</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -84,37 +89,25 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <AvForm model={isNew ? {} : locationEntity} onSubmit={this.saveEntity}>
+              <AvForm model={isNew ? {} : routeLocationEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
                     <Label for="id">ID</Label>
-                    <AvInput id="location-id" type="text" className="form-control" name="id" required readOnly />
+                    <AvInput id="route-location-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="locationNameLabel" for="locationName">
-                    Location Name
+                  <Label id="sequenceNumberLabel" for="sequenceNumber">
+                    Sequence Number
                   </Label>
-                  <AvField id="location-locationName" type="text" name="locationName" />
+                  <AvField id="route-location-sequenceNumber" type="string" className="form-control" name="sequenceNumber" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="longitudeLabel" for="longitude">
-                    Longitude
-                  </Label>
-                  <AvField id="location-longitude" type="string" className="form-control" name="longitude" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="latitudeLabel" for="latitude">
-                    Latitude
-                  </Label>
-                  <AvField id="location-latitude" type="string" className="form-control" name="latitude" />
-                </AvGroup>
-                <AvGroup>
-                  <Label for="locationType.id">Location Type</Label>
-                  <AvInput id="location-locationType" type="select" className="form-control" name="locationType.id">
+                  <Label for="location.id">Location</Label>
+                  <AvInput id="route-location-location" type="select" className="form-control" name="location.id">
                     <option value="" key="0" />
-                    {locationTypes
-                      ? locationTypes.map(otherEntity => (
+                    {locations
+                      ? locations.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -122,7 +115,20 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/location" replace color="info">
+                <AvGroup>
+                  <Label for="route.id">Route</Label>
+                  <AvInput id="route-location-route" type="select" className="form-control" name="route.id">
+                    <option value="" key="0" />
+                    {routes
+                      ? routes.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <Button tag={Link} id="cancel-save" to="/entity/route-location" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
@@ -140,15 +146,17 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  locationTypes: storeState.locationType.entities,
-  locationEntity: storeState.location.entity,
-  loading: storeState.location.loading,
-  updating: storeState.location.updating,
-  updateSuccess: storeState.location.updateSuccess
+  locations: storeState.location.entities,
+  routes: storeState.route.entities,
+  routeLocationEntity: storeState.routeLocation.entity,
+  loading: storeState.routeLocation.loading,
+  updating: storeState.routeLocation.updating,
+  updateSuccess: storeState.routeLocation.updateSuccess
 });
 
 const mapDispatchToProps = {
-  getLocationTypes,
+  getLocations,
+  getRoutes,
   getEntity,
   updateEntity,
   createEntity,
@@ -161,4 +169,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LocationUpdate);
+)(RouteLocationUpdate);

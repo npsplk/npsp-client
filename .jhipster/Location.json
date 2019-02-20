@@ -27,13 +27,6 @@
             "relationshipName": "parkingArea",
             "otherEntityName": "parkingArea",
             "otherEntityRelationshipName": "location"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "route",
-            "otherEntityName": "route",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "location"
         }
     ],
     "changelogDate": "20190214080732",

@@ -7,18 +7,18 @@ import { ICrudGetAllAction, getSortState, IPaginationBaseState, getPaginationIte
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './route.reducer';
-import { IRoute } from 'app/shared/model/route.model';
+import { getEntities } from './route-location.reducer';
+import { IRouteLocation } from 'app/shared/model/route-location.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
-export interface IRouteProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface IRouteLocationProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export type IRouteState = IPaginationBaseState;
+export type IRouteLocationState = IPaginationBaseState;
 
-export class Route extends React.Component<IRouteProps, IRouteState> {
-  state: IRouteState = {
+export class RouteLocation extends React.Component<IRouteLocationProps, IRouteLocationState> {
+  state: IRouteLocationState = {
     ...getSortState(this.props.location, ITEMS_PER_PAGE)
   };
 
@@ -49,13 +49,13 @@ export class Route extends React.Component<IRouteProps, IRouteState> {
   };
 
   render() {
-    const { routeList, match, totalItems } = this.props;
+    const { routeLocationList, match, totalItems } = this.props;
     return (
       <div>
-        <h2 id="route-heading">
-          Routes
+        <h2 id="route-location-heading">
+          Route Locations
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Route
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Route Location
           </Link>
         </h2>
         <div className="table-responsive">
@@ -65,30 +65,40 @@ export class Route extends React.Component<IRouteProps, IRouteState> {
                 <th className="hand" onClick={this.sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={this.sort('routeName')}>
-                  Route Name <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={this.sort('sequenceNumber')}>
+                  Sequence Number <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Location <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Route <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {routeList.map((route, i) => (
+              {routeLocationList.map((routeLocation, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${route.id}`} color="link" size="sm">
-                      {route.id}
+                    <Button tag={Link} to={`${match.url}/${routeLocation.id}`} color="link" size="sm">
+                      {routeLocation.id}
                     </Button>
                   </td>
-                  <td>{route.routeName}</td>
+                  <td>{routeLocation.sequenceNumber}</td>
+                  <td>
+                    {routeLocation.location ? <Link to={`location/${routeLocation.location.id}`}>{routeLocation.location.id}</Link> : ''}
+                  </td>
+                  <td>{routeLocation.route ? <Link to={`route/${routeLocation.route.id}`}>{routeLocation.route.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${route.id}`} color="info" size="sm">
+                      <Button tag={Link} to={`${match.url}/${routeLocation.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${route.id}/edit`} color="primary" size="sm">
+                      <Button tag={Link} to={`${match.url}/${routeLocation.id}/edit`} color="primary" size="sm">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${route.id}/delete`} color="danger" size="sm">
+                      <Button tag={Link} to={`${match.url}/${routeLocation.id}/delete`} color="danger" size="sm">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -111,9 +121,9 @@ export class Route extends React.Component<IRouteProps, IRouteState> {
   }
 }
 
-const mapStateToProps = ({ route }: IRootState) => ({
-  routeList: route.entities,
-  totalItems: route.totalItems
+const mapStateToProps = ({ routeLocation }: IRootState) => ({
+  routeLocationList: routeLocation.entities,
+  totalItems: routeLocation.totalItems
 });
 
 const mapDispatchToProps = {
@@ -126,4 +136,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Route);
+)(RouteLocation);

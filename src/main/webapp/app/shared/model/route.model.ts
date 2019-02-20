@@ -1,11 +1,9 @@
-import { ILocation } from 'app/shared/model/location.model';
+import { IRouteLocation } from 'app/shared/model/route-location.model';
 
 export interface IRoute {
   id?: number;
   routeName?: string;
-  startLocation?: ILocation;
-  endLocation?: ILocation;
-  locations?: ILocation[];
+  routeLocations?: IRouteLocation[];
 }
 
 export const defaultValue: Readonly<IRoute> = {};
