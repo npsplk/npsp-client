@@ -15,7 +15,8 @@
         },
         {
             "fieldName": "specialNotes",
-            "fieldType": "String"
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
         }
     ],
     "relationships": [

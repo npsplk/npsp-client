@@ -65,11 +65,8 @@ export class Weekday extends React.Component<IWeekdayProps, IWeekdayState> {
                 <th className="hand" onClick={this.sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={this.sort('weekdayName')}>
-                  Weekday Name <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={this.sort('weekdayMeta')}>
-                  Weekday Meta <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={this.sort('weekday')}>
+                  Weekday <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -82,8 +79,7 @@ export class Weekday extends React.Component<IWeekdayProps, IWeekdayState> {
                       {weekday.id}
                     </Button>
                   </td>
-                  <td>{weekday.weekdayName}</td>
-                  <td>{weekday.weekdayMeta}</td>
+                  <td>{weekday.weekday}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${weekday.id}`} color="info" size="sm">

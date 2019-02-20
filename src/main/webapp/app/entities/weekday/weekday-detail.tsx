@@ -29,13 +29,9 @@ export class WeekdayDetail extends React.Component<IWeekdayDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="weekdayName">Weekday Name</span>
+              <span id="weekday">Weekday</span>
             </dt>
-            <dd>{weekdayEntity.weekdayName}</dd>
-            <dt>
-              <span id="weekdayMeta">Weekday Meta</span>
-            </dt>
-            <dd>{weekdayEntity.weekdayMeta}</dd>
+            <dd>{weekdayEntity.weekday}</dd>
           </dl>
           <Button tag={Link} to="/entity/weekday" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -41,7 +41,7 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "schedule",
-            "relationshipName": "weekday",
+            "relationshipName": "weekdays",
             "otherEntityName": "weekday",
             "otherEntityField": "id",
             "ownerSide": true

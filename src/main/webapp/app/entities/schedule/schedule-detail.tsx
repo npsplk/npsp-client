@@ -46,7 +46,7 @@ export class ScheduleDetail extends React.Component<IScheduleDetailProps> {
             <dd>{scheduleEntity.startLocation ? scheduleEntity.startLocation.id : ''}</dd>
             <dt>End Location</dt>
             <dd>{scheduleEntity.endLocation ? scheduleEntity.endLocation.id : ''}</dd>
-            <dt>Weekday</dt>
+            <dt>Weekdays</dt>
             <dd>
               {scheduleEntity.weekdays
                 ? scheduleEntity.weekdays.map((val, i) => (

@@ -26,7 +26,7 @@ export interface IScheduleUpdateProps extends StateProps, DispatchProps, RouteCo
 
 export interface IScheduleUpdateState {
   isNew: boolean;
-  idsweekday: any[];
+  idsweekdays: any[];
   idsvehicleFacility: any[];
   routeId: string;
   startLocationId: string;
@@ -37,7 +37,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
   constructor(props) {
     super(props);
     this.state = {
-      idsweekday: [],
+      idsweekdays: [],
       idsvehicleFacility: [],
       routeId: '0',
       startLocationId: '0',
@@ -185,9 +185,9 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="weekdays">Weekday</Label>
+                  <Label for="weekdays">Weekdays</Label>
                   <AvInput
-                    id="schedule-weekday"
+                    id="schedule-weekdays"
                     type="select"
                     multiple
                     className="form-control"

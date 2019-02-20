@@ -8,8 +8,6 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ISchedule } from 'app/shared/model/schedule.model';
-import { getEntities as getSchedules } from 'app/entities/schedule/schedule.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './weekday.reducer';
 import { IWeekday } from 'app/shared/model/weekday.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +18,12 @@ export interface IWeekdayUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IWeekdayUpdateState {
   isNew: boolean;
-  scheduleId: string;
 }
 
 export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekdayUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      scheduleId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -44,8 +40,6 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getSchedules();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +63,7 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
   };
 
   render() {
-    const { weekdayEntity, schedules, loading, updating } = this.props;
+    const { weekdayEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -92,30 +86,22 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="weekdayNameLabel" for="weekdayName">
-                    Weekday Name
-                  </Label>
-                  <AvField
-                    id="weekday-weekdayName"
-                    type="text"
-                    name="weekdayName"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="weekdayMetaLabel" for="weekdayMeta">
-                    Weekday Meta
-                  </Label>
-                  <AvField
-                    id="weekday-weekdayMeta"
-                    type="text"
-                    name="weekdayMeta"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <Label id="weekdayLabel">Weekday</Label>
+                  <AvInput
+                    id="weekday-weekday"
+                    type="select"
+                    className="form-control"
+                    name="weekday"
+                    value={(!isNew && weekdayEntity.weekday) || 'Sunday'}
+                  >
+                    <option value="Sunday">Sunday</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                  </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/weekday" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
@@ -135,7 +121,6 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  schedules: storeState.schedule.entities,
   weekdayEntity: storeState.weekday.entity,
   loading: storeState.weekday.loading,
   updating: storeState.weekday.updating,
@@ -143,7 +128,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getSchedules,
   getEntity,
   updateEntity,
   createEntity,
