@@ -1,3 +1,15 @@
 .footer {
-  height: 50px;
+    bottom: 0;
+}
+
+.footer .row{
+    background-color: #353d47;
+}
+
+p{
+    margin: 0;
+    color: white;
+    padding: 10px 0;
+    font-size: 12px;
+    text-align: right;
 }
