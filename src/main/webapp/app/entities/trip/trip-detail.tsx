@@ -57,10 +57,10 @@ export class TripDetail extends React.Component<ITripDetailProps> {
             <dt>Parking Slot</dt>
             <dd>{tripEntity.parkingSlot ? tripEntity.parkingSlot.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/entity/trip" replace color="info">
+          <Button tag={Link} to="/config/trip" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/trip/${tripEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/config/trip/${tripEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

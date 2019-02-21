@@ -59,7 +59,7 @@ export class VehicleOwnerUpdate extends React.Component<IVehicleOwnerUpdateProps
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/vehicle-owner');
+    this.props.history.push('/config/vehicle-owner');
   };
 
   render() {
@@ -117,7 +117,7 @@ export class VehicleOwnerUpdate extends React.Component<IVehicleOwnerUpdateProps
                   </Label>
                   <AvField id="vehicle-owner-address" type="text" name="address" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/vehicle-owner" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/vehicle-owner" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

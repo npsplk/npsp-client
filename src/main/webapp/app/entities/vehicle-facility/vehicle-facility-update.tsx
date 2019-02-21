@@ -70,7 +70,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/vehicle-facility');
+    this.props.history.push('/config/vehicle-facility');
   };
 
   render() {
@@ -128,7 +128,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
                   </Label>
                   <AvField id="vehicle-facility-description" type="text" name="description" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/vehicle-facility" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/vehicle-facility" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

@@ -35,10 +35,10 @@ export class ParkingAreaDetail extends React.Component<IParkingAreaDetailProps> 
             <dt>Location</dt>
             <dd>{parkingAreaEntity.location ? parkingAreaEntity.location.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/entity/parking-area" replace color="info">
+          <Button tag={Link} to="/config/parking-area" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/parking-area/${parkingAreaEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/config/parking-area/${parkingAreaEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

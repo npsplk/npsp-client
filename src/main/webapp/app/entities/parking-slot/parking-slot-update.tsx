@@ -65,7 +65,7 @@ export class ParkingSlotUpdate extends React.Component<IParkingSlotUpdateProps, 
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/parking-slot');
+    this.props.history.push('/config/parking-slot');
   };
 
   render() {
@@ -110,7 +110,7 @@ export class ParkingSlotUpdate extends React.Component<IParkingSlotUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/parking-slot" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/parking-slot" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

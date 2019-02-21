@@ -37,10 +37,10 @@ export class RouteLocationDetail extends React.Component<IRouteLocationDetailPro
             <dt>Route</dt>
             <dd>{routeLocationEntity.route ? routeLocationEntity.route.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/entity/route-location" replace color="info">
+          <Button tag={Link} to="/config/route-location" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/route-location/${routeLocationEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/config/route-location/${routeLocationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

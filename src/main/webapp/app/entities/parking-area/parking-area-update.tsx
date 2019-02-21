@@ -65,7 +65,7 @@ export class ParkingAreaUpdate extends React.Component<IParkingAreaUpdateProps, 
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/parking-area');
+    this.props.history.push('/config/parking-area');
   };
 
   render() {
@@ -117,7 +117,7 @@ export class ParkingAreaUpdate extends React.Component<IParkingAreaUpdateProps, 
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/parking-area" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/parking-area" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

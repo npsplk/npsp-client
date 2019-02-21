@@ -59,7 +59,7 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/weekday');
+    this.props.history.push('/config/weekday');
   };
 
   render() {
@@ -103,7 +103,7 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
                     <option value="Saturday">Saturday</option>
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/weekday" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/weekday" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

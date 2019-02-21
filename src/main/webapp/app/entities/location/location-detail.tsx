@@ -43,10 +43,10 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
             <dt>Location Type</dt>
             <dd>{locationEntity.locationType ? locationEntity.locationType.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/entity/location" replace color="info">
+          <Button tag={Link} to="/operation/location" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/location/${locationEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/operation/location/${locationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

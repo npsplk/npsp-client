@@ -52,10 +52,10 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
                 : null}
             </dd>
           </dl>
-          <Button tag={Link} to="/entity/vehicle" replace color="info">
+          <Button tag={Link} to="/config/vehicle" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/vehicle/${vehicleEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/config/vehicle/${vehicleEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
