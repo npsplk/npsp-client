@@ -116,7 +116,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                     {locationTypes
                       ? locationTypes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.typeName}
                           </option>
                         ))
                       : null}
