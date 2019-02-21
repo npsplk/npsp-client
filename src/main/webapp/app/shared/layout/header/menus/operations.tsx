@@ -8,6 +8,13 @@ import { NavDropdown } from '../header-components';
 export const OperationsMenu = props => (
   // tslint:disable-next-line:jsx-self-close
   <NavDropdown icon="th-list" name="Operations" id="operations-menu">
+      <DropdownItem tag={Link} to="/operation/trip">
+          <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Trip
+      </DropdownItem>
+      <DropdownItem tag={Link} to="/operation/schedule">
+          <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Schedule
+      </DropdownItem>
+
     <DropdownItem tag={Link} to="/operation/route">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Route
     </DropdownItem>

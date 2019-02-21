@@ -86,7 +86,7 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
   };
 
   handleClose = () => {
-    this.props.history.push('/config/trip');
+    this.props.history.push('/operation/trip');
   };
 
   render() {
@@ -191,7 +191,7 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/config/trip" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/operation/trip" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

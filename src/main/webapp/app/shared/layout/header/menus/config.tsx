@@ -29,18 +29,6 @@ export const ConfigMenu = props => (
     <DropdownItem tag={Link} to="/config/vehicle-owner">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Vehicle Owner
     </DropdownItem>
-    <DropdownItem tag={Link} to="/config/schedule">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Schedule
-    </DropdownItem>
-    <DropdownItem tag={Link} to="/config/trip">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Trip
-    </DropdownItem>
-    <DropdownItem tag={Link} to="/config/weekday">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Weekday
-    </DropdownItem>
-    <DropdownItem tag={Link} to="/config/route-location">
-      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Route Location
-    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

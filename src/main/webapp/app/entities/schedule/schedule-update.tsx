@@ -87,7 +87,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
   };
 
   handleClose = () => {
-    this.props.history.push('/config/schedule');
+    this.props.history.push('/operation/schedule');
   };
 
   render() {
@@ -224,7 +224,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/config/schedule" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/operation/schedule" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
