@@ -152,7 +152,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     {routes
                       ? routes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.routeName}
                           </option>
                         ))
                       : null}
@@ -164,9 +164,10 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     <option value="" key="0" />
                     {locations
                       ? locations.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
+                            <option value={otherEntity.id} key={otherEntity.id}>
+                                {otherEntity.locationName ? otherEntity.locationName : '< unnamed location >'}, {otherEntity.locationType ? otherEntity.locationType.typeName : ''},
+                                lon: {otherEntity.longitude}, lat: {otherEntity.latitude},
+                            </option>
                         ))
                       : null}
                   </AvInput>
@@ -178,7 +179,8 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     {locations
                       ? locations.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.locationName ? otherEntity.locationName : '< unnamed location >'}, {otherEntity.locationType ? otherEntity.locationType.typeName : ''},
+                              lon: {otherEntity.longitude}, lat: {otherEntity.latitude},
                           </option>
                         ))
                       : null}
@@ -198,7 +200,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     {weekdays
                       ? weekdays.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.weekday}
                           </option>
                         ))
                       : null}
