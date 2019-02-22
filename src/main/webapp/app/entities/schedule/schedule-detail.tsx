@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './schedule.reducer';
 import { ISchedule } from 'app/shared/model/schedule.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_TIME_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IScheduleDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -32,26 +32,26 @@ export class ScheduleDetail extends React.Component<IScheduleDetailProps> {
               <span id="startTime">Start Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleEntity.startTime} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={scheduleEntity.startTime} type="date" format={APP_TIME_FORMAT} />
             </dd>
             <dt>
               <span id="endTime">End Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleEntity.endTime} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={scheduleEntity.endTime} type="date" format={APP_TIME_FORMAT} />
             </dd>
             <dt>Route</dt>
-            <dd>{scheduleEntity.route ? scheduleEntity.route.id : ''}</dd>
+            <dd>{scheduleEntity.route ? scheduleEntity.route.routeName : ''}</dd>
             <dt>Start Location</dt>
-            <dd>{scheduleEntity.startLocation ? scheduleEntity.startLocation.id : ''}</dd>
+            <dd>{scheduleEntity.startLocation ? scheduleEntity.startLocation.locationName : ''}</dd>
             <dt>End Location</dt>
-            <dd>{scheduleEntity.endLocation ? scheduleEntity.endLocation.id : ''}</dd>
+            <dd>{scheduleEntity.endLocation ? scheduleEntity.endLocation.locationName : ''}</dd>
             <dt>Weekdays</dt>
             <dd>
               {scheduleEntity.weekdays
                 ? scheduleEntity.weekdays.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      {val.weekday}
                       {i === scheduleEntity.weekdays.length - 1 ? '' : ', '}
                     </span>
                   ))
@@ -62,7 +62,7 @@ export class ScheduleDetail extends React.Component<IScheduleDetailProps> {
               {scheduleEntity.vehicleFacilities
                 ? scheduleEntity.vehicleFacilities.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      {val.facilityName}
                       {i === scheduleEntity.vehicleFacilities.length - 1 ? '' : ', '}
                     </span>
                   ))

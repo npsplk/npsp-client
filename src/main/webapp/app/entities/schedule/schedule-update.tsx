@@ -122,7 +122,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     type="datetime-local"
                     className="form-control"
                     name="startTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
+                    placeholder={'HH:mm'}
                     value={isNew ? null : convertDateTimeFromServer(this.props.scheduleEntity.startTime)}
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
@@ -220,7 +220,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     {vehicleFacilities
                       ? vehicleFacilities.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.facilityName}
                           </option>
                         ))
                       : null}

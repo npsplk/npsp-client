@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './schedule.reducer';
 import { ISchedule } from 'app/shared/model/schedule.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IScheduleProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -80,7 +80,12 @@ export class Schedule extends React.Component<IScheduleProps, IScheduleState> {
                 <th>
                   End Location <FontAwesomeIcon icon="sort" />
                 </th>
-                <th />
+                  <th>
+                      Weekdays
+                  </th>
+                  <th>
+                      Facilities
+                  </th>
               </tr>
             </thead>
             <tbody>
@@ -92,17 +97,37 @@ export class Schedule extends React.Component<IScheduleProps, IScheduleState> {
                     </Button>
                   </td>
                   <td>
-                    <TextFormat type="date" value={schedule.startTime} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={schedule.startTime} format={APP_TIME_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={schedule.endTime} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={schedule.endTime} format={APP_TIME_FORMAT} />
                   </td>
-                  <td>{schedule.route ? <Link to={`route/${schedule.route.id}`}>{schedule.route.id}</Link> : ''}</td>
+                  <td>{schedule.route ? <Link to={`route/${schedule.route.id}`}>{schedule.route.routeName}</Link> : ''}</td>
                   <td>
-                    {schedule.startLocation ? <Link to={`location/${schedule.startLocation.id}`}>{schedule.startLocation.id}</Link> : ''}
+                    {schedule.startLocation ? <Link to={`location/${schedule.startLocation.id}`}>{schedule.startLocation.locationName}</Link> : ''}
                   </td>
-                  <td>{schedule.endLocation ? <Link to={`location/${schedule.endLocation.id}`}>{schedule.endLocation.id}</Link> : ''}</td>
-                  <td className="text-right">
+                  <td>{schedule.endLocation ? <Link to={`location/${schedule.endLocation.id}`}>{schedule.endLocation.locationName}</Link> : ''}</td>
+                    <td>
+                        {schedule.weekdays
+                            ? schedule.weekdays.map((val, x) => (
+                                <span key={val.id}>
+                      {val.weekday}
+                                    {x === schedule.weekdays.length - 1 ? '' : ', '}
+                    </span>
+                            ))
+                            : null}
+                    </td>
+                    <td>
+                        {schedule.vehicleFacilities
+                            ? schedule.vehicleFacilities.map((val, x) => (
+                                <span key={val.id}>
+                      {val.facilityName}
+                                    {x === schedule.vehicleFacilities.length - 1 ? '' : ', '}
+                    </span>
+                            ))
+                            : null}
+                    </td>
+                    <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${schedule.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
