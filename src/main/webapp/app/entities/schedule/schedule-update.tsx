@@ -67,10 +67,8 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
   }
 
   saveEntity = (event, errors, values) => {
-      console.log('info', values.startTime);
-      console.log('info', convertDateTimeToServer(values.startTime));
-    values.startTime = convertDateTimeToServer(values.startTime);
-    values.endTime = convertDateTimeToServer(values.endTime);
+    values.startTime = convertDateTimeToServer('2019-02-08T' + values.startTime);
+    values.endTime = convertDateTimeToServer('2019-02-08T' + values.endTime);
 
     if (errors.length === 0) {
       const { scheduleEntity } = this.props;
@@ -125,8 +123,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                     type="time"
                     className="form-control"
                     name="startTime"
-                    placeholder={'HH:mm'}
-                    value="12:45 AM"
+                    value={isNew ? null : convertTimeFromServer(this.props.scheduleEntity.startTime)}
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -138,11 +135,10 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                   </Label>
                   <AvInput
                     id="schedule-endTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="endTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleEntity.endTime)}
+                    value={isNew ? null : convertTimeFromServer(this.props.scheduleEntity.endTime)}
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
