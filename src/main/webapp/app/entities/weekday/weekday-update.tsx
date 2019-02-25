@@ -70,7 +70,7 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.weekday.home.createOrEditLabel">Create or edit a Weekday</h2>
+            <h2 id="npspClientApp.weekday.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Weekday</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

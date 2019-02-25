@@ -70,7 +70,7 @@ export class TransportTypeUpdate extends React.Component<ITransportTypeUpdatePro
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.transportType.home.createOrEditLabel">Create or edit a TransportType</h2>
+            <h2 id="npspClientApp.transportType.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} TransportType</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

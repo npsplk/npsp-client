@@ -76,7 +76,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.location.home.createOrEditLabel">Create or edit a Location</h2>
+            <h2 id="npspClientApp.location.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Location</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

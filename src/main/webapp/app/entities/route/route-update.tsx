@@ -70,7 +70,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.route.home.createOrEditLabel">Create or edit a Route</h2>
+            <h2 id="npspClientApp.route.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Route</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

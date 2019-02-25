@@ -24,7 +24,7 @@ export class Home extends React.Component<IHomeProp> {
           <h2>Welcome to National Passenger Service!</h2>
         </Col>
         <Col md="3" className="pad">
-          <span className="hipster rounded" />
+          {/*<span className="hipster rounded" />*/}
         </Col>
       </Row>
     );

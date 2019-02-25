@@ -81,7 +81,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.routeLocation.home.createOrEditLabel">Create or edit a RouteLocation</h2>
+            <h2 id="npspClientApp.routeLocation.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} RouteLocation</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

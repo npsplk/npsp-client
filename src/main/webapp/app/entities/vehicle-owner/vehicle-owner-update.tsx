@@ -70,7 +70,7 @@ export class VehicleOwnerUpdate extends React.Component<IVehicleOwnerUpdateProps
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.vehicleOwner.home.createOrEditLabel">Create or edit a VehicleOwner</h2>
+            <h2 id="npspClientApp.vehicleOwner.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} VehicleOwner</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

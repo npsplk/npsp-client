@@ -76,7 +76,7 @@ export class ParkingAreaUpdate extends React.Component<IParkingAreaUpdateProps, 
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.parkingArea.home.createOrEditLabel">Create or edit a ParkingArea</h2>
+            <h2 id="npspClientApp.parkingArea.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} ParkingArea</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

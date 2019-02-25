@@ -99,7 +99,7 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.trip.home.createOrEditLabel">Create or edit a Trip</h2>
+            <h2 id="npspClientApp.trip.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Trip</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

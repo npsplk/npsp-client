@@ -19,8 +19,9 @@ import { getEntities as getVehicleFacilities } from 'app/entities/vehicle-facili
 import { getEntity, updateEntity, createEntity, reset } from './schedule.reducer';
 import { ISchedule } from 'app/shared/model/schedule.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer, convertTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import TimeInput from 'material-ui-time-picker';
 
 export interface IScheduleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -66,6 +67,8 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
   }
 
   saveEntity = (event, errors, values) => {
+      console.log('info', values.startTime);
+      console.log('info', convertDateTimeToServer(values.startTime));
     values.startTime = convertDateTimeToServer(values.startTime);
     values.endTime = convertDateTimeToServer(values.endTime);
 
@@ -98,7 +101,7 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.schedule.home.createOrEditLabel">Create or edit a Schedule</h2>
+            <h2 id="npspClientApp.schedule.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Schedule</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -119,11 +122,11 @@ export class ScheduleUpdate extends React.Component<IScheduleUpdateProps, ISched
                   </Label>
                   <AvInput
                     id="schedule-startTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="startTime"
                     placeholder={'HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleEntity.startTime)}
+                    value="12:45 AM"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
