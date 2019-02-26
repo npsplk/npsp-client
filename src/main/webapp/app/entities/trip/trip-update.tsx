@@ -17,7 +17,7 @@ import { getEntities as getParkingSlots } from 'app/entities/parking-slot/parkin
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './trip.reducer';
 import { ITrip } from 'app/shared/model/trip.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer, convertTimeFromServer, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITripUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -67,8 +67,8 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
   };
 
   saveEntity = (event, errors, values) => {
-    values.startTime = convertDateTimeToServer(values.startTime);
-    values.endTime = convertDateTimeToServer(values.endTime);
+    values.startTime = convertDateTimeToServer('2019-02-08T' + values.startTime);
+    values.endTime = convertDateTimeToServer('2019-02-08T' + values.endTime);
 
     if (errors.length === 0) {
       const { tripEntity } = this.props;
@@ -126,11 +126,10 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                   </Label>
                   <AvInput
                     id="trip-startTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="startTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.tripEntity.startTime)}
+                    value={isNew ? null : convertTimeFromServer(this.props.tripEntity.startTime)}
                   />
                 </AvGroup>
                 <AvGroup>
@@ -139,11 +138,10 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                   </Label>
                   <AvInput
                     id="trip-endTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="endTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.tripEntity.endTime)}
+                    value={isNew ? null : convertTimeFromServer(this.props.tripEntity.endTime)}
                   />
                 </AvGroup>
                 <AvGroup>
@@ -159,7 +157,7 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                     {vehicles
                       ? vehicles.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.numberPlate}
                           </option>
                         ))
                       : null}
@@ -172,25 +170,26 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                     {schedules
                       ? schedules.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.route.routeName} - {otherEntity.startLocation.locationName} to {otherEntity.endLocation.locationName}
+                             [ {convertLocalTimeFromServer(otherEntity.startTime)} to {convertLocalTimeFromServer(otherEntity.endTime)} ]
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
-                <AvGroup>
-                  <Label for="parkingSlot.id">Parking Slot</Label>
-                  <AvInput id="trip-parkingSlot" type="select" className="form-control" name="parkingSlot.id">
-                    <option value="" key="0" />
-                    {parkingSlots
-                      ? parkingSlots.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
+                {/*<AvGroup>*/}
+                  {/*<Label for="parkingSlot.id">Parking Slot</Label>*/}
+                  {/*<AvInput id="trip-parkingSlot" type="select" className="form-control" name="parkingSlot.id">*/}
+                    {/*<option value="" key="0" />*/}
+                    {/*{parkingSlots*/}
+                      {/*? parkingSlots.map(otherEntity => (*/}
+                          {/*<option value={otherEntity.id} key={otherEntity.id}>*/}
+                            {/*{otherEntity.id}*/}
+                          {/*</option>*/}
+                        {/*))*/}
+                      {/*: null}*/}
+                  {/*</AvInput>*/}
+                {/*</AvGroup>*/}
                 <Button tag={Link} id="cancel-save" to="/operation/trip" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>

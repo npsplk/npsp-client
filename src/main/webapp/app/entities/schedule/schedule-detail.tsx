@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './schedule.reducer';
 import { ISchedule } from 'app/shared/model/schedule.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_TIME_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_TIME_FORMAT, APP_LOCAL_DATE_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constants';
 
 export interface IScheduleDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -32,13 +32,13 @@ export class ScheduleDetail extends React.Component<IScheduleDetailProps> {
               <span id="startTime">Start Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleEntity.startTime} type="date" format={APP_TIME_FORMAT} />
+              <TextFormat value={scheduleEntity.startTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
             </dd>
             <dt>
               <span id="endTime">End Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleEntity.endTime} type="date" format={APP_TIME_FORMAT} />
+              <TextFormat value={scheduleEntity.endTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
             </dd>
             <dt>Route</dt>
             <dd>{scheduleEntity.route ? scheduleEntity.route.routeName : ''}</dd>

@@ -18,7 +18,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './trip.reducer';
 import { ITrip } from 'app/shared/model/trip.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ITripProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -91,9 +91,9 @@ export class Trip extends React.Component<ITripProps, ITripState> {
                 <th>
                   Schedule <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  Parking Slot <FontAwesomeIcon icon="sort" />
-                </th>
+                {/*<th>*/}
+                  {/*Parking Slot <FontAwesomeIcon icon="sort" />*/}
+                {/*</th>*/}
                 <th />
               </tr>
             </thead>
@@ -109,15 +109,16 @@ export class Trip extends React.Component<ITripProps, ITripState> {
                     <TextFormat type="date" value={trip.startDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={trip.startTime} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={trip.startTime} format={APP_LOCAL_TIME_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={trip.endTime} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={trip.endTime} format={APP_LOCAL_TIME_FORMAT} />
                   </td>
                   <td>{trip.specialNotes}</td>
-                  <td>{trip.vehicle ? <Link to={`vehicle/${trip.vehicle.id}`}>{trip.vehicle.id}</Link> : ''}</td>
-                  <td>{trip.schedule ? <Link to={`schedule/${trip.schedule.id}`}>{trip.schedule.id}</Link> : ''}</td>
-                  <td>{trip.parkingSlot ? <Link to={`parking-slot/${trip.parkingSlot.id}`}>{trip.parkingSlot.id}</Link> : ''}</td>
+                  <td>{trip.vehicle ? <Link to={`vehicle/${trip.vehicle.id}`}>{trip.vehicle.numberPlate}</Link> : ''}</td>
+                  <td>{trip.schedule ? <Link to={`schedule/${trip.schedule.id}`}>
+                      {trip.schedule.route.routeName} - {trip.schedule.startLocation.locationName} to {trip.schedule.endLocation.locationName}</Link> : ''}</td>
+                  {/*<td>{trip.parkingSlot ? <Link to={`parking-slot/${trip.parkingSlot.id}`}>{trip.parkingSlot.id}</Link> : ''}</td>*/}
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${trip.id}`} color="info" size="sm">

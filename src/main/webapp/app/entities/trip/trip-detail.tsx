@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './trip.reducer';
 import { ITrip } from 'app/shared/model/trip.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constants';
 
 export interface ITripDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -38,24 +38,26 @@ export class TripDetail extends React.Component<ITripDetailProps> {
               <span id="startTime">Start Time</span>
             </dt>
             <dd>
-              <TextFormat value={tripEntity.startTime} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={tripEntity.startTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
             </dd>
             <dt>
               <span id="endTime">End Time</span>
             </dt>
             <dd>
-              <TextFormat value={tripEntity.endTime} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={tripEntity.endTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
             </dd>
             <dt>
               <span id="specialNotes">Special Notes</span>
             </dt>
             <dd>{tripEntity.specialNotes}</dd>
             <dt>Vehicle</dt>
-            <dd>{tripEntity.vehicle ? tripEntity.vehicle.id : ''}</dd>
+            <dd>{tripEntity.vehicle ? tripEntity.vehicle.numberPlate : ''}</dd>
             <dt>Schedule</dt>
-            <dd>{tripEntity.schedule ? tripEntity.schedule.id : ''}</dd>
-            <dt>Parking Slot</dt>
-            <dd>{tripEntity.parkingSlot ? tripEntity.parkingSlot.id : ''}</dd>
+            <dd>{tripEntity.schedule ? tripEntity.schedule.route.routeName
+                + ' - ' + tripEntity.schedule.startLocation.locationName
+                + ' to ' + tripEntity.schedule.endLocation.locationName : ''} </dd>
+            {/*<dt>Parking Slot</dt>*/}
+            {/*<dd>{tripEntity.parkingSlot ? tripEntity.parkingSlot.id : ''}</dd>*/}
           </dl>
           <Button tag={Link} to="/operation/trip" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
