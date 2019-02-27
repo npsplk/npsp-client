@@ -21,7 +21,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190218071435",
+    "changelogDate": "20190227131614",
     "entityTableName": "transport_type",
     "dto": "no",
     "pagination": "pagination",

@@ -10,8 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IVehicle } from 'app/shared/model/vehicle.model';
 import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
-import { ISchedule } from 'app/shared/model/schedule.model';
-import { getEntities as getSchedules } from 'app/entities/schedule/schedule.reducer';
+import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
+import { getEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './vehicle-facility.reducer';
 import { IVehicleFacility } from 'app/shared/model/vehicle-facility.model';
 // tslint:disable-next-line:no-unused-variable
@@ -23,7 +23,7 @@ export interface IVehicleFacilityUpdateProps extends StateProps, DispatchProps, 
 export interface IVehicleFacilityUpdateState {
   isNew: boolean;
   vehicleId: string;
-  scheduleId: string;
+  scheduleTemplateId: string;
 }
 
 export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdateProps, IVehicleFacilityUpdateState> {
@@ -31,7 +31,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
     super(props);
     this.state = {
       vehicleId: '0',
-      scheduleId: '0',
+      scheduleTemplateId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -50,7 +50,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
     }
 
     this.props.getVehicles();
-    this.props.getSchedules();
+    this.props.getScheduleTemplates();
   }
 
   saveEntity = (event, errors, values) => {
@@ -70,18 +70,18 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
   };
 
   handleClose = () => {
-    this.props.history.push('/config/vehicle-facility');
+    this.props.history.push('/entity/vehicle-facility');
   };
 
   render() {
-    const { vehicleFacilityEntity, vehicles, schedules, loading, updating } = this.props;
+    const { vehicleFacilityEntity, vehicles, scheduleTemplates, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.vehicleFacility.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} VehicleFacility</h2>
+            <h2 id="npspClientApp.vehicleFacility.home.createOrEditLabel">Create or edit a VehicleFacility</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -128,7 +128,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
                   </Label>
                   <AvField id="vehicle-facility-description" type="text" name="description" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/config/vehicle-facility" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/vehicle-facility" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
@@ -147,7 +147,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
 
 const mapStateToProps = (storeState: IRootState) => ({
   vehicles: storeState.vehicle.entities,
-  schedules: storeState.schedule.entities,
+  scheduleTemplates: storeState.scheduleTemplate.entities,
   vehicleFacilityEntity: storeState.vehicleFacility.entity,
   loading: storeState.vehicleFacility.loading,
   updating: storeState.vehicleFacility.updating,
@@ -156,7 +156,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getVehicles,
-  getSchedules,
+  getScheduleTemplates,
   getEntity,
   updateEntity,
   createEntity,

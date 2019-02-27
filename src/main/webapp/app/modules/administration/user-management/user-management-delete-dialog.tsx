@@ -34,12 +34,10 @@ export class UserManagementDeleteDialog extends React.Component<IUserManagementD
         <ModalBody>Are you sure you want to delete this User?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban" />
-            &nbsp; Cancel
+            <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
           <Button color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash" />
-            &nbsp; Delete
+            <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>
       </Modal>

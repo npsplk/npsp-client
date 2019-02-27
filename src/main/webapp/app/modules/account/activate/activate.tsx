@@ -12,8 +12,7 @@ const successAlert = (
     <strong>Your user account has been activated.</strong> Please
     <Link to="/login" className="alert-link">
       sign in
-    </Link>
-    .
+    </Link>.
   </Alert>
 );
 

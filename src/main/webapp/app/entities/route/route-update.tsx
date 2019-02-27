@@ -59,7 +59,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   handleClose = () => {
-    this.props.history.push('/operation/route');
+    this.props.history.push('/entity/route');
   };
 
   render() {
@@ -70,7 +70,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.route.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Route</h2>
+            <h2 id="npspClientApp.route.home.createOrEditLabel">Create or edit a Route</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -91,7 +91,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                   </Label>
                   <AvField id="route-routeName" type="text" name="routeName" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/operation/route" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/route" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

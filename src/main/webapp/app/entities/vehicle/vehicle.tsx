@@ -65,17 +65,17 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                 <th className="hand" onClick={this.sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={this.sort('numberPlate')}>
-                  Number Plate <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={this.sort('registrationNumber')}>
+                  Registration Number <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={this.sort('numberOfSeats')}>
                   Number Of Seats <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  Owner <FontAwesomeIcon icon="sort" />
+                  Transport Type <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  Transport Type <FontAwesomeIcon icon="sort" />
+                  Driver <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -88,12 +88,12 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                       {vehicle.id}
                     </Button>
                   </td>
-                  <td>{vehicle.numberPlate}</td>
+                  <td>{vehicle.registrationNumber}</td>
                   <td>{vehicle.numberOfSeats}</td>
-                  <td>{vehicle.owner ? <Link to={`vehicle-owner/${vehicle.owner.id}`}>{vehicle.owner.id}</Link> : ''}</td>
                   <td>
                     {vehicle.transportType ? <Link to={`transport-type/${vehicle.transportType.id}`}>{vehicle.transportType.id}</Link> : ''}
                   </td>
+                  <td>{vehicle.driver ? <Link to={`driver/${vehicle.driver.id}`}>{vehicle.driver.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${vehicle.id}`} color="info" size="sm">

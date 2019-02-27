@@ -14,7 +14,7 @@
             "otherEntityRelationshipName": "route"
         }
     ],
-    "changelogDate": "20190214080731",
+    "changelogDate": "20190227131610",
     "entityTableName": "route",
     "dto": "no",
     "pagination": "pagination",

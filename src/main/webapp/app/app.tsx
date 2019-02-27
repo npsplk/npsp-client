@@ -26,7 +26,7 @@ export class App extends React.Component<IAppProps> {
   }
 
   render() {
-    const paddingTop = '50px';
+    const paddingTop = '60px';
     return (
       <Router>
         <div className="app-container" style={{ paddingTop }}>

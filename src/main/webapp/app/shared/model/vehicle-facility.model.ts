@@ -1,5 +1,5 @@
 import { IVehicle } from 'app/shared/model/vehicle.model';
-import { ISchedule } from 'app/shared/model/schedule.model';
+import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 
 export interface IVehicleFacility {
   id?: number;
@@ -7,7 +7,7 @@ export interface IVehicleFacility {
   facilityMeta?: string;
   description?: string;
   vehicles?: IVehicle[];
-  schedules?: ISchedule[];
+  scheduleTemplates?: IScheduleTemplate[];
 }
 
 export const defaultValue: Readonly<IVehicleFacility> = {};

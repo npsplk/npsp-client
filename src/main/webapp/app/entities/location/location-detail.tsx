@@ -25,7 +25,7 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            Location [ <b>{locationEntity.locationName ? locationEntity.locationName : locationEntity.longitude } </b>]
+            Location [<b>{locationEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -41,12 +41,12 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
             </dt>
             <dd>{locationEntity.latitude}</dd>
             <dt>Location Type</dt>
-            <dd>{locationEntity.locationType ? locationEntity.locationType.typeName : ''}</dd>
+            <dd>{locationEntity.locationType ? locationEntity.locationType.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/operation/location" replace color="info">
+          <Button tag={Link} to="/entity/location" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/operation/location/${locationEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/entity/location/${locationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

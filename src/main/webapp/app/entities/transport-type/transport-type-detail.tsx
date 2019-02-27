@@ -41,10 +41,10 @@ export class TransportTypeDetail extends React.Component<ITransportTypeDetailPro
             </dt>
             <dd>{transportTypeEntity.description}</dd>
           </dl>
-          <Button tag={Link} to="/config/transport-type" replace color="info">
+          <Button tag={Link} to="/entity/transport-type" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/config/transport-type/${transportTypeEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/entity/transport-type/${transportTypeEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

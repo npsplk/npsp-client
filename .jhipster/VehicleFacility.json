@@ -30,13 +30,13 @@
         },
         {
             "relationshipType": "many-to-many",
-            "relationshipName": "schedule",
-            "otherEntityName": "schedule",
+            "relationshipName": "scheduleTemplate",
+            "otherEntityName": "scheduleTemplate",
             "ownerSide": false,
             "otherEntityRelationshipName": "vehicleFacility"
         }
     ],
-    "changelogDate": "20190218071436",
+    "changelogDate": "20190227131615",
     "entityTableName": "vehicle_facility",
     "dto": "no",
     "pagination": "pagination",

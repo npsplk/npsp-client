@@ -8,6 +8,8 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
+import { getEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './weekday.reducer';
 import { IWeekday } from 'app/shared/model/weekday.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface IWeekdayUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IWeekdayUpdateState {
   isNew: boolean;
+  scheduleTemplateId: string;
 }
 
 export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekdayUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      scheduleTemplateId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +44,8 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getScheduleTemplates();
   }
 
   saveEntity = (event, errors, values) => {
@@ -59,18 +65,18 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
   };
 
   handleClose = () => {
-    this.props.history.push('/config/weekday');
+    this.props.history.push('/entity/weekday');
   };
 
   render() {
-    const { weekdayEntity, loading, updating } = this.props;
+    const { weekdayEntity, scheduleTemplates, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.weekday.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Weekday</h2>
+            <h2 id="npspClientApp.weekday.home.createOrEditLabel">Create or edit a Weekday</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -103,7 +109,7 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
                     <option value="Saturday">Saturday</option>
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/config/weekday" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/weekday" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
@@ -121,6 +127,7 @@ export class WeekdayUpdate extends React.Component<IWeekdayUpdateProps, IWeekday
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  scheduleTemplates: storeState.scheduleTemplate.entities,
   weekdayEntity: storeState.weekday.entity,
   loading: storeState.weekday.loading,
   updating: storeState.weekday.updating,
@@ -128,6 +135,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getScheduleTemplates,
   getEntity,
   updateEntity,
   createEntity,

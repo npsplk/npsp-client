@@ -28,8 +28,7 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
           <dl className="jh-entity-details">
             <dt>Login</dt>
             <dd>
-              <span>{user.login}</span>
-              &nbsp;
+              <span>{user.login}</span>&nbsp;
               {user.activated ? <Badge color="success">Activated</Badge> : <Badge color="danger">Deactivated</Badge>}
             </dd>
             <dt>First Name</dt>

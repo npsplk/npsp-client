@@ -65,7 +65,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
   };
 
   handleClose = () => {
-    this.props.history.push('/operation/location');
+    this.props.history.push('/entity/location');
   };
 
   render() {
@@ -76,7 +76,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.location.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Location</h2>
+            <h2 id="npspClientApp.location.home.createOrEditLabel">Create or edit a Location</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -116,13 +116,13 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                     {locationTypes
                       ? locationTypes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.typeName}
+                            {otherEntity.id}
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/operation/location" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/location" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

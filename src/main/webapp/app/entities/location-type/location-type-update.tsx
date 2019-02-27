@@ -59,7 +59,7 @@ export class LocationTypeUpdate extends React.Component<ILocationTypeUpdateProps
   };
 
   handleClose = () => {
-    this.props.history.push('/config/location-type');
+    this.props.history.push('/entity/location-type');
   };
 
   render() {
@@ -70,7 +70,7 @@ export class LocationTypeUpdate extends React.Component<ILocationTypeUpdateProps
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.locationType.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} LocationType</h2>
+            <h2 id="npspClientApp.locationType.home.createOrEditLabel">Create or edit a LocationType</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -111,7 +111,7 @@ export class LocationTypeUpdate extends React.Component<ILocationTypeUpdateProps
                     }}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/config/location-type" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/location-type" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

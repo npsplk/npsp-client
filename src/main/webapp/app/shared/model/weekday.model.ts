@@ -1,3 +1,5 @@
+import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
+
 export const enum Weekdays {
   Sunday = 'Sunday',
   Monday = 'Monday',
@@ -11,6 +13,7 @@ export const enum Weekdays {
 export interface IWeekday {
   id?: number;
   weekday?: Weekdays;
+  scheduleTemplates?: IScheduleTemplate[];
 }
 
 export const defaultValue: Readonly<IWeekday> = {};

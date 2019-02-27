@@ -16,18 +16,13 @@ import route, {
   RouteState
 } from 'app/entities/route/route.reducer';
 // prettier-ignore
+import routeLocation, {
+  RouteLocationState
+} from 'app/entities/route-location/route-location.reducer';
+// prettier-ignore
 import location, {
   LocationState
 } from 'app/entities/location/location.reducer';
-// prettier-ignore
-// prettier-ignore
-import parkingArea, {
-  ParkingAreaState
-} from 'app/entities/parking-area/parking-area.reducer';
-// prettier-ignore
-import parkingSlot, {
-  ParkingSlotState
-} from 'app/entities/parking-slot/parking-slot.reducer';
 // prettier-ignore
 import locationType, {
   LocationTypeState
@@ -45,25 +40,21 @@ import vehicle, {
   VehicleState
 } from 'app/entities/vehicle/vehicle.reducer';
 // prettier-ignore
-import vehicleOwner, {
-  VehicleOwnerState
-} from 'app/entities/vehicle-owner/vehicle-owner.reducer';
+import driver, {
+  DriverState
+} from 'app/entities/driver/driver.reducer';
 // prettier-ignore
-import schedule, {
-  ScheduleState
-} from 'app/entities/schedule/schedule.reducer';
+import scheduleTemplate, {
+  ScheduleTemplateState
+} from 'app/entities/schedule-template/schedule-template.reducer';
 // prettier-ignore
-import trip, {
-  TripState
-} from 'app/entities/trip/trip.reducer';
+import scheduleInstance, {
+  ScheduleInstanceState
+} from 'app/entities/schedule-instance/schedule-instance.reducer';
 // prettier-ignore
 import weekday, {
   WeekdayState
 } from 'app/entities/weekday/weekday.reducer';
-// prettier-ignore
-import routeLocation, {
-  RouteLocationState
-} from 'app/entities/route-location/route-location.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -77,18 +68,16 @@ export interface IRootState {
   readonly password: PasswordState;
   readonly settings: SettingsState;
   readonly route: RouteState;
+  readonly routeLocation: RouteLocationState;
   readonly location: LocationState;
-  readonly parkingArea: ParkingAreaState;
-  readonly parkingSlot: ParkingSlotState;
   readonly locationType: LocationTypeState;
   readonly transportType: TransportTypeState;
   readonly vehicleFacility: VehicleFacilityState;
   readonly vehicle: VehicleState;
-  readonly vehicleOwner: VehicleOwnerState;
-  readonly schedule: ScheduleState;
-  readonly trip: TripState;
+  readonly driver: DriverState;
+  readonly scheduleTemplate: ScheduleTemplateState;
+  readonly scheduleInstance: ScheduleInstanceState;
   readonly weekday: WeekdayState;
-  readonly routeLocation: RouteLocationState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -104,18 +93,16 @@ const rootReducer = combineReducers<IRootState>({
   password,
   settings,
   route,
+  routeLocation,
   location,
-  parkingArea,
-  parkingSlot,
   locationType,
   transportType,
   vehicleFacility,
   vehicle,
-  vehicleOwner,
-  schedule,
-  trip,
+  driver,
+  scheduleTemplate,
+  scheduleInstance,
   weekday,
-  routeLocation,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

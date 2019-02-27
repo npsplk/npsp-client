@@ -29,17 +29,17 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="numberPlate">Number Plate</span>
+              <span id="registrationNumber">Registration Number</span>
             </dt>
-            <dd>{vehicleEntity.numberPlate}</dd>
+            <dd>{vehicleEntity.registrationNumber}</dd>
             <dt>
               <span id="numberOfSeats">Number Of Seats</span>
             </dt>
             <dd>{vehicleEntity.numberOfSeats}</dd>
-            <dt>Owner</dt>
-            <dd>{vehicleEntity.owner ? vehicleEntity.owner.id : ''}</dd>
             <dt>Transport Type</dt>
             <dd>{vehicleEntity.transportType ? vehicleEntity.transportType.id : ''}</dd>
+            <dt>Driver</dt>
+            <dd>{vehicleEntity.driver ? vehicleEntity.driver.id : ''}</dd>
             <dt>Vehicle Facility</dt>
             <dd>
               {vehicleEntity.vehicleFacilities
@@ -52,10 +52,10 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
                 : null}
             </dd>
           </dl>
-          <Button tag={Link} to="/config/vehicle" replace color="info">
+          <Button tag={Link} to="/entity/vehicle" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/config/vehicle/${vehicleEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/entity/vehicle/${vehicleEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

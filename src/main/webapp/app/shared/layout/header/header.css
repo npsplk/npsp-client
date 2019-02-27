@@ -87,7 +87,7 @@ Navbar styles
   height: 45px;
 }
 .brand-title {
-  font-size: 20px;
+  font-size: 24px;
   color: #fff;
 }
 .brand-title:hover {
@@ -101,9 +101,3 @@ Navbar styles
   top: 0px;
   z-index: 1031;
 }
-
-.dropdown-item, .btn{
-    font-size: 12px;
-}
-
-

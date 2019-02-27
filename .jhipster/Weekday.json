@@ -10,8 +10,16 @@
             ]
         }
     ],
-    "relationships": [],
-    "changelogDate": "20190218071441",
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "scheduleTemplate",
+            "otherEntityName": "scheduleTemplate",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "weekday"
+        }
+    ],
+    "changelogDate": "20190227131620",
     "entityTableName": "weekday",
     "dto": "no",
     "pagination": "pagination",
