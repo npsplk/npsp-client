@@ -36,10 +36,10 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
               <span id="numberOfSeats">Number Of Seats</span>
             </dt>
             <dd>{vehicleEntity.numberOfSeats}</dd>
-            <dt>Transport Type</dt>
-            <dd>{vehicleEntity.transportType ? vehicleEntity.transportType.id : ''}</dd>
             <dt>Driver</dt>
             <dd>{vehicleEntity.driver ? vehicleEntity.driver.id : ''}</dd>
+            <dt>Transport Type</dt>
+            <dd>{vehicleEntity.transportType ? vehicleEntity.transportType.id : ''}</dd>
             <dt>Vehicle Facility</dt>
             <dd>
               {vehicleEntity.vehicleFacilities

@@ -8,10 +8,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IVehicle } from 'app/shared/model/vehicle.model';
-import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
 import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 import { getEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
+import { IVehicle } from 'app/shared/model/vehicle.model';
+import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './vehicle-facility.reducer';
 import { IVehicleFacility } from 'app/shared/model/vehicle-facility.model';
 // tslint:disable-next-line:no-unused-variable
@@ -22,16 +22,16 @@ export interface IVehicleFacilityUpdateProps extends StateProps, DispatchProps, 
 
 export interface IVehicleFacilityUpdateState {
   isNew: boolean;
-  vehicleId: string;
   scheduleTemplateId: string;
+  vehicleId: string;
 }
 
 export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdateProps, IVehicleFacilityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      vehicleId: '0',
       scheduleTemplateId: '0',
+      vehicleId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -49,8 +49,8 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getVehicles();
     this.props.getScheduleTemplates();
+    this.props.getVehicles();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +74,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
   };
 
   render() {
-    const { vehicleFacilityEntity, vehicles, scheduleTemplates, loading, updating } = this.props;
+    const { vehicleFacilityEntity, scheduleTemplates, vehicles, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -146,8 +146,8 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  vehicles: storeState.vehicle.entities,
   scheduleTemplates: storeState.scheduleTemplate.entities,
+  vehicles: storeState.vehicle.entities,
   vehicleFacilityEntity: storeState.vehicleFacility.entity,
   loading: storeState.vehicleFacility.loading,
   updating: storeState.vehicleFacility.updating,
@@ -155,8 +155,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getVehicles,
   getScheduleTemplates,
+  getVehicles,
   getEntity,
   updateEntity,
   createEntity,

@@ -7,18 +7,18 @@ import { ICrudGetAllAction, getSortState, IPaginationBaseState, getPaginationIte
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './vehicle.reducer';
-import { IVehicle } from 'app/shared/model/vehicle.model';
+import { getEntities } from './bay.reducer';
+import { IBay } from 'app/shared/model/bay.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
-export interface IVehicleProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface IBayProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export type IVehicleState = IPaginationBaseState;
+export type IBayState = IPaginationBaseState;
 
-export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
-  state: IVehicleState = {
+export class Bay extends React.Component<IBayProps, IBayState> {
+  state: IBayState = {
     ...getSortState(this.props.location, ITEMS_PER_PAGE)
   };
 
@@ -49,13 +49,13 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
   };
 
   render() {
-    const { vehicleList, match, totalItems } = this.props;
+    const { bayList, match, totalItems } = this.props;
     return (
       <div>
-        <h2 id="vehicle-heading">
-          Vehicles
+        <h2 id="bay-heading">
+          Bays
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Vehicle
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Bay
           </Link>
         </h2>
         <div className="table-responsive">
@@ -65,44 +65,34 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                 <th className="hand" onClick={this.sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={this.sort('registrationNumber')}>
-                  Registration Number <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={this.sort('bayName')}>
+                  Bay Name <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={this.sort('numberOfSeats')}>
-                  Number Of Seats <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  Driver <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  Transport Type <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={this.sort('bindingAddress')}>
+                  Binding Address <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {vehicleList.map((vehicle, i) => (
+              {bayList.map((bay, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${vehicle.id}`} color="link" size="sm">
-                      {vehicle.id}
+                    <Button tag={Link} to={`${match.url}/${bay.id}`} color="link" size="sm">
+                      {bay.id}
                     </Button>
                   </td>
-                  <td>{vehicle.registrationNumber}</td>
-                  <td>{vehicle.numberOfSeats}</td>
-                  <td>{vehicle.driver ? <Link to={`driver/${vehicle.driver.id}`}>{vehicle.driver.id}</Link> : ''}</td>
-                  <td>
-                    {vehicle.transportType ? <Link to={`transport-type/${vehicle.transportType.id}`}>{vehicle.transportType.id}</Link> : ''}
-                  </td>
+                  <td>{bay.bayName}</td>
+                  <td>{bay.bindingAddress}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${vehicle.id}`} color="info" size="sm">
+                      <Button tag={Link} to={`${match.url}/${bay.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${vehicle.id}/edit`} color="primary" size="sm">
+                      <Button tag={Link} to={`${match.url}/${bay.id}/edit`} color="primary" size="sm">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${vehicle.id}/delete`} color="danger" size="sm">
+                      <Button tag={Link} to={`${match.url}/${bay.id}/delete`} color="danger" size="sm">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -125,9 +115,9 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
   }
 }
 
-const mapStateToProps = ({ vehicle }: IRootState) => ({
-  vehicleList: vehicle.entities,
-  totalItems: vehicle.totalItems
+const mapStateToProps = ({ bay }: IRootState) => ({
+  bayList: bay.entities,
+  totalItems: bay.totalItems
 });
 
 const mapDispatchToProps = {
@@ -140,4 +130,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Vehicle);
+)(Bay);

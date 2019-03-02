@@ -8,6 +8,8 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { ILocation } from 'app/shared/model/location.model';
+import { getEntities as getLocations } from 'app/entities/location/location.reducer';
 import { IRoute } from 'app/shared/model/route.model';
 import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './route-location.reducer';
@@ -20,6 +22,7 @@ export interface IRouteLocationUpdateProps extends StateProps, DispatchProps, Ro
 
 export interface IRouteLocationUpdateState {
   isNew: boolean;
+  locationId: string;
   routeId: string;
 }
 
@@ -27,6 +30,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
   constructor(props) {
     super(props);
     this.state = {
+      locationId: '0',
       routeId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -45,6 +49,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getLocations();
     this.props.getRoutes();
   }
 
@@ -69,7 +74,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
   };
 
   render() {
-    const { routeLocationEntity, routes, loading, updating } = this.props;
+    const { routeLocationEntity, locations, routes, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -96,6 +101,19 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
                     Sequence Number
                   </Label>
                   <AvField id="route-location-sequenceNumber" type="string" className="form-control" name="sequenceNumber" />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="location.id">Location</Label>
+                  <AvInput id="route-location-location" type="select" className="form-control" name="location.id">
+                    <option value="" key="0" />
+                    {locations
+                      ? locations.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="route.id">Route</Label>
@@ -128,6 +146,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  locations: storeState.location.entities,
   routes: storeState.route.entities,
   routeLocationEntity: storeState.routeLocation.entity,
   loading: storeState.routeLocation.loading,
@@ -136,6 +155,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getLocations,
   getRoutes,
   getEntity,
   updateEntity,

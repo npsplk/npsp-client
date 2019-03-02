@@ -56,12 +56,20 @@ export class ScheduleInstanceDetail extends React.Component<IScheduleInstanceDet
               <span id="specialNotes">Special Notes</span>
             </dt>
             <dd>{scheduleInstanceEntity.specialNotes}</dd>
+            <dt>
+              <span id="scheduleState">Schedule State</span>
+            </dt>
+            <dd>{scheduleInstanceEntity.scheduleState}</dd>
             <dt>Vehicle</dt>
             <dd>{scheduleInstanceEntity.vehicle ? scheduleInstanceEntity.vehicle.id : ''}</dd>
             <dt>Schedule Template</dt>
             <dd>{scheduleInstanceEntity.scheduleTemplate ? scheduleInstanceEntity.scheduleTemplate.id : ''}</dd>
             <dt>Driver</dt>
             <dd>{scheduleInstanceEntity.driver ? scheduleInstanceEntity.driver.id : ''}</dd>
+            <dt>Route</dt>
+            <dd>{scheduleInstanceEntity.route ? scheduleInstanceEntity.route.id : ''}</dd>
+            <dt>Bay</dt>
+            <dd>{scheduleInstanceEntity.bay ? scheduleInstanceEntity.bay.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/schedule-instance" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

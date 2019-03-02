@@ -8,19 +8,19 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { getEntity, updateEntity, createEntity, reset } from './route.reducer';
-import { IRoute } from 'app/shared/model/route.model';
+import { getEntity, updateEntity, createEntity, reset } from './bay.reducer';
+import { IBay } from 'app/shared/model/bay.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IBayUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export interface IRouteUpdateState {
+export interface IBayUpdateState {
   isNew: boolean;
 }
 
-export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdateState> {
+export class BayUpdate extends React.Component<IBayUpdateProps, IBayUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,9 +44,9 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const { routeEntity } = this.props;
+      const { bayEntity } = this.props;
       const entity = {
-        ...routeEntity,
+        ...bayEntity,
         ...values
       };
 
@@ -59,18 +59,18 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/route');
+    this.props.history.push('/entity/bay');
   };
 
   render() {
-    const { routeEntity, loading, updating } = this.props;
+    const { bayEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.route.home.createOrEditLabel">Create or edit a Route</h2>
+            <h2 id="npspClientApp.bay.home.createOrEditLabel">Create or edit a Bay</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -78,26 +78,26 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <AvForm model={isNew ? {} : routeEntity} onSubmit={this.saveEntity}>
+              <AvForm model={isNew ? {} : bayEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
                     <Label for="id">ID</Label>
-                    <AvInput id="route-id" type="text" className="form-control" name="id" required readOnly />
+                    <AvInput id="bay-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="routeNameLabel" for="routeName">
-                    Route Name
+                  <Label id="bayNameLabel" for="bayName">
+                    Bay Name
                   </Label>
-                  <AvField id="route-routeName" type="text" name="routeName" />
+                  <AvField id="bay-bayName" type="text" name="bayName" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="routeNumberLabel" for="routeNumber">
-                    Route Number
+                  <Label id="bindingAddressLabel" for="bindingAddress">
+                    Binding Address
                   </Label>
-                  <AvField id="route-routeNumber" type="text" name="routeNumber" />
+                  <AvField id="bay-bindingAddress" type="text" name="bindingAddress" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/route" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/entity/bay" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
@@ -115,10 +115,10 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  routeEntity: storeState.route.entity,
-  loading: storeState.route.loading,
-  updating: storeState.route.updating,
-  updateSuccess: storeState.route.updateSuccess
+  bayEntity: storeState.bay.entity,
+  loading: storeState.bay.loading,
+  updating: storeState.bay.updating,
+  updateSuccess: storeState.bay.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -134,4 +134,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RouteUpdate);
+)(BayUpdate);

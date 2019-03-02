@@ -15,6 +15,7 @@ import Driver from './driver';
 import ScheduleTemplate from './schedule-template';
 import ScheduleInstance from './schedule-instance';
 import Weekday from './weekday';
+import Bay from './bay';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -32,6 +33,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/schedule-template`} component={ScheduleTemplate} />
       <ErrorBoundaryRoute path={`${match.url}/schedule-instance`} component={ScheduleInstance} />
       <ErrorBoundaryRoute path={`${match.url}/weekday`} component={Weekday} />
+      <ErrorBoundaryRoute path={`${match.url}/bay`} component={Bay} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

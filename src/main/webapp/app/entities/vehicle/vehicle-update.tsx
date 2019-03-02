@@ -8,10 +8,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ITransportType } from 'app/shared/model/transport-type.model';
-import { getEntities as getTransportTypes } from 'app/entities/transport-type/transport-type.reducer';
 import { IDriver } from 'app/shared/model/driver.model';
 import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
+import { ITransportType } from 'app/shared/model/transport-type.model';
+import { getEntities as getTransportTypes } from 'app/entities/transport-type/transport-type.reducer';
 import { IVehicleFacility } from 'app/shared/model/vehicle-facility.model';
 import { getEntities as getVehicleFacilities } from 'app/entities/vehicle-facility/vehicle-facility.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './vehicle.reducer';
@@ -25,8 +25,8 @@ export interface IVehicleUpdateProps extends StateProps, DispatchProps, RouteCom
 export interface IVehicleUpdateState {
   isNew: boolean;
   idsvehicleFacility: any[];
-  transportTypeId: string;
   driverId: string;
+  transportTypeId: string;
 }
 
 export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicleUpdateState> {
@@ -34,8 +34,8 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
     super(props);
     this.state = {
       idsvehicleFacility: [],
-      transportTypeId: '0',
       driverId: '0',
+      transportTypeId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -53,8 +53,8 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getTransportTypes();
     this.props.getDrivers();
+    this.props.getTransportTypes();
     this.props.getVehicleFacilities();
   }
 
@@ -80,7 +80,7 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
   };
 
   render() {
-    const { vehicleEntity, transportTypes, drivers, vehicleFacilities, loading, updating } = this.props;
+    const { vehicleEntity, drivers, transportTypes, vehicleFacilities, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -131,11 +131,11 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="transportType.id">Transport Type</Label>
-                  <AvInput id="vehicle-transportType" type="select" className="form-control" name="transportType.id">
+                  <Label for="driver.id">Driver</Label>
+                  <AvInput id="vehicle-driver" type="select" className="form-control" name="driver.id">
                     <option value="" key="0" />
-                    {transportTypes
-                      ? transportTypes.map(otherEntity => (
+                    {drivers
+                      ? drivers.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -144,11 +144,11 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="driver.id">Driver</Label>
-                  <AvInput id="vehicle-driver" type="select" className="form-control" name="driver.id">
+                  <Label for="transportType.id">Transport Type</Label>
+                  <AvInput id="vehicle-transportType" type="select" className="form-control" name="transportType.id">
                     <option value="" key="0" />
-                    {drivers
-                      ? drivers.map(otherEntity => (
+                    {transportTypes
+                      ? transportTypes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -194,8 +194,8 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  transportTypes: storeState.transportType.entities,
   drivers: storeState.driver.entities,
+  transportTypes: storeState.transportType.entities,
   vehicleFacilities: storeState.vehicleFacility.entities,
   vehicleEntity: storeState.vehicle.entity,
   loading: storeState.vehicle.loading,
@@ -204,8 +204,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getTransportTypes,
   getDrivers,
+  getTransportTypes,
   getVehicleFacilities,
   getEntity,
   updateEntity,

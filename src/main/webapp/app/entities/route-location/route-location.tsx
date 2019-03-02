@@ -69,6 +69,9 @@ export class RouteLocation extends React.Component<IRouteLocationProps, IRouteLo
                   Sequence Number <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  Location <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   Route <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -83,6 +86,9 @@ export class RouteLocation extends React.Component<IRouteLocationProps, IRouteLo
                     </Button>
                   </td>
                   <td>{routeLocation.sequenceNumber}</td>
+                  <td>
+                    {routeLocation.location ? <Link to={`location/${routeLocation.location.id}`}>{routeLocation.location.id}</Link> : ''}
+                  </td>
                   <td>{routeLocation.route ? <Link to={`route/${routeLocation.route.id}`}>{routeLocation.route.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

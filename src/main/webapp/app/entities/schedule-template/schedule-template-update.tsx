@@ -8,8 +8,14 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IVehicle } from 'app/shared/model/vehicle.model';
+import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
+import { IDriver } from 'app/shared/model/driver.model';
+import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
 import { IRoute } from 'app/shared/model/route.model';
 import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
+import { IBay } from 'app/shared/model/bay.model';
+import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { IWeekday } from 'app/shared/model/weekday.model';
 import { getEntities as getWeekdays } from 'app/entities/weekday/weekday.reducer';
 import { IVehicleFacility } from 'app/shared/model/vehicle-facility.model';
@@ -26,7 +32,10 @@ export interface IScheduleTemplateUpdateState {
   isNew: boolean;
   idsweekday: any[];
   idsvehicleFacility: any[];
+  vehicleId: string;
+  driverId: string;
   routeId: string;
+  bayId: string;
 }
 
 export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpdateProps, IScheduleTemplateUpdateState> {
@@ -35,7 +44,10 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
     this.state = {
       idsweekday: [],
       idsvehicleFacility: [],
+      vehicleId: '0',
+      driverId: '0',
       routeId: '0',
+      bayId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -53,7 +65,10 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getVehicles();
+    this.props.getDrivers();
     this.props.getRoutes();
+    this.props.getBays();
     this.props.getWeekdays();
     this.props.getVehicleFacilities();
   }
@@ -84,7 +99,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
   };
 
   render() {
-    const { scheduleTemplateEntity, routes, weekdays, vehicleFacilities, loading, updating } = this.props;
+    const { scheduleTemplateEntity, vehicles, drivers, routes, bays, weekdays, vehicleFacilities, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -139,11 +154,50 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label for="vehicle.id">Vehicle</Label>
+                  <AvInput id="schedule-template-vehicle" type="select" className="form-control" name="vehicle.id">
+                    <option value="" key="0" />
+                    {vehicles
+                      ? vehicles.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="driver.id">Driver</Label>
+                  <AvInput id="schedule-template-driver" type="select" className="form-control" name="driver.id">
+                    <option value="" key="0" />
+                    {drivers
+                      ? drivers.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="route.id">Route</Label>
                   <AvInput id="schedule-template-route" type="select" className="form-control" name="route.id">
                     <option value="" key="0" />
                     {routes
                       ? routes.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="bay.id">Bay</Label>
+                  <AvInput id="schedule-template-bay" type="select" className="form-control" name="bay.id">
+                    <option value="" key="0" />
+                    {bays
+                      ? bays.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -209,7 +263,10 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  vehicles: storeState.vehicle.entities,
+  drivers: storeState.driver.entities,
   routes: storeState.route.entities,
+  bays: storeState.bay.entities,
   weekdays: storeState.weekday.entities,
   vehicleFacilities: storeState.vehicleFacility.entities,
   scheduleTemplateEntity: storeState.scheduleTemplate.entity,
@@ -219,7 +276,10 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getVehicles,
+  getDrivers,
   getRoutes,
+  getBays,
   getWeekdays,
   getVehicleFacilities,
   getEntity,
