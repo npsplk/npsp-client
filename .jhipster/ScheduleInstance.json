@@ -25,7 +25,7 @@
         {
             "fieldName": "scheduleState",
             "fieldType": "ScheduleState",
-            "fieldValues": "ARRIVED,PENDING,DELAYED,CANCELLED"
+            "fieldValues": "DEPARTED,BOARDING,PENDING,DELAYED,CANCELLED"
         }
     ],
     "relationships": [

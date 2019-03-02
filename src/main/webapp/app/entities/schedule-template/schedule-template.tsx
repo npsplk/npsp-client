@@ -71,6 +71,9 @@ export class ScheduleTemplate extends React.Component<IScheduleTemplateProps, IS
                 <th className="hand" onClick={this.sort('endTime')}>
                   End Time <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('isActive')}>
+                  Is Active <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   Vehicle <FontAwesomeIcon icon="sort" />
                 </th>
@@ -100,6 +103,7 @@ export class ScheduleTemplate extends React.Component<IScheduleTemplateProps, IS
                   <td>
                     <TextFormat type="date" value={scheduleTemplate.endTime} format={APP_DATE_FORMAT} />
                   </td>
+                  <td>{scheduleTemplate.isActive ? 'true' : 'false'}</td>
                   <td>
                     {scheduleTemplate.vehicle ? (
                       <Link to={`vehicle/${scheduleTemplate.vehicle.id}`}>{scheduleTemplate.vehicle.id}</Link>

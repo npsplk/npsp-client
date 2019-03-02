@@ -98,6 +98,18 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                   <AvField id="location-locationName" type="text" name="locationName" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="locationNameSinhalaLabel" for="locationNameSinhala">
+                    Location Name Sinhala
+                  </Label>
+                  <AvField id="location-locationNameSinhala" type="text" name="locationNameSinhala" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="locationNameTamilLabel" for="locationNameTamil">
+                    Location Name Tamil
+                  </Label>
+                  <AvField id="location-locationNameTamil" type="text" name="locationNameTamil" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="longitudeLabel" for="longitude">
                     Longitude
                   </Label>

@@ -183,9 +183,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     type="select"
                     className="form-control"
                     name="scheduleState"
-                    value={(!isNew && scheduleInstanceEntity.scheduleState) || 'ARRIVED'}
+                    value={(!isNew && scheduleInstanceEntity.scheduleState) || 'DEPARTED'}
                   >
-                    <option value="ARRIVED">ARRIVED</option>
+                    <option value="DEPARTED">DEPARTED</option>
+                    <option value="BOARDING">BOARDING</option>
                     <option value="PENDING">PENDING</option>
                     <option value="DELAYED">DELAYED</option>
                     <option value="CANCELLED">CANCELLED</option>

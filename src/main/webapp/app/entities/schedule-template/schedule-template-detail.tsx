@@ -40,6 +40,10 @@ export class ScheduleTemplateDetail extends React.Component<IScheduleTemplateDet
             <dd>
               <TextFormat value={scheduleTemplateEntity.endTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
+            <dt>
+              <span id="isActive">Is Active</span>
+            </dt>
+            <dd>{scheduleTemplateEntity.isActive ? 'true' : 'false'}</dd>
             <dt>Vehicle</dt>
             <dd>{scheduleTemplateEntity.vehicle ? scheduleTemplateEntity.vehicle.id : ''}</dd>
             <dt>Driver</dt>

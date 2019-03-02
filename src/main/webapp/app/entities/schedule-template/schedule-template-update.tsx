@@ -154,6 +154,12 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="isActiveLabel" check>
+                    <AvInput id="schedule-template-isActive" type="checkbox" className="form-control" name="isActive" />
+                    Is Active
+                  </Label>
+                </AvGroup>
+                <AvGroup>
                   <Label for="vehicle.id">Vehicle</Label>
                   <AvInput id="schedule-template-vehicle" type="select" className="form-control" name="vehicle.id">
                     <option value="" key="0" />

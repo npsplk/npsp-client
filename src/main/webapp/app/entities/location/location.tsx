@@ -68,6 +68,12 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
                 <th className="hand" onClick={this.sort('locationName')}>
                   Location Name <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('locationNameSinhala')}>
+                  Location Name Sinhala <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={this.sort('locationNameTamil')}>
+                  Location Name Tamil <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={this.sort('longitude')}>
                   Longitude <FontAwesomeIcon icon="sort" />
                 </th>
@@ -89,6 +95,8 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
                     </Button>
                   </td>
                   <td>{location.locationName}</td>
+                  <td>{location.locationNameSinhala}</td>
+                  <td>{location.locationNameTamil}</td>
                   <td>{location.longitude}</td>
                   <td>{location.latitude}</td>
                   <td>

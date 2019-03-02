@@ -33,6 +33,14 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
             </dt>
             <dd>{locationEntity.locationName}</dd>
             <dt>
+              <span id="locationNameSinhala">Location Name Sinhala</span>
+            </dt>
+            <dd>{locationEntity.locationNameSinhala}</dd>
+            <dt>
+              <span id="locationNameTamil">Location Name Tamil</span>
+            </dt>
+            <dd>{locationEntity.locationNameTamil}</dd>
+            <dt>
               <span id="longitude">Longitude</span>
             </dt>
             <dd>{locationEntity.longitude}</dd>

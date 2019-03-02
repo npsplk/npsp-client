@@ -6,6 +6,14 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "locationNameSinhala",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "locationNameTamil",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "longitude",
             "fieldType": "Double"
         },

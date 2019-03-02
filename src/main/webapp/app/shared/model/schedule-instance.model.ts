@@ -6,7 +6,8 @@ import { IRoute } from 'app/shared/model/route.model';
 import { IBay } from 'app/shared/model/bay.model';
 
 export const enum ScheduleState {
-  ARRIVED = 'ARRIVED',
+  DEPARTED = 'DEPARTED',
+  BOARDING = 'BOARDING',
   PENDING = 'PENDING',
   DELAYED = 'DELAYED',
   CANCELLED = 'CANCELLED'

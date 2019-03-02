@@ -14,6 +14,10 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "isActive",
+            "fieldType": "Boolean"
         }
     ],
     "relationships": [

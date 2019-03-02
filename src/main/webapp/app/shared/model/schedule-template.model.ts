@@ -10,6 +10,7 @@ export interface IScheduleTemplate {
   id?: number;
   startTime?: Moment;
   endTime?: Moment;
+  isActive?: boolean;
   vehicle?: IVehicle;
   driver?: IDriver;
   route?: IRoute;
@@ -18,4 +19,6 @@ export interface IScheduleTemplate {
   vehicleFacilities?: IVehicleFacility[];
 }
 
-export const defaultValue: Readonly<IScheduleTemplate> = {};
+export const defaultValue: Readonly<IScheduleTemplate> = {
+  isActive: false
+};
