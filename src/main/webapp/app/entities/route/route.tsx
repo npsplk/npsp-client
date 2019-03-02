@@ -68,6 +68,9 @@ export class Route extends React.Component<IRouteProps, IRouteState> {
                 <th className="hand" onClick={this.sort('routeName')}>
                   Route Name <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('routeNumber')}>
+                  Route Number <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -80,6 +83,7 @@ export class Route extends React.Component<IRouteProps, IRouteState> {
                     </Button>
                   </td>
                   <td>{route.routeName}</td>
+                  <td>{route.routeNumber}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${route.id}`} color="info" size="sm">

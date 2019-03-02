@@ -55,6 +55,10 @@ import scheduleInstance, {
 import weekday, {
   WeekdayState
 } from 'app/entities/weekday/weekday.reducer';
+// prettier-ignore
+import bay, {
+  BayState
+} from 'app/entities/bay/bay.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -78,6 +82,7 @@ export interface IRootState {
   readonly scheduleTemplate: ScheduleTemplateState;
   readonly scheduleInstance: ScheduleInstanceState;
   readonly weekday: WeekdayState;
+  readonly bay: BayState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -103,6 +108,7 @@ const rootReducer = combineReducers<IRootState>({
   scheduleTemplate,
   scheduleInstance,
   weekday,
+  bay,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

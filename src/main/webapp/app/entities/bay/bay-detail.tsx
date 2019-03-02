@@ -7,40 +7,40 @@ import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './route-location.reducer';
-import { IRouteLocation } from 'app/shared/model/route-location.model';
+import { getEntity } from './bay.reducer';
+import { IBay } from 'app/shared/model/bay.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IRouteLocationDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IBayDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
-export class RouteLocationDetail extends React.Component<IRouteLocationDetailProps> {
+export class BayDetail extends React.Component<IBayDetailProps> {
   componentDidMount() {
     this.props.getEntity(this.props.match.params.id);
   }
 
   render() {
-    const { routeLocationEntity } = this.props;
+    const { bayEntity } = this.props;
     return (
       <Row>
         <Col md="8">
           <h2>
-            RouteLocation [<b>{routeLocationEntity.id}</b>]
+            Bay [<b>{bayEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="sequenceNumber">Sequence Number</span>
+              <span id="bayName">Bay Name</span>
             </dt>
-            <dd>{routeLocationEntity.sequenceNumber}</dd>
-            <dt>Location</dt>
-            <dd>{routeLocationEntity.location ? routeLocationEntity.location.id : ''}</dd>
-            <dt>Route</dt>
-            <dd>{routeLocationEntity.route ? routeLocationEntity.route.id : ''}</dd>
+            <dd>{bayEntity.bayName}</dd>
+            <dt>
+              <span id="bindingAddress">Binding Address</span>
+            </dt>
+            <dd>{bayEntity.bindingAddress}</dd>
           </dl>
-          <Button tag={Link} to="/entity/route-location" replace color="info">
+          <Button tag={Link} to="/entity/bay" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/route-location/${routeLocationEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/entity/bay/${bayEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
@@ -49,8 +49,8 @@ export class RouteLocationDetail extends React.Component<IRouteLocationDetailPro
   }
 }
 
-const mapStateToProps = ({ routeLocation }: IRootState) => ({
-  routeLocationEntity: routeLocation.entity
+const mapStateToProps = ({ bay }: IRootState) => ({
+  bayEntity: bay.entity
 });
 
 const mapDispatchToProps = { getEntity };
@@ -61,4 +61,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RouteLocationDetail);
+)(BayDetail);

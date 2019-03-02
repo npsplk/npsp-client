@@ -32,6 +32,10 @@ export class RouteDetail extends React.Component<IRouteDetailProps> {
               <span id="routeName">Route Name</span>
             </dt>
             <dd>{routeEntity.routeName}</dd>
+            <dt>
+              <span id="routeNumber">Route Number</span>
+            </dt>
+            <dd>{routeEntity.routeNumber}</dd>
           </dl>
           <Button tag={Link} to="/entity/route" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

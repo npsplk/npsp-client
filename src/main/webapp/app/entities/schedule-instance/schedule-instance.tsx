@@ -88,6 +88,9 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
                 <th className="hand" onClick={this.sort('specialNotes')}>
                   Special Notes <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={this.sort('scheduleState')}>
+                  Schedule State <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   Vehicle <FontAwesomeIcon icon="sort" />
                 </th>
@@ -96,6 +99,12 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
                 </th>
                 <th>
                   Driver <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Route <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Bay <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -121,6 +130,7 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
                     <TextFormat type="date" value={scheduleInstance.actualDepartureTime} format={APP_DATE_FORMAT} />
                   </td>
                   <td>{scheduleInstance.specialNotes}</td>
+                  <td>{scheduleInstance.scheduleState}</td>
                   <td>
                     {scheduleInstance.vehicle ? (
                       <Link to={`vehicle/${scheduleInstance.vehicle.id}`}>{scheduleInstance.vehicle.id}</Link>
@@ -138,6 +148,10 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
                   <td>
                     {scheduleInstance.driver ? <Link to={`driver/${scheduleInstance.driver.id}`}>{scheduleInstance.driver.id}</Link> : ''}
                   </td>
+                  <td>
+                    {scheduleInstance.route ? <Link to={`route/${scheduleInstance.route.id}`}>{scheduleInstance.route.id}</Link> : ''}
+                  </td>
+                  <td>{scheduleInstance.bay ? <Link to={`bay/${scheduleInstance.bay.id}`}>{scheduleInstance.bay.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${scheduleInstance.id}`} color="info" size="sm">

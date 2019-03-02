@@ -40,8 +40,14 @@ export class ScheduleTemplateDetail extends React.Component<IScheduleTemplateDet
             <dd>
               <TextFormat value={scheduleTemplateEntity.endTime} type="date" format={APP_DATE_FORMAT} />
             </dd>
+            <dt>Vehicle</dt>
+            <dd>{scheduleTemplateEntity.vehicle ? scheduleTemplateEntity.vehicle.id : ''}</dd>
+            <dt>Driver</dt>
+            <dd>{scheduleTemplateEntity.driver ? scheduleTemplateEntity.driver.id : ''}</dd>
             <dt>Route</dt>
             <dd>{scheduleTemplateEntity.route ? scheduleTemplateEntity.route.id : ''}</dd>
+            <dt>Bay</dt>
+            <dd>{scheduleTemplateEntity.bay ? scheduleTemplateEntity.bay.id : ''}</dd>
             <dt>Weekday</dt>
             <dd>
               {scheduleTemplateEntity.weekdays
