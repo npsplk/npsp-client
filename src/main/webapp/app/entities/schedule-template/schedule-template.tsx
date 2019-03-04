@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './schedule-template.reducer';
 import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IScheduleTemplateProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
@@ -98,26 +98,26 @@ export class ScheduleTemplate extends React.Component<IScheduleTemplateProps, IS
                     </Button>
                   </td>
                   <td>
-                    <TextFormat type="date" value={scheduleTemplate.startTime} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={scheduleTemplate.startTime} format={APP_LOCAL_TIME_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={scheduleTemplate.endTime} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={scheduleTemplate.endTime} format={APP_LOCAL_TIME_FORMAT} />
                   </td>
-                  <td>{scheduleTemplate.isActive ? 'true' : 'false'}</td>
+                  <td>{scheduleTemplate.isActive ? 'Active' : 'Inactive'}</td>
                   <td>
                     {scheduleTemplate.vehicle ? (
-                      <Link to={`vehicle/${scheduleTemplate.vehicle.id}`}>{scheduleTemplate.vehicle.id}</Link>
+                      <Link to={`vehicle/${scheduleTemplate.vehicle.id}`}>{scheduleTemplate.vehicle.registrationNumber}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
-                    {scheduleTemplate.driver ? <Link to={`driver/${scheduleTemplate.driver.id}`}>{scheduleTemplate.driver.id}</Link> : ''}
+                    {scheduleTemplate.driver ? <Link to={`driver/${scheduleTemplate.driver.id}`}>{scheduleTemplate.driver.driverName}</Link> : ''}
                   </td>
                   <td>
-                    {scheduleTemplate.route ? <Link to={`route/${scheduleTemplate.route.id}`}>{scheduleTemplate.route.id}</Link> : ''}
+                    {scheduleTemplate.route ? <Link to={`route/${scheduleTemplate.route.id}`}>{scheduleTemplate.route.routeName}</Link> : ''}
                   </td>
-                  <td>{scheduleTemplate.bay ? <Link to={`bay/${scheduleTemplate.bay.id}`}>{scheduleTemplate.bay.id}</Link> : ''}</td>
+                  <td>{scheduleTemplate.bay ? <Link to={`bay/${scheduleTemplate.bay.id}`}>{scheduleTemplate.bay.bayName}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${scheduleTemplate.id}`} color="info" size="sm">
