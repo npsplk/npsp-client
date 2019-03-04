@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './schedule-template.reducer';
 import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 // tslint:disable-next-line:no-unused-variable
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constants';
 
 export interface IScheduleTemplateDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -32,32 +32,32 @@ export class ScheduleTemplateDetail extends React.Component<IScheduleTemplateDet
               <span id="startTime">Start Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleTemplateEntity.startTime} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={scheduleTemplateEntity.startTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
             </dd>
             <dt>
               <span id="endTime">End Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleTemplateEntity.endTime} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={scheduleTemplateEntity.endTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
             </dd>
             <dt>
               <span id="isActive">Is Active</span>
             </dt>
-            <dd>{scheduleTemplateEntity.isActive ? 'true' : 'false'}</dd>
+            <dd>{scheduleTemplateEntity.isActive ? 'Active' : 'Inactive'}</dd>
             <dt>Vehicle</dt>
-            <dd>{scheduleTemplateEntity.vehicle ? scheduleTemplateEntity.vehicle.id : ''}</dd>
+            <dd>{scheduleTemplateEntity.vehicle ? scheduleTemplateEntity.vehicle.registrationNumber : ''}</dd>
             <dt>Driver</dt>
-            <dd>{scheduleTemplateEntity.driver ? scheduleTemplateEntity.driver.id : ''}</dd>
+            <dd>{scheduleTemplateEntity.driver ? scheduleTemplateEntity.driver.driverName : ''}</dd>
             <dt>Route</dt>
-            <dd>{scheduleTemplateEntity.route ? scheduleTemplateEntity.route.id : ''}</dd>
+            <dd>{scheduleTemplateEntity.route ? scheduleTemplateEntity.route.routeName : ''}</dd>
             <dt>Bay</dt>
-            <dd>{scheduleTemplateEntity.bay ? scheduleTemplateEntity.bay.id : ''}</dd>
+            <dd>{scheduleTemplateEntity.bay ? scheduleTemplateEntity.bay.bayName : ''}</dd>
             <dt>Weekday</dt>
             <dd>
               {scheduleTemplateEntity.weekdays
                 ? scheduleTemplateEntity.weekdays.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      <a>{val.weekday}</a>
                       {i === scheduleTemplateEntity.weekdays.length - 1 ? '' : ', '}
                     </span>
                   ))
@@ -68,7 +68,7 @@ export class ScheduleTemplateDetail extends React.Component<IScheduleTemplateDet
               {scheduleTemplateEntity.vehicleFacilities
                 ? scheduleTemplateEntity.vehicleFacilities.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      <a>{val.facilityName}</a>
                       {i === scheduleTemplateEntity.vehicleFacilities.length - 1 ? '' : ', '}
                     </span>
                   ))

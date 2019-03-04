@@ -23,7 +23,7 @@ import { getEntities as getVehicleFacilities } from 'app/entities/vehicle-facili
 import { getEntity, updateEntity, createEntity, reset } from './schedule-template.reducer';
 import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IScheduleTemplateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -74,8 +74,8 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
   }
 
   saveEntity = (event, errors, values) => {
-    values.startTime = convertDateTimeToServer(values.startTime);
-    values.endTime = convertDateTimeToServer(values.endTime);
+    values.startTime = convertDateTimeToServer('2019-02-08T' + values.startTime);
+    values.endTime = convertDateTimeToServer('2019-02-08T' + values.endTime);
 
     if (errors.length === 0) {
       const { scheduleTemplateEntity } = this.props;
@@ -127,11 +127,10 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                   </Label>
                   <AvInput
                     id="schedule-template-startTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="startTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleTemplateEntity.startTime)}
+                    value={isNew ? null : convert24HourTimeFromServer(this.props.scheduleTemplateEntity.startTime)}
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -143,11 +142,10 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                   </Label>
                   <AvInput
                     id="schedule-template-endTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="endTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleTemplateEntity.endTime)}
+                    value={isNew ? null : convert24HourTimeFromServer(this.props.scheduleTemplateEntity.endTime)}
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -166,7 +164,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     {vehicles
                       ? vehicles.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                              {otherEntity.transportType.typeName} {otherEntity.registrationNumber}
                           </option>
                         ))
                       : null}
@@ -179,7 +177,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     {drivers
                       ? drivers.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.driverName} {otherEntity.licenseNumber}
                           </option>
                         ))
                       : null}
@@ -192,7 +190,8 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     {routes
                       ? routes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.routeName} {otherEntity.routeLocations[0].location.locationName} -
+                              &nbsp;{otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName}
                           </option>
                         ))
                       : null}
@@ -205,7 +204,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     {bays
                       ? bays.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.bayName}
                           </option>
                         ))
                       : null}
@@ -225,7 +224,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     {weekdays
                       ? weekdays.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.weekday}
                           </option>
                         ))
                       : null}
@@ -245,7 +244,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     {vehicleFacilities
                       ? vehicleFacilities.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.facilityName}
                           </option>
                         ))
                       : null}

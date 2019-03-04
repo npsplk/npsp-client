@@ -106,18 +106,18 @@ export class ScheduleTemplate extends React.Component<IScheduleTemplateProps, IS
                   <td>{scheduleTemplate.isActive ? 'Active' : 'Inactive'}</td>
                   <td>
                     {scheduleTemplate.vehicle ? (
-                      <Link to={`vehicle/${scheduleTemplate.vehicle.id}`}>{scheduleTemplate.vehicle.registrationNumber}</Link>
+                      <Link to={`../config/vehicle/${scheduleTemplate.vehicle.id}`}>{scheduleTemplate.vehicle.registrationNumber}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
-                    {scheduleTemplate.driver ? <Link to={`driver/${scheduleTemplate.driver.id}`}>{scheduleTemplate.driver.driverName}</Link> : ''}
+                    {scheduleTemplate.driver ? <Link to={`../config/driver/${scheduleTemplate.driver.id}`}>{scheduleTemplate.driver.driverName}</Link> : ''}
                   </td>
                   <td>
-                    {scheduleTemplate.route ? <Link to={`route/${scheduleTemplate.route.id}`}>{scheduleTemplate.route.routeName}</Link> : ''}
+                    {scheduleTemplate.route ? <Link to={`../config/route/${scheduleTemplate.route.id}`}>{scheduleTemplate.route.routeName}</Link> : ''}
                   </td>
-                  <td>{scheduleTemplate.bay ? <Link to={`bay/${scheduleTemplate.bay.id}`}>{scheduleTemplate.bay.bayName}</Link> : ''}</td>
+                  <td>{scheduleTemplate.bay ? <Link to={`../config/bay/${scheduleTemplate.bay.id}`}>{scheduleTemplate.bay.bayName}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${scheduleTemplate.id}`} color="info" size="sm">
