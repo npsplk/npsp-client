@@ -63,11 +63,23 @@ export class ScheduleInstanceDetail extends React.Component<IScheduleInstanceDet
             <dt>Vehicle</dt>
             <dd>{scheduleInstanceEntity.vehicle ? scheduleInstanceEntity.vehicle.registrationNumber : ''}</dd>
             <dt>Schedule Template</dt>
-            <dd>{scheduleInstanceEntity.scheduleTemplate ? scheduleInstanceEntity.scheduleTemplate.id : ''}</dd>
+            <dd>
+                {scheduleInstanceEntity.scheduleTemplate ? (
+                    <Link to={`../schedule-template/${scheduleInstanceEntity.scheduleTemplate.id}`}>{scheduleInstanceEntity.scheduleTemplate.id}</Link>
+                ) : (
+                    ''
+                )}
+            </dd>
             <dt>Driver</dt>
             <dd>{scheduleInstanceEntity.driver ? scheduleInstanceEntity.driver.driverName : ''}</dd>
             <dt>Route</dt>
-            <dd>{scheduleInstanceEntity.route ? scheduleInstanceEntity.route.routeName : ''}</dd>
+            <dd>
+                {scheduleInstanceEntity.route ? (
+                    <Link to={`../../config/route/${scheduleInstanceEntity.route.id}`}>{scheduleInstanceEntity.route.routeName}</Link>
+                ) : (
+                    ''
+                )}
+            </dd>
             <dt>Bay</dt>
             <dd>{scheduleInstanceEntity.bay ? scheduleInstanceEntity.bay.bayName : ''}</dd>
           </dl>
