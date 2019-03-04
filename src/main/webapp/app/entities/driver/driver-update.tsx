@@ -72,7 +72,7 @@ export class DriverUpdate extends React.Component<IDriverUpdateProps, IDriverUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.driver.home.createOrEditLabel">Create or edit a Driver</h2>
+            <h2 id="npspClientApp.driver.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Driver</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

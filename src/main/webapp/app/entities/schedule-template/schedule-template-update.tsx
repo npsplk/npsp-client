@@ -106,7 +106,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.scheduleTemplate.home.createOrEditLabel">Create or edit a ScheduleTemplate</h2>
+            <h2 id="npspClientApp.scheduleTemplate.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} ScheduleTemplate</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

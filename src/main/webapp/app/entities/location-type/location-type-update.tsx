@@ -70,7 +70,7 @@ export class LocationTypeUpdate extends React.Component<ILocationTypeUpdateProps
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.locationType.home.createOrEditLabel">Create or edit a LocationType</h2>
+            <h2 id="npspClientApp.locationType.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} LocationType</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

@@ -81,7 +81,7 @@ export class VehicleFacilityUpdate extends React.Component<IVehicleFacilityUpdat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.vehicleFacility.home.createOrEditLabel">Create or edit a VehicleFacility</h2>
+            <h2 id="npspClientApp.vehicleFacility.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} VehicleFacility</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">

@@ -70,7 +70,7 @@ export class BayUpdate extends React.Component<IBayUpdateProps, IBayUpdateState>
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.bay.home.createOrEditLabel">Create or edit a Bay</h2>
+            <h2 id="npspClientApp.bay.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Bay</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
