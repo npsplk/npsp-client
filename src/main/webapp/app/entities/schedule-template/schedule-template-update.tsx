@@ -95,7 +95,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/schedule-template');
+    this.props.history.push('/operation/schedule-template');
   };
 
   render() {
@@ -251,7 +251,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/schedule-template" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/operation/schedule-template" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

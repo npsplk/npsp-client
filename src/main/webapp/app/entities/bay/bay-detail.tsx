@@ -37,10 +37,10 @@ export class BayDetail extends React.Component<IBayDetailProps> {
             </dt>
             <dd>{bayEntity.bindingAddress}</dd>
           </dl>
-          <Button tag={Link} to="/entity/bay" replace color="info">
+          <Button tag={Link} to="/config/bay" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/bay/${bayEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/config/bay/${bayEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

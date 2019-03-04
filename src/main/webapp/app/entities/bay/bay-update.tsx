@@ -59,7 +59,7 @@ export class BayUpdate extends React.Component<IBayUpdateProps, IBayUpdateState>
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/bay');
+    this.props.history.push('/config/bay');
   };
 
   render() {
@@ -97,7 +97,7 @@ export class BayUpdate extends React.Component<IBayUpdateProps, IBayUpdateState>
                   </Label>
                   <AvField id="bay-bindingAddress" type="text" name="bindingAddress" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/bay" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/bay" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

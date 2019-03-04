@@ -65,7 +65,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/location');
+    this.props.history.push('/config/location');
   };
 
   render() {
@@ -134,7 +134,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/location" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/location" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

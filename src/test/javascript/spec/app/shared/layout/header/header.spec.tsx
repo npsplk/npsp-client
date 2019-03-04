@@ -5,7 +5,7 @@ import LoadingBar from 'react-redux-loading-bar';
 import { Navbar, Nav } from 'reactstrap';
 
 import { Home, Brand } from 'app/shared/layout/header/header-components';
-import { AdminMenu, EntitiesMenu, AccountMenu } from 'app/shared/layout/header/menus';
+import { AdminMenu, AccountMenu } from 'app/shared/layout/header/menus';
 import Header from 'app/shared/layout/header/header';
 
 describe('Header', () => {
@@ -58,7 +58,6 @@ describe('Header', () => {
     expect(nav.length).toEqual(1);
     expect(nav.find(Home).length).toEqual(1);
     expect(nav.find(AdminMenu).length).toEqual(1);
-    expect(nav.find(EntitiesMenu).length).toEqual(1);
 
     expect(nav.find(AccountMenu).length).toEqual(1);
     const ribbon = component.find('.ribbon.dev');
@@ -76,7 +75,6 @@ describe('Header', () => {
     expect(nav.length).toEqual(1);
     expect(nav.find(Home).length).toEqual(1);
     expect(nav.find(AdminMenu).length).toEqual(1);
-    expect(nav.find(EntitiesMenu).length).toEqual(1);
 
     expect(nav.find(AccountMenu).length).toEqual(1);
     const ribbon = component.find('.ribbon.dev');
@@ -86,7 +84,6 @@ describe('Header', () => {
   it('Renders a Header component in prod profile with logged in User', () => {
     const nav = wrapper(userProps).find(Nav);
     expect(nav.find(AdminMenu).length).toEqual(0);
-    expect(nav.find(EntitiesMenu).length).toEqual(1);
     const account = nav.find(AccountMenu);
     expect(account.first().props().isAuthenticated).toEqual(true);
   });
@@ -94,7 +91,6 @@ describe('Header', () => {
   it('Renders a Header component in prod profile with no logged in User', () => {
     const nav = wrapper(guestProps).find(Nav);
     expect(nav.find(AdminMenu).length).toEqual(0);
-    expect(nav.find(EntitiesMenu).length).toEqual(0);
     const account = nav.find(AccountMenu);
     expect(account.length).toEqual(1);
     expect(account.first().props().isAuthenticated).toEqual(false);

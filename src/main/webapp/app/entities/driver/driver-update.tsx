@@ -61,7 +61,7 @@ export class DriverUpdate extends React.Component<IDriverUpdateProps, IDriverUpd
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/driver');
+    this.props.history.push('/config/driver');
   };
 
   render() {
@@ -144,7 +144,7 @@ export class DriverUpdate extends React.Component<IDriverUpdateProps, IDriverUpd
                     value={isNew ? null : convertDateTimeFromServer(this.props.driverEntity.licenseExpiryDate)}
                   />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/driver" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/driver" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

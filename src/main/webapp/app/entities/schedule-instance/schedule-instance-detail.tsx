@@ -71,10 +71,10 @@ export class ScheduleInstanceDetail extends React.Component<IScheduleInstanceDet
             <dt>Bay</dt>
             <dd>{scheduleInstanceEntity.bay ? scheduleInstanceEntity.bay.id : ''}</dd>
           </dl>
-          <Button tag={Link} to="/entity/schedule-instance" replace color="info">
+          <Button tag={Link} to="/operation/schedule-instance" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
-          <Button tag={Link} to={`/entity/schedule-instance/${scheduleInstanceEntity.id}/edit`} replace color="primary">
+          <Button tag={Link} to={`/operation/schedule-instance/${scheduleInstanceEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>

@@ -59,7 +59,7 @@ export class TransportTypeUpdate extends React.Component<ITransportTypeUpdatePro
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/transport-type');
+    this.props.history.push('/config/transport-type');
   };
 
   render() {
@@ -117,7 +117,7 @@ export class TransportTypeUpdate extends React.Component<ITransportTypeUpdatePro
                   </Label>
                   <AvField id="transport-type-description" type="text" name="description" />
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/transport-type" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/transport-type" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>

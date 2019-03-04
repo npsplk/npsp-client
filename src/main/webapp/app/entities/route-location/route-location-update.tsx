@@ -70,7 +70,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/route-location');
+    this.props.history.push('/config/route-location');
   };
 
   render() {
@@ -128,7 +128,7 @@ export class RouteLocationUpdate extends React.Component<IRouteLocationUpdatePro
                       : null}
                   </AvInput>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/entity/route-location" replace color="info">
+                <Button tag={Link} id="cancel-save" to="/config/route-location" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
