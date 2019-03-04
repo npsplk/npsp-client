@@ -21,14 +21,12 @@ const Routes = ({ match }) => (
     <Switch>
       {/* prettier-ignore */}
         <ErrorBoundaryRoute path={`${match.url}/route`} component={Route} />
-        <ErrorBoundaryRoute path={`${match.url}/route-location`} component={RouteLocation} />
         <ErrorBoundaryRoute path={`${match.url}/location`} component={Location} />
         <ErrorBoundaryRoute path={`${match.url}/location-type`} component={LocationType} />
         <ErrorBoundaryRoute path={`${match.url}/transport-type`} component={TransportType} />
         <ErrorBoundaryRoute path={`${match.url}/vehicle-facility`} component={VehicleFacility} />
         <ErrorBoundaryRoute path={`${match.url}/vehicle`} component={Vehicle} />
         <ErrorBoundaryRoute path={`${match.url}/driver`} component={Driver} />
-        <ErrorBoundaryRoute path={`${match.url}/weekday`} component={Weekday} />
         <ErrorBoundaryRoute path={`${match.url}/bay`} component={Bay} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>

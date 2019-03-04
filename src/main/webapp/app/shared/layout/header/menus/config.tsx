@@ -11,9 +11,6 @@ export const ConfigMenu = props => (
       <DropdownItem tag={Link} to="/config/route">
           <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Route
       </DropdownItem>
-      <DropdownItem tag={Link} to="/config/route-location">
-          <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Route Location
-      </DropdownItem>
       <DropdownItem tag={Link} to="/config/location">
           <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Location
       </DropdownItem>
@@ -31,9 +28,6 @@ export const ConfigMenu = props => (
       </DropdownItem>
       <DropdownItem tag={Link} to="/config/driver">
           <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Driver
-      </DropdownItem>
-      <DropdownItem tag={Link} to="/config/weekday">
-          <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Weekday
       </DropdownItem>
       <DropdownItem tag={Link} to="/config/bay">
           <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Bay
