@@ -21,7 +21,7 @@ import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './schedule-instance.reducer';
 import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertToDashedDate, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IScheduleInstanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -77,9 +77,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
   };
 
   saveEntity = (event, errors, values) => {
-    values.scheduledTime = convertDateTimeToServer(values.scheduledTime);
-    values.actualScheduledTime = convertDateTimeToServer(values.actualScheduledTime);
-    values.actualDepartureTime = convertDateTimeToServer(values.actualDepartureTime);
+    const date_string = convertToDashedDate(values.date) + 'T';
+    values.scheduledTime = convertDateTimeToServer(date_string + values.scheduledTime);
+    values.actualScheduledTime = convertDateTimeToServer(date_string + values.actualScheduledTime);
+    values.actualDepartureTime = convertDateTimeToServer(date_string + values.actualDepartureTime);
 
     if (errors.length === 0) {
       const { scheduleInstanceEntity } = this.props;
@@ -110,7 +111,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="npspClientApp.scheduleInstance.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} ScheduleInstance</h2>
+            <h2 id="npspClientApp.scheduleInstance.home.createOrEditLabel">{isNew ? 'Create a' : 'Edit'} Schedule Instance</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -137,11 +138,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                   </Label>
                   <AvInput
                     id="schedule-instance-scheduledTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="scheduledTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleInstanceEntity.scheduledTime)}
+                    value={isNew ? null : convert24HourTimeFromServer(this.props.scheduleInstanceEntity.scheduledTime)}
                   />
                 </AvGroup>
                 <AvGroup>
@@ -150,11 +150,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                   </Label>
                   <AvInput
                     id="schedule-instance-actualScheduledTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="actualScheduledTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleInstanceEntity.actualScheduledTime)}
+                    value={isNew ? null : convert24HourTimeFromServer(this.props.scheduleInstanceEntity.actualScheduledTime)}
                   />
                 </AvGroup>
                 <AvGroup>
@@ -163,11 +162,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                   </Label>
                   <AvInput
                     id="schedule-instance-actualDepartureTime"
-                    type="datetime-local"
+                    type="time"
                     className="form-control"
                     name="actualDepartureTime"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.scheduleInstanceEntity.actualDepartureTime)}
+                    value={isNew ? null : convert24HourTimeFromServer(this.props.scheduleInstanceEntity.actualDepartureTime)}
                   />
                 </AvGroup>
                 <AvGroup>
@@ -199,7 +197,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     {vehicles
                       ? vehicles.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                              {otherEntity.transportType.typeName} {otherEntity.registrationNumber}
                           </option>
                         ))
                       : null}
@@ -212,7 +210,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     {scheduleTemplates
                       ? scheduleTemplates.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {convertLocalTimeFromServer(otherEntity.startTime)} -
+                              &nbsp;{convertLocalTimeFromServer(otherEntity.endTime)}
+                              &nbsp;[Route - {otherEntity.route.routeName}]
+                              &nbsp;{otherEntity.bay.bayName}
                           </option>
                         ))
                       : null}
@@ -225,7 +226,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     {drivers
                       ? drivers.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                              {otherEntity.driverName} {otherEntity.licenseNumber}
                           </option>
                         ))
                       : null}
@@ -238,7 +239,8 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     {routes
                       ? routes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                              {otherEntity.routeName} {otherEntity.routeLocations[0].location.locationName} -
+                              &nbsp;{otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName}
                           </option>
                         ))
                       : null}
@@ -251,7 +253,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     {bays
                       ? bays.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                              {otherEntity.bayName}
                           </option>
                         ))
                       : null}
