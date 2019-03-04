@@ -135,14 +135,7 @@ export class DriverUpdate extends React.Component<IDriverUpdateProps, IDriverUpd
                   <Label id="licenseExpiryDateLabel" for="licenseExpiryDate">
                     License Expiry Date
                   </Label>
-                  <AvInput
-                    id="driver-licenseExpiryDate"
-                    type="datetime-local"
-                    className="form-control"
-                    name="licenseExpiryDate"
-                    placeholder={'YYYY-MM-DD HH:mm'}
-                    value={isNew ? null : convertDateTimeFromServer(this.props.driverEntity.licenseExpiryDate)}
-                  />
+                    <AvField id="driver-licenseExpiryDate" type="date" className="form-control" name="licenseExpiryDate" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/config/driver" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
