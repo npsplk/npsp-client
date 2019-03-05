@@ -102,7 +102,7 @@ export class Driver extends React.Component<IDriverProps, IDriverState> {
                   <td>{driver.address}</td>
                   <td>{driver.licenseNumber}</td>
                   <td>
-                    <TextFormat type="date" value={driver.licenseExpiryDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={driver.licenseExpiryDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

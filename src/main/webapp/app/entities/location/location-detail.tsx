@@ -49,7 +49,7 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
             </dt>
             <dd>{locationEntity.latitude}</dd>
             <dt>Location Type</dt>
-            <dd>{locationEntity.locationType ? locationEntity.locationType.id : ''}</dd>
+            <dd>{locationEntity.locationType ? locationEntity.locationType.typeName : ''}</dd>
           </dl>
           <Button tag={Link} to="/config/location" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

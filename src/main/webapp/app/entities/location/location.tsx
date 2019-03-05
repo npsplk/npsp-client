@@ -100,7 +100,7 @@ export class Location extends React.Component<ILocationProps, ILocationState> {
                   <td>{location.longitude}</td>
                   <td>{location.latitude}</td>
                   <td>
-                    {location.locationType ? <Link to={`location-type/${location.locationType.id}`}>{location.locationType.id}</Link> : ''}
+                    {location.locationType ? <Link to={`location-type/${location.locationType.id}`}>{location.locationType.typeName}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

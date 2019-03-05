@@ -54,7 +54,7 @@ export class DriverDetail extends React.Component<IDriverDetailProps> {
               <span id="licenseExpiryDate">License Expiry Date</span>
             </dt>
             <dd>
-              <TextFormat value={driverEntity.licenseExpiryDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={driverEntity.licenseExpiryDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
           </dl>
           <Button tag={Link} to="/config/driver" replace color="info">

@@ -85,14 +85,14 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                 <tr key={`entity-${i}`}>
                   <td>
                     <Button tag={Link} to={`${match.url}/${vehicle.id}`} color="link" size="sm">
-                      {vehicle.id}
+                      {vehicle.registrationNumber}
                     </Button>
                   </td>
                   <td>{vehicle.registrationNumber}</td>
                   <td>{vehicle.numberOfSeats}</td>
-                  <td>{vehicle.driver ? <Link to={`driver/${vehicle.driver.id}`}>{vehicle.driver.id}</Link> : ''}</td>
+                  <td>{vehicle.driver ? <Link to={`driver/${vehicle.driver.id}`}>{vehicle.driver.driverName}</Link> : ''}</td>
                   <td>
-                    {vehicle.transportType ? <Link to={`transport-type/${vehicle.transportType.id}`}>{vehicle.transportType.id}</Link> : ''}
+                    {vehicle.transportType ? <Link to={`transport-type/${vehicle.transportType.id}`}>{vehicle.transportType.typeName}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

@@ -37,15 +37,15 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
             </dt>
             <dd>{vehicleEntity.numberOfSeats}</dd>
             <dt>Driver</dt>
-            <dd>{vehicleEntity.driver ? vehicleEntity.driver.id : ''}</dd>
+            <dd>{vehicleEntity.driver ? vehicleEntity.driver.driverName : ''}</dd>
             <dt>Transport Type</dt>
-            <dd>{vehicleEntity.transportType ? vehicleEntity.transportType.id : ''}</dd>
+            <dd>{vehicleEntity.transportType ? vehicleEntity.transportType.typeName : ''}</dd>
             <dt>Vehicle Facility</dt>
             <dd>
               {vehicleEntity.vehicleFacilities
                 ? vehicleEntity.vehicleFacilities.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      <a>{val.facilityName}</a>
                       {i === vehicleEntity.vehicleFacilities.length - 1 ? '' : ', '}
                     </span>
                   ))

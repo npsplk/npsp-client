@@ -137,7 +137,7 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
                     {drivers
                       ? drivers.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.driverName}
                           </option>
                         ))
                       : null}
@@ -150,7 +150,7 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
                     {transportTypes
                       ? transportTypes.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.typeName}
                           </option>
                         ))
                       : null}
@@ -170,7 +170,7 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
                     {vehicleFacilities
                       ? vehicleFacilities.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.facilityName}
                           </option>
                         ))
                       : null}
