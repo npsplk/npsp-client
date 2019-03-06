@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction, IPayload } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IRouteLocation, defaultValue } from 'app/shared/model/route-location.model';
+
+type ICrudGetAllByParentAction<T> = (route?: string) => IPayload<T> | ((dispatch: any) => IPayload<T>);
 
 export const ACTION_TYPES = {
   FETCH_ROUTELOCATION_LIST: 'routeLocation/FETCH_ROUTELOCATION_LIST',
@@ -101,11 +103,11 @@ const apiUrl = 'api/route-locations';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IRouteLocation> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+export const getEntities: ICrudGetAllByParentAction<IRouteLocation> = route => {
+  const requestUrl = `${apiUrl}${route ? `?route=${route}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_ROUTELOCATION_LIST,
-    payload: axios.get<IRouteLocation>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+    payload: axios.get<IRouteLocation>(requestUrl)
   };
 };
 

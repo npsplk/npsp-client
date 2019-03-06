@@ -46,7 +46,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
     }
 
     this.props.getLocations();
-    this.props.getRouteLocations();
+    this.props.getRouteLocations(this.props.match.params.id);
   }
 
   saveEntity = (event, errors, values) => {
@@ -55,8 +55,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
       const entity = {
         ...routeEntity,
         ...values,
-        routeLocations: mapIdList(values.routeLocations),
-        locations: mapIdList(values.locations)
+        routeLocations: mapIdList(values.routeLocations)
       };
 
       if (this.state.isNew) {
@@ -65,6 +64,11 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
         this.props.updateEntity(entity);
       }
     }
+  };
+
+  addRouteLocation = () => {
+      // let value= this.props.location;
+      // debugger;
   };
 
   handleClose = () => {
@@ -122,7 +126,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           </Col>
                           <Col md="2">
                               <div className="btn-group flex-btn-group-container">
-                              <Button id="add-location" replace color="info">
+                              <Button onClick={this.addRouteLocation} id="add-location" replace color="info">
                                   <FontAwesomeIcon icon="plus" />&nbsp;
                               </Button>
                                   <Button id="remove-location" replace color="danger">
@@ -136,7 +140,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           type="select"
                           multiple
                           className="form-control"
-                          name="route-locations"
+                          name="routeLocations"
                           value={routeLocations && routeLocations.map(e => e.id)}
                       >
                           {routeLocations

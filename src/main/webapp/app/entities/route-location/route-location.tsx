@@ -45,7 +45,7 @@ export class RouteLocation extends React.Component<IRouteLocationProps, IRouteLo
 
   getEntities = () => {
     const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
+    // this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
   };
 
   render() {
