@@ -120,17 +120,15 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                                   : null}
                           </AvInput>
                           </Col>
-                          <Col md="1">
+                          <Col md="2">
+                              <div className="btn-group flex-btn-group-container">
                               <Button id="add-location" replace color="info">
                                   <FontAwesomeIcon icon="plus" />&nbsp;
-                                  <span className="d-none d-md-inline">Add</span>
                               </Button>
-                          </Col>
-                          <Col md="1">
-                              <Button id="remove-location" replace color="danger">
-                                  <FontAwesomeIcon icon="trash" />&nbsp;
-                                  <span className="d-none d-md-inline">Remove</span>
-                              </Button>
+                                  <Button id="remove-location" replace color="danger">
+                                      <FontAwesomeIcon icon="trash" />&nbsp;
+                                  </Button>
+                              </div>
                           </Col>
                       </Row>
                       <AvInput

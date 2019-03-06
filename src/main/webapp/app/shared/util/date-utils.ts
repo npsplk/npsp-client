@@ -10,4 +10,4 @@ export const convert24HourTimeFromServer = date => (date ? moment(date).format(A
 
 export const convertLocalTimeFromServer = date => (date ? moment(date).format(APP_LOCAL_TIME_FORMAT) : null);
 
-export const convertDateTimeToServer = date => (date ? moment(date, APP_LOCAL_DATETIME_FORMAT_Z).toDate() : null);
+export const convertDateTimeToServer = date => (date ? moment(date, APP_LOCAL_DATETIME_FORMAT).toDate() : null);
