@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IRouteLocation, defaultValue } from 'app/shared/model/route-location.model';
+import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
 
 type ICrudGetAllByParentAction<T> = (route?: string) => IPayload<T> | ((dispatch: any) => IPayload<T>);
 
@@ -107,7 +108,7 @@ export const getEntities: ICrudGetAllByParentAction<IRouteLocation> = route => {
   const requestUrl = `${apiUrl}${route ? `?route=${route}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_ROUTELOCATION_LIST,
-    payload: axios.get<IRouteLocation>(requestUrl)
+    payload: axios.get<IRouteLocation>(`${requestUrl}&cacheBuster=${new Date().getTime()}`)
   };
 };
 

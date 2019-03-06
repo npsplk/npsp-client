@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
-import { getEntities as getRouteLocations } from 'app/entities/route-location/route-location.reducer';
+import { getEntities as getRouteLocations, createEntity as createRouteLocation, deleteEntity as deleteRouteLocation } from 'app/entities/route-location/route-location.reducer';
 import { IRoute } from 'app/shared/model/route.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
@@ -41,12 +41,13 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   componentDidMount() {
     if (this.state.isNew) {
       this.props.reset();
+      this.props.getRouteLocations('0');
     } else {
       this.props.getEntity(this.props.match.params.id);
+      this.props.getRouteLocations(this.props.match.params.id);
     }
 
     this.props.getLocations();
-    this.props.getRouteLocations(this.props.match.params.id);
   }
 
   saveEntity = (event, errors, values) => {
