@@ -12,6 +12,7 @@ export const ACTION_TYPES = {
   CREATE_ROUTE: 'route/CREATE_ROUTE',
   UPDATE_ROUTE: 'route/UPDATE_ROUTE',
   DELETE_ROUTE: 'route/DELETE_ROUTE',
+  SELECT_LOCATION: 'route/SELECT_LOCATION',
   RESET: 'route/RESET'
 };
 
@@ -89,12 +90,12 @@ export default (state: RouteState = initialState, action): RouteState => {
         updateSuccess: true,
         entity: {}
       };
-      case 'XXXT':
-          const newLocation = action.payload;
-          return {
-              ...state,
-              selectedLocation: newLocation
-          };
+    case (ACTION_TYPES.SELECT_LOCATION):
+      const newLocation = action.payload;
+        return {
+          ...state,
+          selectedLocation: newLocation
+      };
     case ACTION_TYPES.RESET:
       return {
         ...initialState
@@ -150,6 +151,13 @@ export const deleteEntity: ICrudDeleteAction<IRoute> = id => async dispatch => {
   });
   dispatch(getEntities());
   return result;
+};
+
+export const selectLocation = locationOption => {
+    return {
+        type: ACTION_TYPES.SELECT_LOCATION,
+        payload: locationOption
+    };
 };
 
 export const reset = () => ({

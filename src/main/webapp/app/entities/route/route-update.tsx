@@ -8,9 +8,9 @@ import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validatio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { getEntity, updateEntity, createEntity, reset } from './route.reducer';
+import { getEntity, updateEntity, createEntity, reset, selectLocation } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
-import { getEntities as getRouteLocations } from 'app/entities/route-location/route-location.reducer';
+import { getEntities as getRouteLocations, addRouteLocation } from 'app/entities/route-location/route-location.reducer';
 // tslint:disable-next-line:no-unused-variable
 
 export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -23,7 +23,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   constructor(props) {
     super(props);
     this.state = {
-      isNew: !this.props.match.params || !this.props.match.params.id,
+      isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
 
@@ -62,12 +62,13 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   addRouteLocation = () => {
-    this.props.addRouteLocations({'id': '', 'label': this.props.selectedLocation['object']['locationName'], 'location': this.props.selectedLocation['object'] });
+    const locationObject = this.props.selectedLocation['object'];
+    this.props.addRouteLocation({ 'id': 'new-' + locationObject['id'], 'label': locationObject['locationName'], 'location': locationObject });
   };
 
-    selectLocation = selectedOption => {
-        this.props.selectLocation(selectedOption);
-    };
+  selectLocation = selectedOption => {
+    this.props.selectLocation(selectedOption);
+  };
 
   handleClose = () => {
     this.props.history.push('/config/route');
@@ -124,11 +125,11 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           </Col>
                           <Col md="2">
                               <div className="btn-group flex-btn-group-container">
-                              <Button onClick={this.addRouteLocation} id="add-location" replace color="info">
-                                  <FontAwesomeIcon icon="plus" />&nbsp;
-                              </Button>
+                                  <Button onClick={this.addRouteLocation} id="add-location" replace color="info">
+                                      <FontAwesomeIcon icon="plus"/>&nbsp;
+                                  </Button>
                                   <Button id="remove-location" replace color="danger">
-                                      <FontAwesomeIcon icon="trash" />&nbsp;
+                                      <FontAwesomeIcon icon="trash"/>&nbsp;
                                   </Button>
                               </div>
                           </Col>
@@ -177,26 +178,12 @@ const mapStateToProps = (storeState: IRootState) => ({
   selectedLocation: storeState.route.selectedLocation
 });
 
-export const addRouteLocations = route => {
-    return {
-        type: 'XXX',
-        payload: route
-    };
-};
-
-export const selectLocation = locationOption => {
-    return {
-        type: 'XXXT',
-        payload: locationOption
-    };
-};
-
 const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
   getLocations,
-  addRouteLocations,
+  addRouteLocation,
   selectLocation,
   getRouteLocations,
   reset
