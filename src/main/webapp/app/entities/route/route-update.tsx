@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset, selectLocation } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
-import { getEntities as getRouteLocations, addRouteLocation } from 'app/entities/route-location/route-location.reducer';
+import { getEntities as getRouteLocations, addRouteLocation, removeRouteLocations } from 'app/entities/route-location/route-location.reducer';
 // tslint:disable-next-line:no-unused-variable
 
 export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -64,6 +64,11 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   addRouteLocation = () => {
     const locationObject = this.props.selectedLocation['object'];
     this.props.addRouteLocation({ 'id': 'new-' + locationObject['id'], 'label': locationObject['locationName'], 'location': locationObject });
+  };
+
+  removeRouteLocations = () => {
+      const obj = { 'id': '1' };
+    this.props.removeRouteLocations({ obj });
   };
 
   selectLocation = selectedOption => {
@@ -128,7 +133,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                                   <Button onClick={this.addRouteLocation} id="add-location" replace color="info">
                                       <FontAwesomeIcon icon="plus"/>&nbsp;
                                   </Button>
-                                  <Button id="remove-location" replace color="danger">
+                                  <Button onClick={this.removeRouteLocations} id="remove-location" replace color="danger">
                                       <FontAwesomeIcon icon="trash"/>&nbsp;
                                   </Button>
                               </div>
@@ -175,7 +180,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   updateSuccess: storeState.route.updateSuccess,
   routeLocations: storeState.routeLocation.entities,
   locations: storeState.location.entities,
-  selectedLocation: storeState.route.selectedLocation
+  selectedLocation: storeState.route.selectedLocation,
+  selectedRouteLocations: storeState.routeLocation.selectedRouteLocations
 });
 
 const mapDispatchToProps = {
@@ -184,6 +190,7 @@ const mapDispatchToProps = {
   createEntity,
   getLocations,
   addRouteLocation,
+  removeRouteLocations,
   selectLocation,
   getRouteLocations,
   reset

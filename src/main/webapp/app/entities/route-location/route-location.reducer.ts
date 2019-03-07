@@ -6,6 +6,7 @@ import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util'
 
 import { IRouteLocation, defaultValue } from 'app/shared/model/route-location.model';
 import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
+import React from 'react';
 
 type ICrudGetAllByParentAction<T> = (route?: string) => IPayload<T> | ((dispatch: any) => IPayload<T>);
 
@@ -16,7 +17,8 @@ export const ACTION_TYPES = {
   UPDATE_ROUTELOCATION: 'routeLocation/UPDATE_ROUTELOCATION',
   DELETE_ROUTELOCATION: 'routeLocation/DELETE_ROUTELOCATION',
   RESET: 'routeLocation/RESET',
-  ADD_ROUTELOCATION: 'routeLocation/ADD_ROUTELOCATION'
+  ADD_ROUTELOCATION: 'routeLocation/ADD_ROUTELOCATION',
+  REMOVE_ROUTELOCATIONS: 'routeLocation/REMOVE_ROUTELOCATIONS'
 };
 
 const initialState = {
@@ -26,7 +28,8 @@ const initialState = {
   entity: defaultValue,
   updating: false,
   totalItems: 0,
-  updateSuccess: false
+  updateSuccess: false,
+  selectedRouteLocations: []
 };
 
 export type RouteLocationState = Readonly<typeof initialState>;
@@ -99,6 +102,17 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
         ...state,
         entities: newEntities
       };
+    case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
+      const existingList = state.entities.slice();
+      const thiswa = action.payload;
+      // action.payload.map(routeLocation => (
+        delete existingList[1];
+      // ));
+      debugger;
+      return {
+          ...state,
+          entities: existingList
+    };
     case ACTION_TYPES.RESET:
       return {
         ...initialState
@@ -160,6 +174,13 @@ export const addRouteLocation = route => {
     return {
         type: ACTION_TYPES.ADD_ROUTELOCATION,
         payload: route
+    };
+};
+
+export const removeRouteLocations = routeLocations => {
+    return {
+        type: ACTION_TYPES.REMOVE_ROUTELOCATIONS,
+        payload: routeLocations
     };
 };
 
