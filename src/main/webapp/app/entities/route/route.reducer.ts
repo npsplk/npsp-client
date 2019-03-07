@@ -22,7 +22,8 @@ const initialState = {
   entity: defaultValue,
   updating: false,
   totalItems: 0,
-  updateSuccess: false
+  updateSuccess: false,
+  selectedLocation: []
 };
 
 export type RouteState = Readonly<typeof initialState>;
@@ -88,6 +89,12 @@ export default (state: RouteState = initialState, action): RouteState => {
         updateSuccess: true,
         entity: {}
       };
+      case 'XXXT':
+          const newLocation = action.payload;
+          return {
+              ...state,
+              selectedLocation: newLocation
+          };
     case ACTION_TYPES.RESET:
       return {
         ...initialState

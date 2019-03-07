@@ -91,6 +91,13 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
         updateSuccess: true,
         entity: {}
       };
+    case 'XXX':
+      const newEntities = state.entities.slice();
+      newEntities.push(action.payload);
+      return {
+          ...state,
+          entities: newEntities
+      };
     case ACTION_TYPES.RESET:
       return {
         ...initialState

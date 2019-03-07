@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
@@ -10,15 +11,12 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity, updateEntity, createEntity, reset } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
 import { getEntities as getRouteLocations } from 'app/entities/route-location/route-location.reducer';
-import { ILocation } from 'app/shared/model/location.model';
 // tslint:disable-next-line:no-unused-variable
 
 export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IRouteUpdateState {
   isNew: boolean;
-  idsRouteLocation: any[];
-  idLocation: ILocation;
 }
 
 export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdateState> {
@@ -26,8 +24,6 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
     super(props);
     this.state = {
       isNew: !this.props.match.params || !this.props.match.params.id,
-        idsRouteLocation: [],
-      idLocation: { id: 0 }
     };
   }
 
@@ -47,6 +43,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
     }
 
     this.props.getLocations();
+
   }
 
   saveEntity = (event, errors, values) => {
@@ -56,7 +53,6 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
         ...routeEntity,
         ...values
       };
-
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {
@@ -66,17 +62,26 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   addRouteLocation = () => {
+    this.props.addRouteLocations({'id': '', 'label': this.props.selectedLocation['object']['locationName'], 'location': this.props.selectedLocation['object'] });
   };
+
+    selectLocation = selectedOption => {
+        this.props.selectLocation(selectedOption);
+    };
 
   handleClose = () => {
     this.props.history.push('/config/route');
   };
 
   render() {
-    const { routeEntity, loading, updating, routeLocations, locations } = this.props;
-    const { isNew, idLocation } = this.state;
-
+    const { routeEntity, loading, updating, routeLocations, locations, selectedLocation } = this.props;
+    const { isNew } = this.state;
+    let locationOptions = [];
+      {locations ? locations.map(otherEntity => (
+        locationOptions.push({ value: otherEntity.id.toString() , label: otherEntity.locationName, object: otherEntity })
+        )) : locationOptions = []; }
     return (
+
       <div>
         <Row className="justify-content-center">
           <Col md="8">
@@ -111,15 +116,11 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                       <Label for="route-locations">Route Locations</Label>
                       <Row className="justify-content-center">
                           <Col md="6">
-                          <AvInput id="location" value={idLocation} type="select" className="form-control" name="location.id">
-                              {locations
-                                  ? locations.map(otherEntity => (
-                                      <option value={otherEntity.id} key={otherEntity.id}>
-                                          {otherEntity.locationName}
-                                      </option>
-                                  ))
-                                  : null}
-                          </AvInput>
+                              <Select
+                                  value={selectedLocation}
+                                  onChange={this.selectLocation}
+                                  options={locationOptions}
+                              />
                           </Col>
                           <Col md="2">
                               <div className="btn-group flex-btn-group-container">
@@ -141,9 +142,9 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           value={routeLocations && routeLocations.map(e => e)}
                       >
                           {routeLocations
-                              ? routeLocations.map(otherEntity => (
-                                  <option value={otherEntity.id} key={otherEntity.id}>
-                                      {otherEntity.sequenceNumber} - {otherEntity.location.locationName}
+                              ? routeLocations.map((otherEntity, index) => (
+                                  <option value={otherEntity.id} key={index}>
+                                      {otherEntity.location.locationName}
                                   </option>
                               ))
                               : null}
@@ -172,14 +173,31 @@ const mapStateToProps = (storeState: IRootState) => ({
   updating: storeState.route.updating,
   updateSuccess: storeState.route.updateSuccess,
   routeLocations: storeState.routeLocation.entities,
-  locations: storeState.location.entities
+  locations: storeState.location.entities,
+  selectedLocation: storeState.route.selectedLocation
 });
+
+export const addRouteLocations = route => {
+    return {
+        type: 'XXX',
+        payload: route
+    };
+};
+
+export const selectLocation = locationOption => {
+    return {
+        type: 'XXXT',
+        payload: locationOption
+    };
+};
 
 const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
   getLocations,
+  addRouteLocations,
+  selectLocation,
   getRouteLocations,
   reset
 };
