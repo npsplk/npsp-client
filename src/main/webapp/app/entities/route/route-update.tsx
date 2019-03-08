@@ -62,12 +62,13 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   addRouteLocation = () => {
-    const locationObject = this.props.selectedLocation['object'];
-    this.props.addRouteLocation({ 'id': 'new-' + locationObject['id'], 'label': locationObject['locationName'], 'location': locationObject });
+    const locationObject = this.props.selectedLocationOption.location;
+    debugger;
+    this.props.addRouteLocation({ 'id': 'new-' + locationObject.id, 'label': locationObject.label, 'location': locationObject });
   };
 
   removeRouteLocations = () => {
-      const obj = { 'id': '1' };
+    const obj = { 'id': '1' };
     this.props.removeRouteLocations({ obj });
   };
 
@@ -80,11 +81,11 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   render() {
-    const { routeEntity, loading, updating, routeLocations, locations, selectedLocation } = this.props;
+    const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption } = this.props;
     const { isNew } = this.state;
     let locationOptions = [];
       {locations ? locations.map(otherEntity => (
-        locationOptions.push({ value: otherEntity.id.toString() , label: otherEntity.locationName, object: otherEntity })
+        locationOptions.push({ value: otherEntity.id.toString() , label: otherEntity.locationName, location: otherEntity })
         )) : locationOptions = []; }
     return (
 
@@ -123,7 +124,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                       <Row className="justify-content-center">
                           <Col md="6">
                               <Select
-                                  value={selectedLocation}
+                                  value={selectedLocationOption}
                                   onChange={this.selectLocation}
                                   options={locationOptions}
                               />
@@ -180,7 +181,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   updateSuccess: storeState.route.updateSuccess,
   routeLocations: storeState.routeLocation.entities,
   locations: storeState.location.entities,
-  selectedLocation: storeState.route.selectedLocation,
+  selectedLocationOption: storeState.route.selectedLocationOption,
   selectedRouteLocations: storeState.routeLocation.selectedRouteLocations
 });
 

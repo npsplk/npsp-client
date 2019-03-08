@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IRoute, defaultValue } from 'app/shared/model/route.model';
+import { ILocation } from 'app/shared/model/location.model';
 
 export const ACTION_TYPES = {
   FETCH_ROUTE_LIST: 'route/FETCH_ROUTE_LIST',
@@ -16,6 +17,12 @@ export const ACTION_TYPES = {
   RESET: 'route/RESET'
 };
 
+const selectedLocationOption = {
+    value: '',
+    label: '',
+    location: [] as ReadonlyArray<ILocation>
+};
+
 const initialState = {
   loading: false,
   errorMessage: null,
@@ -24,10 +31,11 @@ const initialState = {
   updating: false,
   totalItems: 0,
   updateSuccess: false,
-  selectedLocation: []
+  selectedLocationOption: [] as ReadonlyArray<SelectedLocationOption>
 };
 
 export type RouteState = Readonly<typeof initialState>;
+export type SelectedLocationOption = Readonly<typeof selectedLocationOption>;
 
 // Reducer
 
@@ -94,7 +102,7 @@ export default (state: RouteState = initialState, action): RouteState => {
       const newLocation = action.payload;
         return {
           ...state,
-          selectedLocation: newLocation
+          selectedLocationOption: newLocation
       };
     case ACTION_TYPES.RESET:
       return {
