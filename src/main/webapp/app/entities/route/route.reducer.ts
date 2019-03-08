@@ -6,6 +6,7 @@ import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util'
 
 import { IRoute, defaultValue } from 'app/shared/model/route.model';
 import { ILocation } from 'app/shared/model/location.model';
+import { IRouteLocation } from 'app/shared/model/route-location.model';
 
 export const ACTION_TYPES = {
   FETCH_ROUTE_LIST: 'route/FETCH_ROUTE_LIST',
@@ -14,13 +15,22 @@ export const ACTION_TYPES = {
   UPDATE_ROUTE: 'route/UPDATE_ROUTE',
   DELETE_ROUTE: 'route/DELETE_ROUTE',
   SELECT_LOCATION: 'route/SELECT_LOCATION',
-  RESET: 'route/RESET'
+  RESET: 'route/RESET',
+  ADD_ROUTELOCATION: 'route/ADD_ROUTELOCATION',
+  REMOVE_ROUTELOCATIONS: 'route/REMOVE_ROUTELOCATIONS',
+  SELECT_ROUTELOCATIONS: 'route/SELECT_ROUTELOCATIONS'
 };
 
+export interface ISelectedRouteLocationOption {
+  value?: string;
+  label?: string;
+  routeLocation?: Readonly<IRouteLocation>;
+}
+
 export interface ISelectedLocationOption {
-    value?: string;
-    label?: string;
-    location: Readonly<ILocation>;
+  value?: string;
+  label?: string;
+  location: Readonly<ILocation>;
 }
 export const defaultLocation: Readonly<ILocation> = {};
 export const defaultLocationSelectOption: Readonly<ISelectedLocationOption> = { location: defaultLocation };
@@ -33,7 +43,8 @@ const initialState = {
   updating: false,
   totalItems: 0,
   updateSuccess: false,
-  selectedLocationOption: defaultLocationSelectOption
+  selectedLocationOption: defaultLocationSelectOption,
+  selectedRouteLocationOptions: [] as ReadonlyArray<ISelectedRouteLocationOption>
 };
 
 export type RouteState = Readonly<typeof initialState>;
@@ -105,6 +116,35 @@ export default (state: RouteState = initialState, action): RouteState => {
           ...state,
           selectedLocationOption: newLocation
       };
+    case (ACTION_TYPES.ADD_ROUTELOCATION):
+      const routeEntity = state.entity;
+        routeEntity.routeLocations.push(action.payload);
+      return {
+          ...state,
+          entity: routeEntity
+      };
+    case (ACTION_TYPES.SELECT_ROUTELOCATIONS):
+      const selectedEntities = action.payload;
+      return {
+          ...state,
+          selectedRouteLocationOptions: selectedEntities
+      };
+    case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
+      const existingEntity = state.entity;
+      let existingList = state.entity.routeLocations.slice();
+      action.payload.map(listIndex => (
+          existingList = existingList.filter((val, index) => index !== listIndex)
+      ));
+      return {
+          ...state,
+          entity: {
+            routeLocations: existingList,
+            id: existingEntity.id,
+            routeName: existingEntity.routeName,
+            routeNumber: existingEntity.routeNumber
+          },
+          selectedRouteLocationOptions: []
+    };
     case ACTION_TYPES.RESET:
       return {
         ...initialState
@@ -165,6 +205,21 @@ export const deleteEntity: ICrudDeleteAction<IRoute> = id => async dispatch => {
 export const selectLocation = locationOption => ({
   type: ACTION_TYPES.SELECT_LOCATION,
   payload: locationOption
+});
+
+export const addRouteLocation = route => ({
+  type: ACTION_TYPES.ADD_ROUTELOCATION,
+  payload: route
+});
+
+export const removeRouteLocations = routeLocations => ({
+  type: ACTION_TYPES.REMOVE_ROUTELOCATIONS,
+  payload: routeLocations
+});
+
+export const selectRouteLocations = routeLocations => ({
+  type: ACTION_TYPES.SELECT_ROUTELOCATIONS,
+  payload: routeLocations
 });
 
 export const reset = () => ({

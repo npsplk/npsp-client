@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction, IPayload } from 'react-jhipster';
+import { ICrudGetAction, ICrudPutAction, ICrudDeleteAction, IPayload } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -14,17 +14,8 @@ export const ACTION_TYPES = {
   CREATE_ROUTELOCATION: 'routeLocation/CREATE_ROUTELOCATION',
   UPDATE_ROUTELOCATION: 'routeLocation/UPDATE_ROUTELOCATION',
   DELETE_ROUTELOCATION: 'routeLocation/DELETE_ROUTELOCATION',
-  RESET: 'routeLocation/RESET',
-  ADD_ROUTELOCATION: 'routeLocation/ADD_ROUTELOCATION',
-  REMOVE_ROUTELOCATIONS: 'routeLocation/REMOVE_ROUTELOCATIONS',
-  SELECT_ROUTELOCATIONS: 'routeLocation/SELECT_ROUTELOCATIONS'
+  RESET: 'routeLocation/RESET'
 };
-
-export interface ISelectedRouteLocationOption {
-    value?: string;
-    label?: string;
-    routeLocation?: Readonly<IRouteLocation>;
-}
 
 const initialState = {
   loading: false,
@@ -33,8 +24,7 @@ const initialState = {
   entity: defaultValue,
   updating: false,
   totalItems: 0,
-  updateSuccess: false,
-  selectedRouteLocationOptions: [] as ReadonlyArray<ISelectedRouteLocationOption>
+  updateSuccess: false
 };
 
 export type RouteLocationState = Readonly<typeof initialState>;
@@ -100,29 +90,6 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
         updateSuccess: true,
         entity: {}
       };
-    case (ACTION_TYPES.ADD_ROUTELOCATION):
-      const newEntities = state.entities.slice();
-      newEntities.push(action.payload);
-      return {
-        ...state,
-        entities: newEntities
-      };
-    case (ACTION_TYPES.SELECT_ROUTELOCATIONS):
-      const selectedEntities = action.payload;
-      return {
-          ...state,
-          selectedRouteLocationOptions: selectedEntities
-    };
-    case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
-      let existingList = state.entities.slice();
-      action.payload.map(listIndex => (
-          existingList = existingList.filter((val, index) => index !== listIndex)
-      ));
-      return {
-          ...state,
-          entities: existingList,
-          selectedRouteLocationOptions: []
-    };
     case ACTION_TYPES.RESET:
       return {
         ...initialState
@@ -179,21 +146,6 @@ export const deleteEntity: ICrudDeleteAction<IRouteLocation> = id => async dispa
   dispatch(getEntities());
   return result;
 };
-
-export const addRouteLocation = route => ({
-  type: ACTION_TYPES.ADD_ROUTELOCATION,
-  payload: route
-});
-
-export const removeRouteLocations = routeLocations => ({
-  type: ACTION_TYPES.REMOVE_ROUTELOCATIONS,
-  payload: routeLocations
-});
-
-export const selectRouteLocations = routeLocations => ({
-  type: ACTION_TYPES.SELECT_ROUTELOCATIONS,
-  payload: routeLocations
-});
 
 export const reset = () => ({
   type: ACTION_TYPES.RESET

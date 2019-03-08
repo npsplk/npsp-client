@@ -8,9 +8,8 @@ import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validatio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { getEntity, updateEntity, createEntity, reset, selectLocation } from './route.reducer';
+import { getEntity, updateEntity, createEntity, reset, selectLocation, addRouteLocation, removeRouteLocations, selectRouteLocations } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
-import { getEntities as getRouteLocations, addRouteLocation, removeRouteLocations, selectRouteLocations } from 'app/entities/route-location/route-location.reducer';
 // tslint:disable-next-line:no-unused-variable
 
 export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -36,10 +35,8 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   componentDidMount() {
     if (this.state.isNew) {
       this.props.reset();
-      this.props.getRouteLocations('0');
     } else {
       this.props.getEntity(this.props.match.params.id);
-      this.props.getRouteLocations(this.props.match.params.id);
     }
 
     this.props.getLocations();
@@ -47,6 +44,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   }
 
   saveEntity = (event, errors, values) => {
+      values.routeLocations = this.props.routeLocations;
     if (errors.length === 0) {
       const { routeEntity } = this.props;
       const entity = {
@@ -63,7 +61,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 
   addRouteLocation = () => {
     const locationObject = this.props.selectedLocationOption.location;
-    this.props.addRouteLocation({ id: 'new-' + locationObject.id, label: locationObject.locationName, location: locationObject });
+    this.props.addRouteLocation({ id: 'new-' + locationObject.id, sequenceNumber: 0, location: locationObject });
   };
 
   removeRouteLocations = () => {
@@ -87,7 +85,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   render() {
-    const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption, selectedRouteLocationOptions } = this.props;
+    const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption } = this.props;
     const { isNew } = this.state;
     let locationOptions = [];
       {locations ? locations.map(otherEntity => (
@@ -152,6 +150,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           multiple
                           className="form-control"
                           name="routeLocations"
+                          value={routeLocations}
                           onChange={this.selectRouteLocations}
                       >
                           {routeLocations
@@ -185,10 +184,10 @@ const mapStateToProps = (storeState: IRootState) => ({
   loading: storeState.route.loading,
   updating: storeState.route.updating,
   updateSuccess: storeState.route.updateSuccess,
-  routeLocations: storeState.routeLocation.entities,
+  routeLocations: storeState.route.entity.routeLocations,
   locations: storeState.location.entities,
   selectedLocationOption: storeState.route.selectedLocationOption,
-  selectedRouteLocationOptions: storeState.routeLocation.selectedRouteLocationOptions
+  selectedRouteLocationOptions: storeState.route.selectedRouteLocationOptions
 });
 
 const mapDispatchToProps = {
@@ -200,7 +199,6 @@ const mapDispatchToProps = {
   removeRouteLocations,
   selectLocation,
   selectRouteLocations,
-  getRouteLocations,
   reset
 };
 
