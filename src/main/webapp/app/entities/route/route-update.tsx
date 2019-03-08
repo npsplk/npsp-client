@@ -67,8 +67,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   removeRouteLocations = () => {
-    const obj = { 'id': '1' };
-    this.props.removeRouteLocations({ obj });
+    this.props.removeRouteLocations(this.props.selectedRouteLocationOptions);
   };
 
   selectLocation = selectedOption => {
@@ -76,7 +75,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   selectRouteLocations = selectedOptions => {
-    this.props.selectRouteLocations(selectedOptions);
+    this.props.selectRouteLocations([0, 1, 2]);
   };
 
   handleClose = () => {
@@ -84,7 +83,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   render() {
-    const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption } = this.props;
+    const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption, selectedRouteLocationOptions } = this.props;
     const { isNew } = this.state;
     let locationOptions = [];
       {locations ? locations.map(otherEntity => (
@@ -149,7 +148,8 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           multiple
                           className="form-control"
                           name="routeLocations"
-                          value={routeLocations && routeLocations.map(e => e)}
+                          value={selectedRouteLocationOptions.map((e, index) => index)}
+                          onChange={this.selectRouteLocations}
                       >
                           {routeLocations
                               ? routeLocations.map((otherEntity, index) => (
@@ -185,7 +185,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   routeLocations: storeState.routeLocation.entities,
   locations: storeState.location.entities,
   selectedLocationOption: storeState.route.selectedLocationOption,
-  selectedRouteLocations: storeState.routeLocation.selectedRouteLocations
+  selectedRouteLocationOptions: storeState.routeLocation.selectedRouteLocationOptions
 });
 
 const mapDispatchToProps = {
