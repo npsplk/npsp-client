@@ -74,8 +74,12 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
     this.props.selectLocation(selectedOption);
   };
 
-  selectRouteLocations = selectedOptions => {
-    this.props.selectRouteLocations([0, 1, 2]);
+  selectRouteLocations = SelectEvent => {
+      const selectedIndexes = [];
+      for (const option of SelectEvent.target.selectedOptions) {
+          selectedIndexes.push(option.index);
+      }
+    this.props.selectRouteLocations(selectedIndexes);
   };
 
   handleClose = () => {
@@ -148,7 +152,6 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                           multiple
                           className="form-control"
                           name="routeLocations"
-                          value={selectedRouteLocationOptions.map((e, index) => index)}
                           onChange={this.selectRouteLocations}
                       >
                           {routeLocations

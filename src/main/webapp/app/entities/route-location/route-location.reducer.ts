@@ -23,7 +23,7 @@ export const ACTION_TYPES = {
 export interface ISelectedRouteLocationOption {
     value?: string;
     label?: string;
-    routeLocation: Readonly<IRouteLocation>;
+    routeLocation?: Readonly<IRouteLocation>;
 }
 
 const initialState = {
@@ -114,13 +114,14 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
           selectedRouteLocationOptions: selectedEntities
     };
     case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
-      const existingList = state.entities.slice();
+      let existingList = state.entities.slice();
       action.payload.map(listIndex => (
-        delete existingList[listIndex]
+          existingList = existingList.filter((val, index) => index !== listIndex)
       ));
       return {
           ...state,
-          entities: existingList
+          entities: existingList,
+          selectedRouteLocationOptions: []
     };
     case ACTION_TYPES.RESET:
       return {
