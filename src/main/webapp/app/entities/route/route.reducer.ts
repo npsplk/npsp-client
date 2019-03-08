@@ -17,11 +17,13 @@ export const ACTION_TYPES = {
   RESET: 'route/RESET'
 };
 
-const selectedLocationOption = {
-    value: '',
-    label: '',
-    location: [] as ReadonlyArray<ILocation>
-};
+export interface ISelectedLocationOption {
+    value?: string;
+    label?: string;
+    location: Readonly<ILocation>;
+}
+export const defaultLocation: Readonly<ILocation> = {};
+export const defaultLocationSelectOption: Readonly<ISelectedLocationOption> = { location: defaultLocation };
 
 const initialState = {
   loading: false,
@@ -31,11 +33,10 @@ const initialState = {
   updating: false,
   totalItems: 0,
   updateSuccess: false,
-  selectedLocationOption: [] as ReadonlyArray<SelectedLocationOption>
+  selectedLocationOption: defaultLocationSelectOption
 };
 
 export type RouteState = Readonly<typeof initialState>;
-export type SelectedLocationOption = Readonly<typeof selectedLocationOption>;
 
 // Reducer
 
@@ -161,12 +162,10 @@ export const deleteEntity: ICrudDeleteAction<IRoute> = id => async dispatch => {
   return result;
 };
 
-export const selectLocation = locationOption => {
-    return {
-        type: ACTION_TYPES.SELECT_LOCATION,
-        payload: locationOption
-    };
-};
+export const selectLocation = locationOption => ({
+  type: ACTION_TYPES.SELECT_LOCATION,
+  payload: locationOption
+});
 
 export const reset = () => ({
   type: ACTION_TYPES.RESET

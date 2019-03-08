@@ -6,16 +6,17 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
 import reducer, {
-  ACTION_TYPES,
-  createEntity,
-  deleteEntity,
-  getEntities,
-  getEntity,
-  updateEntity,
-  reset
+    ACTION_TYPES,
+    createEntity,
+    deleteEntity,
+    getEntities,
+    getEntity,
+    updateEntity,
+    reset, defaultLocationSelectOption
 } from 'app/entities/route/route.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IRoute, defaultValue } from 'app/shared/model/route.model';
+import { ILocation } from 'app/shared/model/location.model';
 
 // tslint:disable no-invalid-template-strings
 describe('Entities reducer tests', () => {
@@ -34,7 +35,8 @@ describe('Entities reducer tests', () => {
     entity: defaultValue,
     totalItems: 0,
     updating: false,
-    updateSuccess: false
+    updateSuccess: false,
+    selectedLocationOption: defaultLocationSelectOption
   };
 
   function testInitialState(state) {

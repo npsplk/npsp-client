@@ -5,8 +5,6 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IRouteLocation, defaultValue } from 'app/shared/model/route-location.model';
-import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
-import React from 'react';
 
 type ICrudGetAllByParentAction<T> = (route?: string) => IPayload<T> | ((dispatch: any) => IPayload<T>);
 
@@ -18,7 +16,8 @@ export const ACTION_TYPES = {
   DELETE_ROUTELOCATION: 'routeLocation/DELETE_ROUTELOCATION',
   RESET: 'routeLocation/RESET',
   ADD_ROUTELOCATION: 'routeLocation/ADD_ROUTELOCATION',
-  REMOVE_ROUTELOCATIONS: 'routeLocation/REMOVE_ROUTELOCATIONS'
+  REMOVE_ROUTELOCATIONS: 'routeLocation/REMOVE_ROUTELOCATIONS',
+  SELECT_ROUTELOCATIONS: 'routeLocation/SELECT_ROUTELOCATIONS'
 };
 
 const initialState = {
@@ -102,13 +101,19 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
         ...state,
         entities: newEntities
       };
+    case (ACTION_TYPES.SELECT_ROUTELOCATIONS):
+      const selectedEntities = state.entities.slice();
+        selectedEntities.push(action.payload);
+      return {
+          ...state,
+          entities: newEntities
+    };
     case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
       const existingList = state.entities.slice();
       const thiswa = action.payload;
       // action.payload.map(routeLocation => (
         delete existingList[1];
       // ));
-      debugger;
       return {
           ...state,
           entities: existingList
@@ -170,19 +175,20 @@ export const deleteEntity: ICrudDeleteAction<IRouteLocation> = id => async dispa
   return result;
 };
 
-export const addRouteLocation = route => {
-    return {
-        type: ACTION_TYPES.ADD_ROUTELOCATION,
-        payload: route
-    };
-};
+export const addRouteLocation = route => ({
+  type: ACTION_TYPES.ADD_ROUTELOCATION,
+  payload: route
+});
 
-export const removeRouteLocations = routeLocations => {
-    return {
-        type: ACTION_TYPES.REMOVE_ROUTELOCATIONS,
-        payload: routeLocations
-    };
-};
+export const removeRouteLocations = routeLocations => ({
+  type: ACTION_TYPES.REMOVE_ROUTELOCATIONS,
+  payload: routeLocations
+});
+
+export const selectRouteLocations = routeLocations => ({
+  type: ACTION_TYPES.SELECT_ROUTELOCATIONS,
+  payload: routeLocations
+});
 
 export const reset = () => ({
   type: ACTION_TYPES.RESET

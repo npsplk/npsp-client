@@ -10,7 +10,7 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset, selectLocation } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
-import { getEntities as getRouteLocations, addRouteLocation, removeRouteLocations } from 'app/entities/route-location/route-location.reducer';
+import { getEntities as getRouteLocations, addRouteLocation, removeRouteLocations, selectRouteLocations } from 'app/entities/route-location/route-location.reducer';
 // tslint:disable-next-line:no-unused-variable
 
 export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -63,8 +63,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 
   addRouteLocation = () => {
     const locationObject = this.props.selectedLocationOption.location;
-    debugger;
-    this.props.addRouteLocation({ 'id': 'new-' + locationObject.id, 'label': locationObject.label, 'location': locationObject });
+    this.props.addRouteLocation({ id: 'new-' + locationObject.id, label: locationObject.locationName, location: locationObject });
   };
 
   removeRouteLocations = () => {
@@ -74,6 +73,10 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 
   selectLocation = selectedOption => {
     this.props.selectLocation(selectedOption);
+  };
+
+  selectRouteLocations = selectedOptions => {
+    this.props.selectRouteLocations(selectedOptions);
   };
 
   handleClose = () => {
@@ -193,6 +196,7 @@ const mapDispatchToProps = {
   addRouteLocation,
   removeRouteLocations,
   selectLocation,
+  selectRouteLocations,
   getRouteLocations,
   reset
 };
