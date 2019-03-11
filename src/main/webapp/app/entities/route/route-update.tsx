@@ -63,7 +63,13 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 
   addRouteLocation = () => {
     const locationObject = this.props.selectedLocationOption.location;
-    this.props.addRouteLocation({ id: 'new-' + locationObject.id, sequenceNumber: 0, location: locationObject });
+    const routeEntity = this.props.routeEntity;
+    this.props.addRouteLocation({
+      id: 'new-' + locationObject.id,
+      sequenceNumber: 0,
+      location: locationObject,
+      route: { id: routeEntity.id, routeName: routeEntity.routeName, routeNumber: routeEntity.routeNumber }
+    });
   };
 
   removeRouteLocations = () => {
