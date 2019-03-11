@@ -54,10 +54,10 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
       // assign sequence numbers to route locations in order
       let i = 1;
       routeLocations.forEach(routeLocation => {
-        if (routeLocation.id ?
-          routeLocation.id.toString().search('new-') !== -1 : false) {
-          routeLocation.id = null;
-        }
+        // if (routeLocation.id ?
+        //   routeLocation.id.toString().search('new-') !== -1 : false) {
+        routeLocation.id = null;
+        // }
         routeLocation.sequenceNumber = i++;
         newRouteLocations.push(routeLocation);
       });
