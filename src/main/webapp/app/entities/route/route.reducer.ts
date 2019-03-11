@@ -134,7 +134,7 @@ export default (state: RouteState = initialState, action): RouteState => {
       const existingEntity = state.entity;
       let existingList = state.entity.routeLocations.slice();
       action.payload.map(listValue => (
-        existingList = existingList.filter(val => val.id !== listValue)
+        existingList = existingList.filter(val => val.id.toString() !== listValue)
       ));
       return {
         ...state,

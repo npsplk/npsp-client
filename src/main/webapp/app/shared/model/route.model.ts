@@ -8,7 +8,7 @@ export interface IRoute {
 }
 
 export const defaultValue: Readonly<IRoute> = {
-  id: 0,
+  id: null,
   routeName: '',
   routeNumber: '',
   routeLocations: []

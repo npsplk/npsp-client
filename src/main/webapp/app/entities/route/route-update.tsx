@@ -46,8 +46,18 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   }
 
   saveEntity = (event, errors, values) => {
-    values.routeLocations = this.props.routeLocations;
     if (errors.length === 0) {
+      values.routeLocations = this.props.routeLocations;
+      // assign sequence numbers to route locations in order
+      for (let i = 0; i < values.routeLocations.length; i++) {
+        const routeLocation = values.routeLocations[i];
+        if (routeLocation.id && typeof routeLocation.id === 'string' ?
+          routeLocation.id.search('new-') !== -1 : false) {
+          routeLocation.id = null;
+        }
+        routeLocation.sequenceNumber = i + 1;
+      }
+
       const { routeEntity } = this.props;
       const entity = {
         ...routeEntity,
@@ -66,7 +76,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
     const routeEntity = this.props.routeEntity;
     this.props.addRouteLocation({
       id: 'new-' + locationObject.id,
-      sequenceNumber: 0,
+      sequenceNumber: this.props.routeLocations.length + 1,
       location: locationObject,
       route: { id: routeEntity.id, routeName: routeEntity.routeName, routeNumber: routeEntity.routeNumber }
     });
