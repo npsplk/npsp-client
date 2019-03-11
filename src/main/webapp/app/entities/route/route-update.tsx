@@ -10,9 +10,11 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset, selectLocation, addRouteLocation, removeRouteLocations, selectRouteLocations } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
+
 // tslint:disable-next-line:no-unused-variable
 
-export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
+}
 
 export interface IRouteUpdateState {
   isNew: boolean;
@@ -44,7 +46,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   }
 
   saveEntity = (event, errors, values) => {
-      values.routeLocations = this.props.routeLocations;
+    values.routeLocations = this.props.routeLocations;
     if (errors.length === 0) {
       const { routeEntity } = this.props;
       const entity = {
@@ -73,10 +75,10 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   };
 
   selectRouteLocations = SelectEvent => {
-      const selectedIndexes = [];
-      for (const option of SelectEvent.target.selectedOptions) {
-          selectedIndexes.push(option.index);
-      }
+    const selectedIndexes = [];
+    for (const option of SelectEvent.target.selectedOptions) {
+      selectedIndexes.push(option.value);
+    }
     this.props.selectRouteLocations(selectedIndexes);
   };
 
@@ -88,9 +90,11 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
     const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption } = this.props;
     const { isNew } = this.state;
     let locationOptions = [];
-      {locations ? locations.map(otherEntity => (
-        locationOptions.push({ value: otherEntity.id.toString() , label: otherEntity.locationName, location: otherEntity })
-        )) : locationOptions = []; }
+    {
+      locations ? locations.map(otherEntity => (
+        locationOptions.push({ value: otherEntity.id.toString(), label: otherEntity.locationName, location: otherEntity })
+      )) : locationOptions = [];
+    }
     return (
 
       <div>
@@ -108,67 +112,67 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                 {!isNew ? (
                   <AvGroup>
                     <Label for="id">ID</Label>
-                    <AvInput id="route-id" type="text" className="form-control" name="id" required readOnly />
+                    <AvInput id="route-id" type="text" className="form-control" name="id" required readOnly/>
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="routeNameLabel" for="routeName">
                     Route Name
                   </Label>
-                  <AvField id="route-routeName" type="text" name="routeName" />
+                  <AvField id="route-routeName" type="text" name="routeName"/>
                 </AvGroup>
                 <AvGroup>
                   <Label id="routeNumberLabel" for="routeNumber">
                     Route Number
                   </Label>
-                  <AvField id="route-routeNumber" type="text" name="routeNumber" />
+                  <AvField id="route-routeNumber" type="text" name="routeNumber"/>
                 </AvGroup>
-                  <AvGroup>
-                      <Label for="route-locations">Route Locations</Label>
-                      <Row className="justify-content-center">
-                          <Col md="6">
-                              <Select
-                                  value={selectedLocationOption}
-                                  onChange={this.selectLocation}
-                                  options={locationOptions}
-                              />
-                          </Col>
-                          <Col md="2">
-                              <div className="btn-group flex-btn-group-container">
-                                  <Button onClick={this.addRouteLocation} id="add-location" replace color="info">
-                                      <FontAwesomeIcon icon="plus"/>&nbsp;
-                                  </Button>
-                                  <Button onClick={this.removeRouteLocations} id="remove-location" replace color="danger">
-                                      <FontAwesomeIcon icon="trash"/>&nbsp;
-                                  </Button>
-                              </div>
-                          </Col>
-                      </Row>
-                      <AvInput
-                          id="route-route-location"
-                          type="select"
-                          multiple
-                          className="form-control"
-                          name="routeLocations"
-                          value={routeLocations}
-                          onChange={this.selectRouteLocations}
-                      >
-                          {routeLocations
-                              ? routeLocations.map((otherEntity, index) => (
-                                  <option value={otherEntity.id} key={index}>
-                                      {otherEntity.location.locationName}
-                                  </option>
-                              ))
-                              : null}
-                      </AvInput>
-                  </AvGroup>
+                <AvGroup>
+                  <Label for="route-locations">Route Locations</Label>
+                  <Row className="justify-content-center">
+                    <Col md="6">
+                      <Select
+                        value={selectedLocationOption}
+                        onChange={this.selectLocation}
+                        options={locationOptions}
+                      />
+                    </Col>
+                    <Col md="2">
+                      <div className="btn-group flex-btn-group-container">
+                        <Button onClick={this.addRouteLocation} id="add-location" replace color="info">
+                          <FontAwesomeIcon icon="plus"/>&nbsp;
+                        </Button>
+                        <Button onClick={this.removeRouteLocations} id="remove-location" replace color="danger">
+                          <FontAwesomeIcon icon="trash"/>&nbsp;
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                  <AvInput
+                    id="route-route-location"
+                    type="select"
+                    multiple
+                    className="form-control"
+                    name="routeLocations"
+                    value={routeLocations}
+                    onChange={this.selectRouteLocations}
+                  >
+                    {routeLocations
+                      ? routeLocations.map((otherEntity, index) => (
+                        <option value={otherEntity.id} key={index}>
+                          {otherEntity.location.locationName}
+                        </option>
+                      ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/config/route" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left"/>&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save"/>&nbsp; Save
                 </Button>
               </AvForm>
             )}

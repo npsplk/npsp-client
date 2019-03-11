@@ -32,6 +32,7 @@ export interface ISelectedLocationOption {
   label?: string;
   location: Readonly<ILocation>;
 }
+
 export const defaultLocation: Readonly<ILocation> = {};
 export const defaultLocationSelectOption: Readonly<ISelectedLocationOption> = { location: defaultLocation };
 
@@ -112,39 +113,39 @@ export default (state: RouteState = initialState, action): RouteState => {
       };
     case (ACTION_TYPES.SELECT_LOCATION):
       const newLocation = action.payload;
-        return {
-          ...state,
-          selectedLocationOption: newLocation
+      return {
+        ...state,
+        selectedLocationOption: newLocation
       };
     case (ACTION_TYPES.ADD_ROUTELOCATION):
       const routeEntity = state.entity;
-        routeEntity.routeLocations.push(action.payload);
+      routeEntity.routeLocations.push(action.payload);
       return {
-          ...state,
-          entity: routeEntity
+        ...state,
+        entity: routeEntity
       };
     case (ACTION_TYPES.SELECT_ROUTELOCATIONS):
       const selectedEntities = action.payload;
       return {
-          ...state,
-          selectedRouteLocationOptions: selectedEntities
+        ...state,
+        selectedRouteLocationOptions: selectedEntities
       };
     case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
       const existingEntity = state.entity;
       let existingList = state.entity.routeLocations.slice();
-      action.payload.map(listIndex => (
-          existingList = existingList.filter((val, index) => index !== listIndex)
+      action.payload.map(listValue => (
+        existingList = existingList.filter(val => val.id !== listValue)
       ));
       return {
-          ...state,
-          entity: {
-            routeLocations: existingList,
-            id: existingEntity.id,
-            routeName: existingEntity.routeName,
-            routeNumber: existingEntity.routeNumber
-          },
-          selectedRouteLocationOptions: []
-    };
+        ...state,
+        entity: {
+          routeLocations: existingList,
+          id: existingEntity.id,
+          routeName: existingEntity.routeName,
+          routeNumber: existingEntity.routeNumber
+        },
+        selectedRouteLocationOptions: []
+      };
     case ACTION_TYPES.RESET:
       return {
         ...initialState
