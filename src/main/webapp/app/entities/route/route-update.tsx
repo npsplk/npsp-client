@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset, selectLocation, addRouteLocation, removeRouteLocations, selectRouteLocations } from './route.reducer';
 import { getEntities as getLocations } from 'app/entities/location/location.reducer';
+import { IRouteLocation } from 'app/shared/model/route-location.model';
+import route from 'app/entities/route/route';
 
 // tslint:disable-next-line:no-unused-variable
 
@@ -47,16 +49,19 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      values.routeLocations = this.props.routeLocations;
+      const newRouteLocations = [];
+      const routeLocations = this.props.routeLocations;
       // assign sequence numbers to route locations in order
-      for (let i = 0; i < values.routeLocations.length; i++) {
-        const routeLocation = values.routeLocations[i];
-        if (routeLocation.id && typeof routeLocation.id === 'string' ?
-          routeLocation.id.search('new-') !== -1 : false) {
+      let i = 1;
+      routeLocations.forEach(routeLocation => {
+        if (routeLocation.id ?
+          routeLocation.id.toString().search('new-') !== -1 : false) {
           routeLocation.id = null;
         }
-        routeLocation.sequenceNumber = i + 1;
-      }
+        routeLocation.sequenceNumber = i++;
+        newRouteLocations.push(routeLocation);
+      });
+      values.routeLocations = newRouteLocations;
 
       const { routeEntity } = this.props;
       const entity = {
@@ -74,9 +79,10 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   addRouteLocation = () => {
     const locationObject = this.props.selectedLocationOption.location;
     const routeEntity = this.props.routeEntity;
+
     this.props.addRouteLocation({
       id: 'new-' + locationObject.id,
-      sequenceNumber: this.props.routeLocations.length + 1,
+      sequenceNumber: 0,
       location: locationObject,
       route: { id: routeEntity.id, routeName: routeEntity.routeName, routeNumber: routeEntity.routeNumber }
     });
