@@ -8,26 +8,21 @@ import { ICrudGetAction, ICrudGetAllAction, setFileData, byteSize, ICrudPutActio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IVehicle } from 'app/shared/model/vehicle.model';
 import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
-import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 import { getEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
-import { IDriver } from 'app/shared/model/driver.model';
 import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
-import { IRoute } from 'app/shared/model/route.model';
 import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
-import { IBay } from 'app/shared/model/bay.model';
 import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './schedule-instance.reducer';
-import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertToDashedDate, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { convertToDashedDate, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
+import moment from 'moment';
 
 export interface IScheduleInstanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
 }
 
 export interface IScheduleInstanceUpdateState {
+  date: string;
   isNew: boolean;
   vehicleId: string;
   scheduleTemplateId: string;
@@ -40,6 +35,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
   constructor(props) {
     super(props);
     this.state = {
+      date: convertToDashedDate(moment()),
       vehicleId: '0',
       scheduleTemplateId: '0',
       driverId: '0',
@@ -126,7 +122,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                   <Label id="dateLabel" for="date">
                     Date
                   </Label>
-                  <AvField id="schedule-instance-date" type="date" className="form-control" name="date"/>
+                  <AvField id="schedule-instance-date" type="date" className="form-control" name="date" value={this.state.date}/>
                 </AvGroup>
                 <AvGroup>
                   <Label id="specialNotesLabel" for="specialNotes">
@@ -141,7 +137,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                     type="select"
                     className="form-control"
                     name="scheduleState"
-                    value={(!isNew && scheduleInstanceEntity.scheduleState) || 'DEPARTED'}
+                    value={(!isNew && scheduleInstanceEntity.scheduleState) || 'PENDING'}
                   >
                     <option value="PENDING">PENDING</option>
                     <option value="DEPARTED">DEPARTED</option>
@@ -153,7 +149,6 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                 <AvGroup>
                   <Label for="scheduleTemplate.id">Schedule Template</Label>
                   <AvInput id="schedule-instance-scheduleTemplate" type="select" className="form-control" name="scheduleTemplate.id">
-                    <option value="" key="0"/>
                     {scheduleTemplates
                       ? scheduleTemplates.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
