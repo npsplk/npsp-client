@@ -109,11 +109,20 @@ export default (state: ScheduleInstanceState = initialState, action): ScheduleIn
 };
 
 const apiUrl = 'api/schedule-instances';
+const apiUrlOperations = 'api/schedule-operations';
 
 // Actions
 
 export const getEntities: ICrudGetAllAction<IScheduleInstance> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_SCHEDULEINSTANCE_LIST,
+    payload: axios.get<IScheduleInstance>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getOperations: ICrudGetAllAction<IScheduleInstance> = (page, size, sort) => {
+  const requestUrl = `${apiUrlOperations}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_SCHEDULEINSTANCE_LIST,
     payload: axios.get<IScheduleInstance>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
