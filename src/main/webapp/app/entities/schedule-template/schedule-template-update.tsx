@@ -74,10 +74,9 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
   }
 
   saveEntity = (event, errors, values) => {
-    values.startTime = convertDateTimeToServer('2019-02-08T' + values.startTime);
-    values.endTime = convertDateTimeToServer('2019-02-08T' + values.endTime);
-
     if (errors.length === 0) {
+      values.startTime = convertDateTimeToServer('2019-02-08T' + values.startTime);
+      values.endTime = convertDateTimeToServer('2019-02-08T' + values.endTime);
       const { scheduleTemplateEntity } = this.props;
       const entity = {
         ...scheduleTemplateEntity,

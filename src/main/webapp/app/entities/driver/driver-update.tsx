@@ -43,9 +43,8 @@ export class DriverUpdate extends React.Component<IDriverUpdateProps, IDriverUpd
   }
 
   saveEntity = (event, errors, values) => {
-    values.licenseExpiryDate = convertDateTimeToServer(values.licenseExpiryDate);
-
     if (errors.length === 0) {
+      values.licenseExpiryDate = convertDateTimeToServer(values.licenseExpiryDate);
       const { driverEntity } = this.props;
       const entity = {
         ...driverEntity,

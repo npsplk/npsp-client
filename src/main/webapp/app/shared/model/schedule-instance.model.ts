@@ -28,4 +28,4 @@ export interface IScheduleInstance {
   bay?: IBay;
 }
 
-export const defaultValue: Readonly<IScheduleInstance> = {};
+export const defaultValue: Readonly<IScheduleInstance> = { };
