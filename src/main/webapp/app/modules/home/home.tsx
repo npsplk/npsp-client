@@ -104,7 +104,7 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
             {scheduleInstanceList.map((scheduleInstance, i) => (
               <tr key={`entity-${i}`}>
                 <td>
-                  <Button tag={Link} to={`${match.url}/${scheduleInstance.id}`} color="link" size="sm">
+                  <Button tag={Link} to={`${match.url}operation/schedule-instance/${scheduleInstance.id}`} color="link" size="sm">
                     {scheduleInstance.id}
                   </Button>
                 </td>
