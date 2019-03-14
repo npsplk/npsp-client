@@ -15,7 +15,7 @@ import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
 import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './schedule-instance.reducer';
 // tslint:disable-next-line:no-unused-variable
-import { convertToDashedDate, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
+import { convertToDashedDate, convertLocalTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import moment from 'moment';
 
 export interface IScheduleInstanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
@@ -75,6 +75,10 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
 
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
+      const date_string = convertToDashedDate(values.date) + 'T';
+      values.scheduledTime = convertDateTimeToServer(date_string + values.scheduledTime);
+      values.actualScheduledTime = convertDateTimeToServer(date_string + values.actualScheduledTime);
+      values.actualDepartureTime = convertDateTimeToServer(date_string + values.actualDepartureTime);
       const { scheduleInstanceEntity } = this.props;
       const entity = {
         ...scheduleInstanceEntity,
