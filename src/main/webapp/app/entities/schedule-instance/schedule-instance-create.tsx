@@ -153,6 +153,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                 <AvGroup>
                   <Label for="scheduleTemplate.id">Schedule Template</Label>
                   <AvInput id="schedule-instance-scheduleTemplate" type="select" className="form-control" name="scheduleTemplate.id">
+                    <option value="" key="0" />
                     {scheduleTemplates
                       ? scheduleTemplates.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
