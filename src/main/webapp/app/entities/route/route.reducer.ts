@@ -112,26 +112,21 @@ export default (state: RouteState = initialState, action): RouteState => {
         entity: {}
       };
     case (ACTION_TYPES.SELECT_LOCATION):
-      const newLocation = action.payload;
       return {
         ...state,
-        selectedLocationOption: newLocation
+        selectedLocationOption: action.payload
       };
     case (ACTION_TYPES.ADD_ROUTELOCATION):
-      const routeEntity = state.entity;
-      routeEntity.routeLocations.push(action.payload);
+      state.entity.routeLocations.push(action.payload);
       return {
-        ...state,
-        entity: routeEntity
+        ...state
       };
     case (ACTION_TYPES.SELECT_ROUTELOCATIONS):
-      const selectedEntities = action.payload;
       return {
         ...state,
-        selectedRouteLocationOptions: selectedEntities
+        selectedRouteLocationOptions: action.payload
       };
     case (ACTION_TYPES.REMOVE_ROUTELOCATIONS):
-      const existingEntity = state.entity;
       let existingList = state.entity.routeLocations.slice();
       action.payload.map(listValue => (
         existingList = existingList.filter(val => val.id.toString() !== listValue)
@@ -139,10 +134,8 @@ export default (state: RouteState = initialState, action): RouteState => {
       return {
         ...state,
         entity: {
-          routeLocations: existingList,
-          id: existingEntity.id,
-          routeName: existingEntity.routeName,
-          routeNumber: existingEntity.routeNumber
+          ...state.entity,
+          routeLocations: existingList
         },
         selectedRouteLocationOptions: []
       };
