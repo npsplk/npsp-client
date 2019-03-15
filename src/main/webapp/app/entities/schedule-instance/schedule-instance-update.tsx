@@ -8,18 +8,12 @@ import { ICrudGetAction, ICrudGetAllAction, setFileData, byteSize, ICrudPutActio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IVehicle } from 'app/shared/model/vehicle.model';
 import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
-import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 import { getEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
-import { IDriver } from 'app/shared/model/driver.model';
 import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
-import { IRoute } from 'app/shared/model/route.model';
 import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
-import { IBay } from 'app/shared/model/bay.model';
 import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './schedule-instance.reducer';
-import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertToDashedDate, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
