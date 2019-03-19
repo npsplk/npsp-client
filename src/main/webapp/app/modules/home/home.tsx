@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
+import { Button, Col, Row, Table, Label } from 'reactstrap';
+import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import {
   TextFormat,
@@ -19,14 +20,20 @@ import { APP_LOCAL_DATE_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constan
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface IScheduleInstanceProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {
+}
+
+export interface IPaginationOperationsExtendState extends IPaginationBaseState {
+  search: string;
   entitiesLoaded: boolean;
 }
 
-export type IScheduleInstanceState = IPaginationBaseState;
+export type IScheduleInstanceState = IPaginationOperationsExtendState;
 
 export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IScheduleInstanceState> {
   state: IScheduleInstanceState = {
-    ...getSortState(this.props.location, ITEMS_PER_PAGE)
+    ...getSortState(this.props.location, ITEMS_PER_PAGE),
+    search: '',
+    entitiesLoaded: false
   };
 
   componentDidMount() {
@@ -38,6 +45,7 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
   sort = prop => () => {
     this.setState(
       {
+        ...this.state,
         order: this.state.order === 'asc' ? 'desc' : 'asc',
         sort: prop
       },
@@ -47,30 +55,69 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
 
   sortEntities() {
     this.getEntities();
-    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}&search=${this.state.search}`);
   }
+
+  searchEntities = (event, errors, values) => {
+    this.setState({
+      ...this.state,
+      search: values.search
+    });
+    this.getEntities();
+    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}&search=${this.state.search}`);
+  };
 
   handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
 
   getEntities = () => {
-    const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.getOperations(activePage - 1, itemsPerPage, `${sort},${order}`);
+    this.setState({
+      ...this.state,
+      entitiesLoaded: true
+    });
+    const { activePage, itemsPerPage, sort, order, search } = this.state;
+    this.props.getOperations(search, activePage - 1, itemsPerPage, `${sort},${order}`);
   };
 
   render() {
-    const { scheduleInstanceList, match, totalItems, isAuthenticated, entitiesLoaded } = this.props;
+    const { scheduleInstanceList, match, totalItems, isAuthenticated } = this.props;
     if (isAuthenticated) {
-      if (!entitiesLoaded) {
+      if (!this.state.entitiesLoaded) {
         this.componentDidMount();
       }
       return (
         <div>
-          <h2 id="schedule-instance-heading">
-            Today's Schedule
-            <Link to={`${match.url}operation/schedule-instance/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-              <FontAwesomeIcon icon="plus"/>&nbsp; Create new Schedule Instance
-            </Link>
-          </h2>
+          <Table responsive>
+            <tbody>
+            <tr>
+              <td>
+                <h2 id="schedule-instance-heading">
+                  Today's Schedule
+                </h2>
+              </td>
+              <td>
+                <AvForm model={{ vehicle: '' }} onSubmit={this.searchEntities}>
+                  <Row>
+                    <Col>
+                      <AvGroup>
+                        <AvInput id="search-input" type="text" className="form-control-sm" name="search" placeholder="Search"/>
+                      </AvGroup>
+                    </Col>
+                    <Col>
+                      <Button color="primary" id="save-entity" type="submit">
+                        <FontAwesomeIcon icon="search"/>&nbsp; Save
+                      </Button>
+                    </Col>
+                  </Row>
+                </AvForm>
+              </td>
+              <td>
+                <Link to={`${match.url}operation/schedule-instance/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
+                  <FontAwesomeIcon icon="plus"/>&nbsp; Create new Schedule Instance
+                </Link>
+              </td>
+            </tr>
+            </tbody>
+          </Table>
           <div className="table-responsive">
             <Table responsive>
               <thead>
@@ -179,8 +226,7 @@ export class ScheduleInstance extends React.Component<IScheduleInstanceProps, IS
 const mapStateToProps = ({ scheduleInstance, authentication }: IRootState) => ({
   scheduleInstanceList: scheduleInstance.entities,
   totalItems: scheduleInstance.totalItems,
-  isAuthenticated: authentication.isAuthenticated,
-  entitiesLoaded: scheduleInstance.entities.length !== 0
+  isAuthenticated: authentication.isAuthenticated
 });
 
 const mapDispatchToProps = {

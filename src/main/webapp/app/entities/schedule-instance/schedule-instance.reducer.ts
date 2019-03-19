@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction, ICrudSearchAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -121,8 +121,8 @@ export const getEntities: ICrudGetAllAction<IScheduleInstance> = (page, size, so
   };
 };
 
-export const getOperations: ICrudGetAllAction<IScheduleInstance> = (page, size, sort) => {
-  const requestUrl = `${apiUrlOperations}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+export const getOperations: ICrudSearchAction<IScheduleInstance> = (search, page, size, sort) => {
+  const requestUrl = `${apiUrlOperations}${sort ? `?page=${page}&size=${size}&sort=${sort}&search=${search}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_SCHEDULEINSTANCE_LIST,
     payload: axios.get<IScheduleInstance>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
