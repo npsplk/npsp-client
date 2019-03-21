@@ -54,10 +54,7 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
       // assign sequence numbers to route locations in order
       let i = 1;
       routeLocations.forEach(routeLocation => {
-        // if (routeLocation.id ?
-        //   routeLocation.id.toString().search('new-') !== -1 : false) {
         routeLocation.id = null;
-        // }
         routeLocation.sequenceNumber = i++;
         newRouteLocations.push(routeLocation);
       });
@@ -111,12 +108,6 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
   render() {
     const { routeEntity, loading, updating, routeLocations, locations, selectedLocationOption } = this.props;
     const { isNew } = this.state;
-    let locationOptions = [];
-    {
-      locations ? locations.map(otherEntity => (
-        locationOptions.push({ value: otherEntity.id.toString(), label: otherEntity.locationName, location: otherEntity })
-      )) : locationOptions = [];
-    }
     return (
 
       <div>
@@ -156,7 +147,8 @@ export class RouteUpdate extends React.Component<IRouteUpdateProps, IRouteUpdate
                       <Select
                         value={selectedLocationOption}
                         onChange={this.selectLocation}
-                        options={locationOptions}
+                        options={locations ? locations.map(otherEntity => (
+                          { value: otherEntity.id.toString(), label: otherEntity.locationName, location: otherEntity })) : []}
                       />
                     </Col>
                     <Col md="2">
