@@ -26,7 +26,8 @@ import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IScheduleTemplateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IScheduleTemplateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
+}
 
 export interface IScheduleTemplateUpdateState {
   isNew: boolean;
@@ -117,7 +118,7 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                 {!isNew ? (
                   <AvGroup>
                     <Label for="id">ID</Label>
-                    <AvInput id="schedule-template-id" type="text" className="form-control" name="id" required readOnly />
+                    <AvInput id="schedule-template-id" type="text" className="form-control" name="id" required readOnly/>
                   </AvGroup>
                 ) : null}
                 <AvGroup>
@@ -152,60 +153,61 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                 </AvGroup>
                 <AvGroup>
                   <Label id="isActiveLabel" check>
-                    <AvInput id="schedule-template-isActive" type="checkbox" className="form-control" name="isActive" />
+                    <AvInput id="schedule-template-isActive" type="checkbox" className="form-control" name="isActive"/>
                     Is Active
                   </Label>
                 </AvGroup>
                 <AvGroup>
                   <Label for="vehicle.id">Vehicle</Label>
                   <AvInput id="schedule-template-vehicle" type="select" className="form-control" name="vehicle.id">
-                    <option value="" key="0" />
+                    <option value="" key="0"/>
                     {vehicles
                       ? vehicles.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                              {otherEntity.transportType.typeName} {otherEntity.registrationNumber}
-                          </option>
-                        ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.transportType.typeName} {otherEntity.registrationNumber}
+                        </option>
+                      ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="driver.id">Driver</Label>
                   <AvInput id="schedule-template-driver" type="select" className="form-control" name="driver.id">
-                    <option value="" key="0" />
+                    <option value="" key="0"/>
                     {drivers
                       ? drivers.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.driverName} {otherEntity.licenseNumber}
-                          </option>
-                        ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.driverName} {otherEntity.licenseNumber}
+                        </option>
+                      ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="route.id">Route</Label>
                   <AvInput id="schedule-template-route" type="select" className="form-control" name="route.id">
-                    <option value="" key="0" />
+                    <option value="" key="0"/>
                     {routes
                       ? routes.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.routeName} {otherEntity.routeLocations[0].location.locationName} -
-                              &nbsp;{otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName}
-                          </option>
-                        ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.routeName}&nbsp;
+                          {otherEntity.routeLocations[0] ? otherEntity.routeLocations[0].location.locationName : '(location not defined)'} -
+                          &nbsp;{otherEntity.routeLocations[0] ? otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName : '(location not defined)'}
+                        </option>
+                      ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="bay.id">Bay</Label>
                   <AvInput id="schedule-template-bay" type="select" className="form-control" name="bay.id">
-                    <option value="" key="0" />
+                    <option value="" key="0"/>
                     {bays
                       ? bays.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.bayName}
-                          </option>
-                        ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.bayName}
+                        </option>
+                      ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -219,13 +221,13 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     name="weekdays"
                     value={scheduleTemplateEntity.weekdays && scheduleTemplateEntity.weekdays.map(e => e.id)}
                   >
-                    <option value="" key="0" />
+                    <option value="" key="0"/>
                     {weekdays
                       ? weekdays.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.weekday}
-                          </option>
-                        ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.weekday}
+                        </option>
+                      ))
                       : null}
                   </AvInput>
                 </AvGroup>
@@ -239,23 +241,23 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                     name="vehicleFacilities"
                     value={scheduleTemplateEntity.vehicleFacilities && scheduleTemplateEntity.vehicleFacilities.map(e => e.id)}
                   >
-                    <option value="" key="0" />
+                    <option value="" key="0"/>
                     {vehicleFacilities
                       ? vehicleFacilities.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.facilityName}
-                          </option>
-                        ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.facilityName}
+                        </option>
+                      ))
                       : null}
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/operation/schedule-template" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left"/>&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save"/>&nbsp; Save
                 </Button>
               </AvForm>
             )}
