@@ -8,6 +8,7 @@ import { IVehicle, defaultValue } from 'app/shared/model/vehicle.model';
 
 export const ACTION_TYPES = {
   FETCH_VEHICLE_LIST: 'vehicle/FETCH_VEHICLE_LIST',
+  FETCH_ALL_VEHICLE_LIST: 'vehicle/FETCH_ALL_VEHICLE_LIST',
   FETCH_VEHICLE: 'vehicle/FETCH_VEHICLE',
   CREATE_VEHICLE: 'vehicle/CREATE_VEHICLE',
   UPDATE_VEHICLE: 'vehicle/UPDATE_VEHICLE',
@@ -32,6 +33,7 @@ export type VehicleState = Readonly<typeof initialState>;
 export default (state: VehicleState = initialState, action): VehicleState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_VEHICLE_LIST):
+    case REQUEST(ACTION_TYPES.FETCH_ALL_VEHICLE_LIST):
     case REQUEST(ACTION_TYPES.FETCH_VEHICLE):
       return {
         ...state,
@@ -49,6 +51,7 @@ export default (state: VehicleState = initialState, action): VehicleState => {
         updating: true
       };
     case FAILURE(ACTION_TYPES.FETCH_VEHICLE_LIST):
+    case FAILURE(ACTION_TYPES.FETCH_ALL_VEHICLE_LIST):
     case FAILURE(ACTION_TYPES.FETCH_VEHICLE):
     case FAILURE(ACTION_TYPES.CREATE_VEHICLE):
     case FAILURE(ACTION_TYPES.UPDATE_VEHICLE):
@@ -61,6 +64,13 @@ export default (state: VehicleState = initialState, action): VehicleState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.FETCH_VEHICLE_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_VEHICLE_LIST):
       return {
         ...state,
         loading: false,
@@ -98,6 +108,7 @@ export default (state: VehicleState = initialState, action): VehicleState => {
 };
 
 const apiUrl = 'api/vehicles';
+const apiUrlAll = 'api/all-vehicles';
 
 // Actions
 
@@ -105,6 +116,14 @@ export const getEntities: ICrudGetAllAction<IVehicle> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_VEHICLE_LIST,
+    payload: axios.get<IVehicle>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IVehicle> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_VEHICLE_LIST,
     payload: axios.get<IVehicle>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { IVehicle } from 'app/shared/model/vehicle.model';
-import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
+import { getAllEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
 import { IDriver } from 'app/shared/model/driver.model';
 import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
 import { IRoute } from 'app/shared/model/route.model';
