@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
@@ -8,17 +9,18 @@ import { ICrudGetAction, ICrudGetAllAction, setFileData, byteSize, ICrudPutActio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { getEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
-import { getEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
-import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
-import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
-import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
+import { getAllEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
+import { getAllEntities as getScheduleTemplates } from 'app/entities/schedule-template/schedule-template.reducer';
+import { getAllEntities as getDrivers } from 'app/entities/driver/driver.reducer';
+import { getAllEntities as getRoutes } from 'app/entities/route/route.reducer';
+import { getAllEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './schedule-instance.reducer';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertToDashedDate, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IScheduleInstanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IScheduleInstanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
+}
 
 export interface IScheduleInstanceUpdateState {
   isNew: boolean;
@@ -76,6 +78,21 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
       values.scheduledTime = convertDateTimeToServer(date_string + values.scheduledTime);
       values.actualScheduledTime = convertDateTimeToServer(date_string + values.actualScheduledTime);
       values.actualDepartureTime = convertDateTimeToServer(date_string + values.actualDepartureTime);
+      if (this.state.scheduleTemplateId !== '0') {
+        values.scheduleTemplate = { id: this.state.scheduleTemplateId };
+      }
+      if (this.state.driverId !== '0') {
+        values.driver = { id: this.state.driverId };
+      }
+      if (this.state.vehicleId !== '0') {
+        values.vehicle = { id: this.state.vehicleId };
+      }
+      if (this.state.routeId !== '0') {
+        values.route = { id: this.state.routeId };
+      }
+      if (this.state.bayId !== '0') {
+        values.bay = { id: this.state.bayId };
+      }
       const { scheduleInstanceEntity } = this.props;
       const entity = {
         ...scheduleInstanceEntity,
@@ -88,6 +105,26 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
         this.props.updateEntity(entity);
       }
     }
+  };
+
+  handleChangeVehicle = prop => {
+    this.setState({ vehicleId: prop.value });
+  };
+
+  handleChangeScheduleTemplate = prop => {
+    this.setState({ scheduleTemplateId: prop.value });
+  };
+
+  handleChangeDriver = prop => {
+    this.setState({ driverId: prop.value });
+  };
+
+  handleChangeRoute = prop => {
+    this.setState({ routeId: prop.value });
+  };
+
+  handleChangeBay = prop => {
+    this.setState({ bayId: prop.value });
   };
 
   handleClose = () => {
@@ -116,14 +153,14 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                 {!isNew ? (
                   <AvGroup>
                     <Label for="id">ID</Label>
-                    <AvInput id="schedule-instance-id" type="text" className="form-control" name="id" required readOnly />
+                    <AvInput id="schedule-instance-id" type="text" className="form-control" name="id" required readOnly/>
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="dateLabel" for="date">
                     Date
                   </Label>
-                  <AvField id="schedule-instance-date" type="date" className="form-control" name="date" />
+                  <AvField id="schedule-instance-date" type="date" className="form-control" name="date"/>
                 </AvGroup>
                 <AvGroup>
                   <Label id="scheduledTimeLabel" for="scheduledTime">
@@ -165,7 +202,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                   <Label id="specialNotesLabel" for="specialNotes">
                     Special Notes
                   </Label>
-                  <AvInput id="schedule-instance-specialNotes" type="textarea" name="specialNotes" />
+                  <AvInput id="schedule-instance-specialNotes" type="textarea" name="specialNotes"/>
                 </AvGroup>
                 <AvGroup>
                   <Label id="scheduleStateLabel">Schedule State</Label>
@@ -185,80 +222,116 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="vehicle.id">Vehicle</Label>
-                  <AvInput id="schedule-instance-vehicle" type="select" className="form-control" name="vehicle.id">
-                    <option value="" key="0" />
-                    {vehicles
-                      ? vehicles.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                              {otherEntity.transportType.typeName} {otherEntity.registrationNumber}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-instance-vehicle" name="vehicle.id"
+                          onChange={this.handleChangeDriver}
+                          defaultValue={
+                            scheduleInstanceEntity.vehicle ? {
+                              label: scheduleInstanceEntity.vehicle.transportType.typeName + ' ' + scheduleInstanceEntity.vehicle.registrationNumber,
+                              value: scheduleInstanceEntity.vehicle.id
+                            } : null}
+                          options={
+                            vehicles
+                              ? vehicles.map(otherEntity => (
+                                { label: otherEntity.transportType.typeName + ' ' + otherEntity.registrationNumber, value: otherEntity.id }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="scheduleTemplate.id">Schedule Template</Label>
-                  <AvInput id="schedule-instance-scheduleTemplate" type="select" className="form-control" name="scheduleTemplate.id">
-                    <option value="" key="0" />
-                    {scheduleTemplates
-                      ? scheduleTemplates.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {convertLocalTimeFromServer(otherEntity.startTime)} -
-                              &nbsp;{convertLocalTimeFromServer(otherEntity.endTime)}
-                              &nbsp;[Route - {otherEntity.route.routeName}]
-                              &nbsp;{otherEntity.bay.bayName}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-instance-scheduleTemplate" name="scheduleTemplate.id"
+                          onChange={this.handleChangeBay}
+                          defaultValue={
+                            scheduleInstanceEntity.bay ? {
+                              label: convertLocalTimeFromServer(scheduleInstanceEntity.scheduleTemplate.startTime) + ' - ' +
+                                convertLocalTimeFromServer(scheduleInstanceEntity.scheduleTemplate.endTime) + ' [Route - ' +
+                                scheduleInstanceEntity.scheduleTemplate.route.routeName + '] ' +
+                                scheduleInstanceEntity.scheduleTemplate.bay.bayName,
+                              value: scheduleInstanceEntity.scheduleTemplate.id
+                            } : null}
+                          options={
+                            scheduleTemplates
+                              ? scheduleTemplates.map(otherEntity => (
+                                {
+                                  label: convertLocalTimeFromServer(otherEntity.startTime) + ' - ' +
+                                    convertLocalTimeFromServer(otherEntity.endTime) + ' [Route - ' +
+                                    otherEntity.route.routeName + '] ' +
+                                    otherEntity.bay.bayName,
+                                  value: otherEntity.id
+                                }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="driver.id">Driver</Label>
-                  <AvInput id="schedule-instance-driver" type="select" className="form-control" name="driver.id">
-                    <option value="" key="0" />
-                    {drivers
-                      ? drivers.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                              {otherEntity.driverName} {otherEntity.licenseNumber}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-instance-driver" name="driver.id"
+                          onChange={this.handleChangeDriver}
+                          defaultValue={
+                            scheduleInstanceEntity.driver ? {
+                              label: scheduleInstanceEntity.driver.driverName + ' ' + scheduleInstanceEntity.driver.licenseNumber,
+                              value: scheduleInstanceEntity.driver.id
+                            } : null}
+                          options={
+                            drivers
+                              ? drivers.map(otherEntity => (
+                                { label: otherEntity.driverName + ' ' + otherEntity.licenseNumber, value: otherEntity.id }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="route.id">Route</Label>
-                  <AvInput id="schedule-instance-route" type="select" className="form-control" name="route.id">
-                    <option value="" key="0" />
-                    {routes
-                      ? routes.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                              {otherEntity.routeName} {otherEntity.routeLocations[0].location.locationName} -
-                              &nbsp;{otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-instance-route" name="route.id"
+                          onChange={this.handleChangeRoute}
+                          defaultValue={
+                            scheduleInstanceEntity.route ? {
+                              label: scheduleInstanceEntity.route.routeName + ' ' +
+                                (scheduleInstanceEntity.route.routeLocations[0] ? scheduleInstanceEntity.route.routeLocations[0].location.locationName :
+                                  '(location not defined)') + ' - ' +
+                                (scheduleInstanceEntity.route.routeLocations[0] ? scheduleInstanceEntity.route.routeLocations
+                                    [scheduleInstanceEntity.route.routeLocations.length - 1].location.locationName
+                                  : '(location not defined)'),
+                              value: scheduleInstanceEntity.route.id
+                            } : null}
+                          options={
+                            routes
+                              ? routes.map(otherEntity => (
+                                {
+                                  label: otherEntity.routeName + ' ' +
+                                    (otherEntity.routeLocations[0] ? otherEntity.routeLocations[0].location.locationName : '(location not defined)') + ' - ' +
+                                    (otherEntity.routeLocations[0] ? otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName
+                                      : '(location not defined)')
+                                  , value: otherEntity.id
+                                }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="bay.id">Bay</Label>
-                  <AvInput id="schedule-instance-bay" type="select" className="form-control" name="bay.id">
-                    <option value="" key="0" />
-                    {bays
-                      ? bays.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                              {otherEntity.bayName}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-instance-bay" name="bay.id"
+                          onChange={this.handleChangeBay}
+                          defaultValue={
+                            scheduleInstanceEntity.bay ? {
+                              label: scheduleInstanceEntity.bay.bayName,
+                              value: scheduleInstanceEntity.bay.id
+                            } : null}
+                          options={
+                            bays
+                              ? bays.map(otherEntity => (
+                                { label: otherEntity.bayName, value: otherEntity.id }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/operation/schedule-instance" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left"/>&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save"/>&nbsp; Save
                 </Button>
               </AvForm>
             )}

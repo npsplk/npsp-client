@@ -13,13 +13,13 @@ import { getAllEntities as getVehicles } from 'app/entities/vehicle/vehicle.redu
 import { IDriver } from 'app/shared/model/driver.model';
 import { getAllEntities as getDrivers } from 'app/entities/driver/driver.reducer';
 import { IRoute } from 'app/shared/model/route.model';
-import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
+import { getAllEntities as getRoutes } from 'app/entities/route/route.reducer';
 import { IBay } from 'app/shared/model/bay.model';
-import { getEntities as getBays } from 'app/entities/bay/bay.reducer';
+import { getAllEntities as getBays } from 'app/entities/bay/bay.reducer';
 import { IWeekday } from 'app/shared/model/weekday.model';
 import { getEntities as getWeekdays } from 'app/entities/weekday/weekday.reducer';
 import { IVehicleFacility } from 'app/shared/model/vehicle-facility.model';
-import { getEntities as getVehicleFacilities } from 'app/entities/vehicle-facility/vehicle-facility.reducer';
+import { getAllEntities as getVehicleFacilities } from 'app/entities/vehicle-facility/vehicle-facility.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './schedule-template.reducer';
 import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 // tslint:disable-next-line:no-unused-variable
@@ -85,6 +85,12 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
       if (this.state.vehicleId !== '0') {
         values.vehicle = { id: this.state.vehicleId };
       }
+      if (this.state.routeId !== '0') {
+        values.route = { id: this.state.routeId };
+      }
+      if (this.state.bayId !== '0') {
+        values.bay = { id: this.state.bayId };
+      }
       const { scheduleTemplateEntity } = this.props;
       const entity = {
         ...scheduleTemplateEntity,
@@ -102,6 +108,14 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
 
   handleChangeDriver = prop => {
     this.setState({ driverId: prop.value });
+  };
+
+  handleChangeRoute = prop => {
+    this.setState({ routeId: prop.value });
+  };
+
+  handleChangeBay = prop => {
+    this.setState({ bayId: prop.value });
   };
 
   handleChangeVehicle = prop => {
@@ -207,31 +221,48 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="route.id">Route</Label>
-                  <AvInput id="schedule-template-route" type="select" className="form-control" name="route.id">
-                    <option value="" key="0"/>
-                    {routes
-                      ? routes.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.routeName}&nbsp;
-                          {otherEntity.routeLocations[0] ? otherEntity.routeLocations[0].location.locationName : '(location not defined)'} -
-                          &nbsp;{otherEntity.routeLocations[0] ? otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName : '(location not defined)'}
-                        </option>
-                      ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-template-route" name="route.id"
+                          onChange={this.handleChangeRoute}
+                          defaultValue={
+                            scheduleTemplateEntity.route ? {
+                              label: scheduleTemplateEntity.route.routeName + ' ' +
+                                (scheduleTemplateEntity.route.routeLocations[0] ? scheduleTemplateEntity.route.routeLocations[0].location.locationName :
+                                  '(location not defined)') + ' - ' +
+                                (scheduleTemplateEntity.route.routeLocations[0] ? scheduleTemplateEntity.route.routeLocations
+                                    [scheduleTemplateEntity.route.routeLocations.length - 1].location.locationName
+                                  : '(location not defined)'),
+                              value: scheduleTemplateEntity.route.id
+                            } : null}
+                          options={
+                            routes
+                              ? routes.map(otherEntity => (
+                                {
+                                  label: otherEntity.routeName + ' ' +
+                                    (otherEntity.routeLocations[0] ? otherEntity.routeLocations[0].location.locationName : '(location not defined)') + ' - ' +
+                                    (otherEntity.routeLocations[0] ? otherEntity.routeLocations[otherEntity.routeLocations.length - 1].location.locationName
+                                      : '(location not defined)')
+                                  , value: otherEntity.id
+                                }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="bay.id">Bay</Label>
-                  <AvInput id="schedule-template-bay" type="select" className="form-control" name="bay.id">
-                    <option value="" key="0"/>
-                    {bays
-                      ? bays.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.bayName}
-                        </option>
-                      ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-template-bay" name="bay.id"
+                          onChange={this.handleChangeBay}
+                          defaultValue={
+                            scheduleTemplateEntity.bay ? {
+                              label: scheduleTemplateEntity.bay.bayName,
+                              value: scheduleTemplateEntity.bay.id
+                            } : null}
+                          options={
+                            bays
+                              ? bays.map(otherEntity => (
+                                { label: otherEntity.bayName , value: otherEntity.id }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="weekdays">Weekday</Label>
