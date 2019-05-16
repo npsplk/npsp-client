@@ -8,6 +8,7 @@ import { ILocationType, defaultValue } from 'app/shared/model/location-type.mode
 
 export const ACTION_TYPES = {
   FETCH_LOCATIONTYPE_LIST: 'locationType/FETCH_LOCATIONTYPE_LIST',
+  FETCH_ALL_LOCATIONTYPE_LIST: 'locationType/FETCH_ALL_LOCATIONTYPE_LIST',
   FETCH_LOCATIONTYPE: 'locationType/FETCH_LOCATIONTYPE',
   CREATE_LOCATIONTYPE: 'locationType/CREATE_LOCATIONTYPE',
   UPDATE_LOCATIONTYPE: 'locationType/UPDATE_LOCATIONTYPE',
@@ -67,6 +68,13 @@ export default (state: LocationTypeState = initialState, action): LocationTypeSt
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_LOCATIONTYPE_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_LOCATIONTYPE):
       return {
         ...state,
@@ -98,6 +106,7 @@ export default (state: LocationTypeState = initialState, action): LocationTypeSt
 };
 
 const apiUrl = 'api/location-types';
+const apiUrlAll = 'api/all-location-types';
 
 // Actions
 
@@ -105,6 +114,14 @@ export const getEntities: ICrudGetAllAction<ILocationType> = (page, size, sort) 
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_LOCATIONTYPE_LIST,
+    payload: axios.get<ILocationType>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<ILocationType> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_LOCATIONTYPE_LIST,
     payload: axios.get<ILocationType>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

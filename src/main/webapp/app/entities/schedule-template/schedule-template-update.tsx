@@ -11,7 +11,7 @@ import { IRootState } from 'app/shared/reducers';
 import { IVehicle } from 'app/shared/model/vehicle.model';
 import { getAllEntities as getVehicles } from 'app/entities/vehicle/vehicle.reducer';
 import { IDriver } from 'app/shared/model/driver.model';
-import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
+import { getAllEntities as getDrivers } from 'app/entities/driver/driver.reducer';
 import { IRoute } from 'app/shared/model/route.model';
 import { getEntities as getRoutes } from 'app/entities/route/route.reducer';
 import { IBay } from 'app/shared/model/bay.model';
@@ -25,6 +25,7 @@ import { IScheduleTemplate } from 'app/shared/model/schedule-template.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer, convertDateTimeToServer, convert24HourTimeFromServer, convertLocalTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import Select from 'react-select';
 
 export interface IScheduleTemplateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
 }
@@ -78,6 +79,12 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
     if (errors.length === 0) {
       values.startTime = convertDateTimeToServer('2019-02-08T' + values.startTime);
       values.endTime = convertDateTimeToServer('2019-02-08T' + values.endTime);
+      if (this.state.driverId !== '0') {
+        values.driver = { id: this.state.driverId };
+      }
+      if (this.state.vehicleId !== '0') {
+        values.vehicle = { id: this.state.vehicleId };
+      }
       const { scheduleTemplateEntity } = this.props;
       const entity = {
         ...scheduleTemplateEntity,
@@ -85,13 +92,20 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
         weekdays: mapIdList(values.weekdays),
         vehicleFacilities: mapIdList(values.vehicleFacilities)
       };
-
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {
         this.props.updateEntity(entity);
       }
     }
+  };
+
+  handleChangeDriver = prop => {
+    this.setState({ driverId: prop.value });
+  };
+
+  handleChangeVehicle = prop => {
+    this.setState({ vehicleId: prop.value });
   };
 
   handleClose = () => {
@@ -159,29 +173,37 @@ export class ScheduleTemplateUpdate extends React.Component<IScheduleTemplateUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="vehicle.id">Vehicle</Label>
-                  <AvInput id="schedule-template-vehicle" type="select" className="form-control" name="vehicle.id">
-                    <option value="" key="0"/>
-                    {vehicles
-                      ? vehicles.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.transportType.typeName} {otherEntity.registrationNumber}
-                        </option>
-                      ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-template-vehicle" name="vehicle.id"
+                          onChange={this.handleChangeDriver}
+                          defaultValue={
+                            scheduleTemplateEntity.vehicle ? {
+                              label: scheduleTemplateEntity.vehicle.transportType.typeName + ' ' + scheduleTemplateEntity.vehicle.registrationNumber,
+                              value: scheduleTemplateEntity.vehicle.id
+                            } : null}
+                          options={
+                            vehicles
+                              ? vehicles.map(otherEntity => (
+                                { label: otherEntity.transportType.typeName + ' ' + otherEntity.registrationNumber, value: otherEntity.id }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="driver.id">Driver</Label>
-                  <AvInput id="schedule-template-driver" type="select" className="form-control" name="driver.id">
-                    <option value="" key="0"/>
-                    {drivers
-                      ? drivers.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.driverName} {otherEntity.licenseNumber}
-                        </option>
-                      ))
-                      : null}
-                  </AvInput>
+                  <Select id="schedule-template-driver" name="driver.id"
+                          onChange={this.handleChangeDriver}
+                          defaultValue={
+                            scheduleTemplateEntity.driver ? {
+                              label: scheduleTemplateEntity.driver.driverName + ' ' + scheduleTemplateEntity.driver.licenseNumber,
+                              value: scheduleTemplateEntity.driver.id
+                            } : null}
+                          options={
+                            drivers
+                              ? drivers.map(otherEntity => (
+                                { label: otherEntity.driverName + ' ' + otherEntity.licenseNumber, value: otherEntity.id }
+                              ))
+                              : []
+                          }/>
                 </AvGroup>
                 <AvGroup>
                   <Label for="route.id">Route</Label>

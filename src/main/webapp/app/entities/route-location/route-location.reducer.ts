@@ -10,6 +10,7 @@ type ICrudGetAllByParentAction<T> = (route?: string) => IPayload<T> | ((dispatch
 
 export const ACTION_TYPES = {
   FETCH_ROUTELOCATION_LIST: 'routeLocation/FETCH_ROUTELOCATION_LIST',
+  FETCH_ALL_ROUTELOCATION_LIST: 'routeLocation/FETCH_ALL_ROUTELOCATION_LIST',
   FETCH_ROUTELOCATION: 'routeLocation/FETCH_ROUTELOCATION',
   CREATE_ROUTELOCATION: 'routeLocation/CREATE_ROUTELOCATION',
   UPDATE_ROUTELOCATION: 'routeLocation/UPDATE_ROUTELOCATION',
@@ -69,6 +70,13 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_ROUTELOCATION_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_ROUTELOCATION):
       return {
         ...state,
@@ -100,6 +108,7 @@ export default (state: RouteLocationState = initialState, action): RouteLocation
 };
 
 const apiUrl = 'api/route-locations';
+const apiUrlAll = 'api/all-route-locations';
 
 // Actions
 
@@ -107,6 +116,14 @@ export const getEntities: ICrudGetAllByParentAction<IRouteLocation> = route => {
   const requestUrl = `${apiUrl}${route ? `?route=${route}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_ROUTELOCATION_LIST,
+    payload: axios.get<IRouteLocation>(`${requestUrl}&cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllByParentAction<IRouteLocation> = route => {
+  const requestUrl = `${apiUrlAll}${route ? `?route=${route}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_ROUTELOCATION_LIST,
     payload: axios.get<IRouteLocation>(`${requestUrl}&cacheBuster=${new Date().getTime()}`)
   };
 };

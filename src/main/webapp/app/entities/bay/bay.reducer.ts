@@ -8,6 +8,7 @@ import { IBay, defaultValue } from 'app/shared/model/bay.model';
 
 export const ACTION_TYPES = {
   FETCH_BAY_LIST: 'bay/FETCH_BAY_LIST',
+  FETCH_ALL_BAY_LIST: 'bay/FETCH_ALL_BAY_LIST',
   FETCH_BAY: 'bay/FETCH_BAY',
   CREATE_BAY: 'bay/CREATE_BAY',
   UPDATE_BAY: 'bay/UPDATE_BAY',
@@ -67,6 +68,13 @@ export default (state: BayState = initialState, action): BayState => {
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_BAY_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_BAY):
       return {
         ...state,
@@ -98,6 +106,7 @@ export default (state: BayState = initialState, action): BayState => {
 };
 
 const apiUrl = 'api/bays';
+const apiUrlAll = 'api/all-bays';
 
 // Actions
 
@@ -105,6 +114,14 @@ export const getEntities: ICrudGetAllAction<IBay> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_BAY_LIST,
+    payload: axios.get<IBay>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IBay> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_BAY_LIST,
     payload: axios.get<IBay>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

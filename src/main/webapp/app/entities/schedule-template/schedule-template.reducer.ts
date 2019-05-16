@@ -8,6 +8,7 @@ import { IScheduleTemplate, defaultValue } from 'app/shared/model/schedule-templ
 
 export const ACTION_TYPES = {
   FETCH_SCHEDULETEMPLATE_LIST: 'scheduleTemplate/FETCH_SCHEDULETEMPLATE_LIST',
+  FETCH_ALL_SCHEDULETEMPLATE_LIST: 'scheduleTemplate/FETCH_ALL_SCHEDULETEMPLATE_LIST',
   FETCH_SCHEDULETEMPLATE: 'scheduleTemplate/FETCH_SCHEDULETEMPLATE',
   CREATE_SCHEDULETEMPLATE: 'scheduleTemplate/CREATE_SCHEDULETEMPLATE',
   UPDATE_SCHEDULETEMPLATE: 'scheduleTemplate/UPDATE_SCHEDULETEMPLATE',
@@ -67,6 +68,13 @@ export default (state: ScheduleTemplateState = initialState, action): ScheduleTe
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_SCHEDULETEMPLATE_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_SCHEDULETEMPLATE):
       return {
         ...state,
@@ -98,6 +106,7 @@ export default (state: ScheduleTemplateState = initialState, action): ScheduleTe
 };
 
 const apiUrl = 'api/schedule-templates';
+const apiUrlAll = 'api/all-schedule-templates';
 
 // Actions
 
@@ -105,6 +114,14 @@ export const getEntities: ICrudGetAllAction<IScheduleTemplate> = (page, size, so
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_SCHEDULETEMPLATE_LIST,
+    payload: axios.get<IScheduleTemplate>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IScheduleTemplate> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_SCHEDULETEMPLATE_LIST,
     payload: axios.get<IScheduleTemplate>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

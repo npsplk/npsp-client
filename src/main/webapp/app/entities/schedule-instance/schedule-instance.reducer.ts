@@ -8,6 +8,7 @@ import { IScheduleInstance, defaultValue } from 'app/shared/model/schedule-insta
 
 export const ACTION_TYPES = {
   FETCH_SCHEDULEINSTANCE_LIST: 'scheduleInstance/FETCH_SCHEDULEINSTANCE_LIST',
+  FETCH_ALL_SCHEDULEINSTANCE_LIST: 'scheduleInstance/FETCH_ALL_SCHEDULEINSTANCE_LIST',
   FETCH_SCHEDULEINSTANCE: 'scheduleInstance/FETCH_SCHEDULEINSTANCE',
   CREATE_SCHEDULEINSTANCE: 'scheduleInstance/CREATE_SCHEDULEINSTANCE',
   UPDATE_SCHEDULEINSTANCE: 'scheduleInstance/UPDATE_SCHEDULEINSTANCE',
@@ -68,6 +69,13 @@ export default (state: ScheduleInstanceState = initialState, action): ScheduleIn
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_SCHEDULEINSTANCE_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_SCHEDULEINSTANCE):
       return {
         ...state,
@@ -109,6 +117,7 @@ export default (state: ScheduleInstanceState = initialState, action): ScheduleIn
 };
 
 const apiUrl = 'api/schedule-instances';
+const apiUrlAll = 'api/all-schedule-instances';
 const apiUrlOperations = 'api/schedule-operations';
 
 // Actions
@@ -117,6 +126,14 @@ export const getEntities: ICrudGetAllAction<IScheduleInstance> = (page, size, so
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_SCHEDULEINSTANCE_LIST,
+    payload: axios.get<IScheduleInstance>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IScheduleInstance> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_SCHEDULEINSTANCE_LIST,
     payload: axios.get<IScheduleInstance>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

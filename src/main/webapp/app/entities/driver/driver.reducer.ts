@@ -5,9 +5,11 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IDriver, defaultValue } from 'app/shared/model/driver.model';
+import { IVehicle } from 'app/shared/model/vehicle.model';
 
 export const ACTION_TYPES = {
   FETCH_DRIVER_LIST: 'driver/FETCH_DRIVER_LIST',
+  FETCH_ALL_DRIVER_LIST: 'driver/FETCH_ALL_DRIVER_LIST',
   FETCH_DRIVER: 'driver/FETCH_DRIVER',
   CREATE_DRIVER: 'driver/CREATE_DRIVER',
   UPDATE_DRIVER: 'driver/UPDATE_DRIVER',
@@ -67,6 +69,13 @@ export default (state: DriverState = initialState, action): DriverState => {
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_DRIVER_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_DRIVER):
       return {
         ...state,
@@ -98,6 +107,7 @@ export default (state: DriverState = initialState, action): DriverState => {
 };
 
 const apiUrl = 'api/drivers';
+const apiUrlAll = 'api/all-drivers';
 
 // Actions
 
@@ -105,6 +115,14 @@ export const getEntities: ICrudGetAllAction<IDriver> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_DRIVER_LIST,
+    payload: axios.get<IDriver>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IDriver> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_DRIVER_LIST,
     payload: axios.get<IDriver>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

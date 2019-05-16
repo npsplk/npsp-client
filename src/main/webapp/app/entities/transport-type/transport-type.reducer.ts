@@ -8,6 +8,7 @@ import { ITransportType, defaultValue } from 'app/shared/model/transport-type.mo
 
 export const ACTION_TYPES = {
   FETCH_TRANSPORTTYPE_LIST: 'transportType/FETCH_TRANSPORTTYPE_LIST',
+  FETCH_ALL_TRANSPORTTYPE_LIST: 'transportType/FETCH_ALL_TRANSPORTTYPE_LIST',
   FETCH_TRANSPORTTYPE: 'transportType/FETCH_TRANSPORTTYPE',
   CREATE_TRANSPORTTYPE: 'transportType/CREATE_TRANSPORTTYPE',
   UPDATE_TRANSPORTTYPE: 'transportType/UPDATE_TRANSPORTTYPE',
@@ -67,6 +68,13 @@ export default (state: TransportTypeState = initialState, action): TransportType
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_TRANSPORTTYPE_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_TRANSPORTTYPE):
       return {
         ...state,
@@ -98,6 +106,7 @@ export default (state: TransportTypeState = initialState, action): TransportType
 };
 
 const apiUrl = 'api/transport-types';
+const apiUrlAll = 'api/all-transport-types';
 
 // Actions
 
@@ -105,6 +114,14 @@ export const getEntities: ICrudGetAllAction<ITransportType> = (page, size, sort)
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_TRANSPORTTYPE_LIST,
+    payload: axios.get<ITransportType>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<ITransportType> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_TRANSPORTTYPE_LIST,
     payload: axios.get<ITransportType>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

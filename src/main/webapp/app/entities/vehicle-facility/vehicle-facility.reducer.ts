@@ -8,6 +8,7 @@ import { IVehicleFacility, defaultValue } from 'app/shared/model/vehicle-facilit
 
 export const ACTION_TYPES = {
   FETCH_VEHICLEFACILITY_LIST: 'vehicleFacility/FETCH_VEHICLEFACILITY_LIST',
+  FETCH_ALL_VEHICLEFACILITY_LIST: 'vehicleFacility/FETCH_ALL_VEHICLEFACILITY_LIST',
   FETCH_VEHICLEFACILITY: 'vehicleFacility/FETCH_VEHICLEFACILITY',
   CREATE_VEHICLEFACILITY: 'vehicleFacility/CREATE_VEHICLEFACILITY',
   UPDATE_VEHICLEFACILITY: 'vehicleFacility/UPDATE_VEHICLEFACILITY',
@@ -67,6 +68,13 @@ export default (state: VehicleFacilityState = initialState, action): VehicleFaci
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_VEHICLEFACILITY_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_VEHICLEFACILITY):
       return {
         ...state,
@@ -98,6 +106,7 @@ export default (state: VehicleFacilityState = initialState, action): VehicleFaci
 };
 
 const apiUrl = 'api/vehicle-facilities';
+const apiUrlAll = 'api/all-vehicle-facilities';
 
 // Actions
 
@@ -105,6 +114,14 @@ export const getEntities: ICrudGetAllAction<IVehicleFacility> = (page, size, sor
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_VEHICLEFACILITY_LIST,
+    payload: axios.get<IVehicleFacility>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IVehicleFacility> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_VEHICLEFACILITY_LIST,
     payload: axios.get<IVehicleFacility>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

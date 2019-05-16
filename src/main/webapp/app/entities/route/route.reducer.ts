@@ -10,6 +10,7 @@ import { IRouteLocation } from 'app/shared/model/route-location.model';
 
 export const ACTION_TYPES = {
   FETCH_ROUTE_LIST: 'route/FETCH_ROUTE_LIST',
+  FETCH_ALL_ROUTE_LIST: 'route/FETCH_ALL_ROUTE_LIST',
   FETCH_ROUTE: 'route/FETCH_ROUTE',
   CREATE_ROUTE: 'route/CREATE_ROUTE',
   UPDATE_ROUTE: 'route/UPDATE_ROUTE',
@@ -90,6 +91,13 @@ export default (state: RouteState = initialState, action): RouteState => {
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_ROUTE_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_ROUTE):
       return {
         ...state,
@@ -149,6 +157,7 @@ export default (state: RouteState = initialState, action): RouteState => {
 };
 
 const apiUrl = 'api/routes';
+const apiUrlAll = 'api/all-routes';
 
 // Actions
 
@@ -156,6 +165,14 @@ export const getEntities: ICrudGetAllAction<IRoute> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_ROUTE_LIST,
+    payload: axios.get<IRoute>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<IRoute> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_ROUTE_LIST,
     payload: axios.get<IRoute>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };

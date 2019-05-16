@@ -8,6 +8,7 @@ import { ILocation, defaultValue } from 'app/shared/model/location.model';
 
 export const ACTION_TYPES = {
   FETCH_LOCATION_LIST: 'location/FETCH_LOCATION_LIST',
+  FETCH_ALL_LOCATION_LIST: 'location/FETCH_ALL_LOCATION_LIST',
   FETCH_LOCATION: 'location/FETCH_LOCATION',
   CREATE_LOCATION: 'location/CREATE_LOCATION',
   UPDATE_LOCATION: 'location/UPDATE_LOCATION',
@@ -67,6 +68,13 @@ export default (state: LocationState = initialState, action): LocationState => {
         totalItems: action.payload.headers['x-total-count'],
         entities: action.payload.data
       };
+    case SUCCESS(ACTION_TYPES.FETCH_ALL_LOCATION_LIST):
+      return {
+        ...state,
+        loading: false,
+        totalItems: action.payload.headers['x-total-count'],
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_LOCATION):
       return {
         ...state,
@@ -98,6 +106,7 @@ export default (state: LocationState = initialState, action): LocationState => {
 };
 
 const apiUrl = 'api/locations';
+const apiUrlAll = 'api/all-locations';
 
 // Actions
 
@@ -105,6 +114,14 @@ export const getEntities: ICrudGetAllAction<ILocation> = (page, size, sort) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_LOCATION_LIST,
+    payload: axios.get<ILocation>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+  };
+};
+
+export const getAllEntities: ICrudGetAllAction<ILocation> = (page, size, sort) => {
+  const requestUrl = `${apiUrlAll}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_ALL_LOCATION_LIST,
     payload: axios.get<ILocation>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
   };
 };
