@@ -19,6 +19,10 @@ export class BayDetail extends React.Component<IBayDetailProps> {
     this.props.getEntity(this.props.match.params.id);
   }
 
+  handleClose = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     const { bayEntity } = this.props;
     return (
@@ -37,7 +41,7 @@ export class BayDetail extends React.Component<IBayDetailProps> {
             </dt>
             <dd>{bayEntity.bindingAddress}</dd>
           </dl>
-          <Button tag={Link} to="/config/bay" replace color="info">
+          <Button onClick={this.handleClose} replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/config/bay/${bayEntity.id}/edit`} replace color="primary">

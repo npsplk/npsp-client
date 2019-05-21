@@ -12,12 +12,17 @@ import { IScheduleInstance } from 'app/shared/model/schedule-instance.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_LOCAL_TIME_FORMAT } from 'app/config/constants';
 
-export interface IScheduleInstanceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IScheduleInstanceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {
+}
 
 export class ScheduleInstanceDetail extends React.Component<IScheduleInstanceDetailProps> {
   componentDidMount() {
     this.props.getEntity(this.props.match.params.id);
   }
+
+  handleClose = () => {
+    this.props.history.goBack();
+  };
 
   render() {
     const { scheduleInstanceEntity } = this.props;
@@ -32,25 +37,25 @@ export class ScheduleInstanceDetail extends React.Component<IScheduleInstanceDet
               <span id="date">Date</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleInstanceEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={scheduleInstanceEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT}/>
             </dd>
             <dt>
               <span id="scheduledTime">Scheduled Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleInstanceEntity.scheduledTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
+              <TextFormat value={scheduleInstanceEntity.scheduledTime} type="date" format={APP_LOCAL_TIME_FORMAT}/>
             </dd>
             <dt>
               <span id="actualScheduledTime">Actual Scheduled Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleInstanceEntity.actualScheduledTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
+              <TextFormat value={scheduleInstanceEntity.actualScheduledTime} type="date" format={APP_LOCAL_TIME_FORMAT}/>
             </dd>
             <dt>
               <span id="actualDepartureTime">Actual Departure Time</span>
             </dt>
             <dd>
-              <TextFormat value={scheduleInstanceEntity.actualDepartureTime} type="date" format={APP_LOCAL_TIME_FORMAT} />
+              <TextFormat value={scheduleInstanceEntity.actualDepartureTime} type="date" format={APP_LOCAL_TIME_FORMAT}/>
             </dd>
             <dt>
               <span id="specialNotes">Special Notes</span>
@@ -64,30 +69,30 @@ export class ScheduleInstanceDetail extends React.Component<IScheduleInstanceDet
             <dd>{scheduleInstanceEntity.vehicle ? scheduleInstanceEntity.vehicle.registrationNumber : ''}</dd>
             <dt>Schedule Template</dt>
             <dd>
-                {scheduleInstanceEntity.scheduleTemplate ? (
-                    <Link to={`../schedule-template/${scheduleInstanceEntity.scheduleTemplate.id}`}>{scheduleInstanceEntity.scheduleTemplate.id}</Link>
-                ) : (
-                    ''
-                )}
+              {scheduleInstanceEntity.scheduleTemplate ? (
+                <Link to={`../schedule-template/${scheduleInstanceEntity.scheduleTemplate.id}`}>{scheduleInstanceEntity.scheduleTemplate.id}</Link>
+              ) : (
+                ''
+              )}
             </dd>
             <dt>Driver</dt>
             <dd>{scheduleInstanceEntity.driver ? scheduleInstanceEntity.driver.driverName : ''}</dd>
             <dt>Route</dt>
             <dd>
-                {scheduleInstanceEntity.route ? (
-                    <Link to={`../../config/route/${scheduleInstanceEntity.route.id}`}>{scheduleInstanceEntity.route.routeName}</Link>
-                ) : (
-                    ''
-                )}
+              {scheduleInstanceEntity.route ? (
+                <Link to={`../../config/route/${scheduleInstanceEntity.route.id}`}>{scheduleInstanceEntity.route.routeName}</Link>
+              ) : (
+                ''
+              )}
             </dd>
             <dt>Bay</dt>
             <dd>{scheduleInstanceEntity.bay ? scheduleInstanceEntity.bay.bayName : ''}</dd>
           </dl>
-          <Button tag={Link} to="/operation/schedule-instance" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
+          <Button onClick={this.handleClose} replace color="info">
+            <FontAwesomeIcon icon="arrow-left"/> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/operation/schedule-instance/${scheduleInstanceEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+            <FontAwesomeIcon icon="pencil-alt"/> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

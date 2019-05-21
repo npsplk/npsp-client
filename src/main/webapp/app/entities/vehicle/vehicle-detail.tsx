@@ -19,6 +19,10 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
     this.props.getEntity(this.props.match.params.id);
   }
 
+  handleClose = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     const { vehicleEntity } = this.props;
     return (
@@ -52,7 +56,7 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
                 : null}
             </dd>
           </dl>
-          <Button tag={Link} to="/config/vehicle" replace color="info">
+          <Button onClick={this.handleClose} replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/config/vehicle/${vehicleEntity.id}/edit`} replace color="primary">

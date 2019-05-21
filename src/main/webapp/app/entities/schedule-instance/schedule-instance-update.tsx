@@ -128,7 +128,8 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
   };
 
   handleClose = () => {
-    this.props.history.push('/operation/schedule-instance');
+    // this.props.history.push('/operation/schedule-instance');
+    this.props.history.goBack();
   };
 
   render() {
@@ -325,7 +326,7 @@ export class ScheduleInstanceUpdate extends React.Component<IScheduleInstanceUpd
                               : []
                           }/>
                 </AvGroup>
-                <Button tag={Link} id="cancel-save" to="/operation/schedule-instance" replace color="info">
+                <Button id="cancel-save" onClick={this.handleClose} replace color="info">
                   <FontAwesomeIcon icon="arrow-left"/>&nbsp;
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
