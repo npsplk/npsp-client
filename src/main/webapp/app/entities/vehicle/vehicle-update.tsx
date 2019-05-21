@@ -9,11 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { IDriver } from 'app/shared/model/driver.model';
-import { getEntities as getDrivers } from 'app/entities/driver/driver.reducer';
+import { getAllEntities as getDrivers } from 'app/entities/driver/driver.reducer';
 import { ITransportType } from 'app/shared/model/transport-type.model';
-import { getEntities as getTransportTypes } from 'app/entities/transport-type/transport-type.reducer';
+import { getAllEntities as getTransportTypes } from 'app/entities/transport-type/transport-type.reducer';
 import { IVehicleFacility } from 'app/shared/model/vehicle-facility.model';
-import { getEntities as getVehicleFacilities } from 'app/entities/vehicle-facility/vehicle-facility.reducer';
+import { getAllEntities as getVehicleFacilities } from 'app/entities/vehicle-facility/vehicle-facility.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './vehicle.reducer';
 import { IVehicle } from 'app/shared/model/vehicle.model';
 // tslint:disable-next-line:no-unused-variable

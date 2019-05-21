@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset, selectLocation, addRouteLocation, removeRouteLocations, selectRouteLocations } from './route.reducer';
-import { getEntities as getLocations } from 'app/entities/location/location.reducer';
+import { getAllEntities as getLocations } from 'app/entities/location/location.reducer';
 import { IRouteLocation } from 'app/shared/model/route-location.model';
 import route from 'app/entities/route/route';
 
