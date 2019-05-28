@@ -85,7 +85,7 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                 <tr key={`entity-${i}`}>
                   <td>
                     <Button tag={Link} to={`${match.url}/${vehicle.id}`} color="link" size="sm">
-                      {vehicle.registrationNumber}
+                      {vehicle.id}
                     </Button>
                   </td>
                   <td>{vehicle.registrationNumber}</td>
